@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:memofy/widgets/main_scrren/main_screen.dart';
+import 'package:memofy/presentation/screens/task_list/task_list_screen.dart';
 
 class Auth extends StatefulWidget {
   const Auth({Key? key}) : super(key: key);
@@ -103,9 +103,9 @@ class __FormState extends State<_Form> {
       //final navigator = Navigator.of(context);
       //navigator.push(MaterialPageRoute(builder: (context) => MainScreen()));
 
-      //Navigator.of(context).pushNamed('/main_screen');
+      //Navigator.of(context).pushNamed('/task_list');
 
-      Navigator.of(context).pushReplacementNamed('/main_screen');
+      Navigator.of(context).pushReplacementNamed(TaskListScreen.id);
     } else {
       errorText = 'Wrong login or password';
     }

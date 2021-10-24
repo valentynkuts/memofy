@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:memofy/widgets/auth.dart';
-import 'package:memofy/widgets/main_scrren/main_screen.dart';
+import 'package:memofy/presentation/screens/add_task/add_task_screen.dart';
+import 'package:memofy/presentation/screens/task_list/task_list_screen.dart';
+
+import 'auth/auth.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,10 +23,11 @@ class MyApp extends StatelessWidget {
           unselectedItemColor: Colors.grey,
         ),
       ),
-      initialRoute: '/auth',
+      initialRoute: TaskListScreen.id,
       routes: {
         '/auth': (context) => Auth(),
-        '/main_screen': (context) => MainScreen(),
+        TaskListScreen.id : (context) => TaskListScreen(),
+        AddTaskScreen.id : (context) => AddTaskScreen(),
       },
     );
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:memofy/presentation/screens/add_task/add_task_screen.dart';
-import 'package:memofy/presentation/widgets/task_list/task_list_widget.dart';
+import 'package:memofy/presentation/widgets/tasks_list/tasks_list_widget.dart';
 
 class TaskListScreen extends StatefulWidget {
   static const String id = 'Main_screen';
@@ -41,7 +41,7 @@ class _TaskListScreenState extends State<TaskListScreen> {
         title: Text('LISTS'),
         centerTitle: true,
       ),
-      body: TaskListWidget(),
+      body: TasksListWidget(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).pushNamed(AddTaskScreen.id);

@@ -37,7 +37,7 @@ class TaskWidget extends StatelessWidget {
         child: Stack(
           children: [
             Container(
-              padding: EdgeInsets.all(10.0),
+              //width: double.infinity;
               decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border.all(color: Colors.black.withOpacity(0.2)),
@@ -53,8 +53,12 @@ class TaskWidget extends StatelessWidget {
                   ]),
               clipBehavior: Clip.hardEdge,
               child: Column(
+                //mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  SizedBox(
+                    height: 20,
+                  ),
                   Text(
                     task.title,
                     style: TextStyle(
@@ -72,24 +76,15 @@ class TaskWidget extends StatelessWidget {
                   ),
                   Text(
                     task.data,
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15.0,
-                    ),
+                    style: TextStyle(color: Colors.grey),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 20,
                   ),
                   Text(
                     task.note,
-                    style: TextStyle(
-                      color: Colors.green,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17.0
-                    ),
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                   ),

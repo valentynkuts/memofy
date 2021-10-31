@@ -3,8 +3,9 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:memofy/constants/constants.dart';
 import 'package:memofy/data/dataproviders/task_data/task_data.dart';
 import 'package:memofy/models/task/task_model.dart';
+import 'package:memofy/presentation/screens/subtasks_list/subtasks_list_screen.dart';
 import 'package:memofy/presentation/widgets/slidable/item_slidable_widget.dart';
-import 'package:memofy/presentation/widgets/task/task_listTile_widget.dart';
+import 'package:memofy/presentation/widgets/task/task_tile_widget.dart';
 import 'package:memofy/presentation/widgets/task/task_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -124,6 +125,13 @@ class _TasksListWidgetState extends State<TasksListWidget> {
     //tasks = Provider.of<TaskDataProvider>(context).tasks;
   }*/
 
+  void _onTaskTap(int index){
+    Navigator.of(context).pushNamed(
+      SubtasksListScreen.id,
+      arguments: index,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<TaskDataProvider>(builder: (context, taskData, child) {
@@ -149,10 +157,11 @@ class _TasksListWidgetState extends State<TasksListWidget> {
               // itemExtent: 163, //height of element
               itemBuilder: (BuildContext context, int index) {
                 final task = taskData.tasks[index];
-                return TaskListTileWidget(
+                return TaskTileWidget(
                   key: ValueKey(task),
                   task: task,
                   index: index,
+                    onTaskTap:_onTaskTap,
                 );
 
                 /*Padding(

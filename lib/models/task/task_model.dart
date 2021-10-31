@@ -1,3 +1,5 @@
+import 'package:memofy/models/subtask/subtask_model.dart';
+
 class TaskModel {
   //String id;
   final String title;
@@ -6,8 +8,13 @@ class TaskModel {
   final String note;
   //bool isDone;
 
+  final List<SubtaskModel> subtasks;
+
   TaskModel(
       {required this.title,
         required this.data,
-        required this.note});
+        required this.note,
+        required this.subtasks,
+      });
+
 }

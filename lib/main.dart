@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:memofy/presentation/screens/add_task/add_task_screen.dart';
+import 'package:memofy/presentation/screens/subtasks_list/subtasks_list_screen.dart';
 import 'package:memofy/presentation/screens/tasks_list/tasks_list_screen.dart';
 import 'package:memofy/validation/add_task_validation.dart';
 import 'package:provider/provider.dart';
@@ -40,6 +41,14 @@ class MyApp extends StatelessWidget {
           '/auth': (context) => Auth(),
           TasksListScreen.id : (context) => TasksListScreen(),
           AddTaskScreen.id : (context) => AddTaskScreen(),
+          SubtasksListScreen.id : (context) {
+            final arguments = ModalRoute.of(context)?.settings.arguments;
+            if (arguments is int) {
+              return SubtasksListScreen(index: arguments);
+            } else {
+              return SubtasksListScreen(index: 0);
+            }
+          },
         },
       ),
     );

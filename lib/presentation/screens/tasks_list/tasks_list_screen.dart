@@ -49,8 +49,6 @@ class _TasksListScreenState extends State<TasksListScreen> {
     _searchController.addListener(_searchMovies);
   }*/
 
-  
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

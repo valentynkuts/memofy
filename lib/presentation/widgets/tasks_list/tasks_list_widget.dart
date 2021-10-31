@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:memofy/constants/constants.dart';
 import 'package:memofy/data/dataproviders/task_data/task_data.dart';
 import 'package:memofy/models/task/task_model.dart';
+import 'package:memofy/presentation/widgets/slidable/item_slidable_widget.dart';
+import 'package:memofy/presentation/widgets/task/task_listTile_widget.dart';
 import 'package:memofy/presentation/widgets/task/task_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -111,6 +114,16 @@ class _TasksListWidgetState extends State<TasksListWidget> {
 
 // taskData ~ Provider.of<TaskData>(context)
   //   Consumer<TaskData> to get rid of Provider.of<TaskData>(context)  // 206 → 16:50
+
+  /*List<TaskModel> tasks = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    //tasks = Provider.of<TaskDataProvider>(context).tasks;
+  }*/
+
   @override
   Widget build(BuildContext context) {
     return Consumer<TaskDataProvider>(builder: (context, taskData, child) {
@@ -123,15 +136,74 @@ class _TasksListWidgetState extends State<TasksListWidget> {
                 ),
               ),
             )
-          : ListView.builder(
+          : ReorderableListView.builder(
               padding: EdgeInsets.only(top: 70.0),
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               //itemCount: _fillteredTasks.length,
               itemCount: taskData.tasks.length,
-              itemExtent: 163, //height of element
+              onReorder: (int oldIndex, int newIndex) => setState(() {
+                final index = newIndex > oldIndex ? newIndex - 1 : newIndex;
+                final task = taskData.tasks.removeAt(oldIndex);
+                taskData.tasks.insert(index, task);
+              }),
+              // itemExtent: 163, //height of element
               itemBuilder: (BuildContext context, int index) {
-                // final task = _fillteredTasks[index];
-                return TaskWidget(task: taskData.tasks[index]);
+                final task = taskData.tasks[index];
+                return TaskListTileWidget(
+                  key: ValueKey(task),
+                  task: task,
+                  index: index,
+                );
+
+                /*Padding(
+                  key: ValueKey(taskData.tasks[index]),
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
+                  child: Slidable(
+                    // key: ValueKey(task),
+                      actionPane: SlidableBehindActionPane(),
+                      actions: [
+                        ItemSlidableWidget(
+                          actionName: 'Edit',
+                          icon: Icons.edit,
+                          color: Colors.green,
+                          actionFunction: () {},
+                        ),
+                      ],
+                      secondaryActions: [
+                        ItemSlidableWidget(
+                          actionName: 'Delete',
+                          icon: Icons.delete,
+                          color: Colors.red,
+                          actionFunction: () {},
+                        ),
+                      ],
+                      //was wrapped by Padding
+                      child: ListTile(
+                        //key: ValueKey(task),
+                        title: Text(
+                          //task.title,
+                          taskData.tasks[index].title,
+                          style: TextStyle(
+                            fontFamily: 'Pacifico',
+                            fontSize: 20.0,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          maxLines: 1,
+                        ),
+                        subtitle: Text(
+                          //task.data,
+                          taskData.tasks[index].data,
+                          style: TextStyle(
+                            color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 15.0,),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+
+                        isThreeLine: true,
+                      )
+                  ),
+                );*/
               },
             );
     });

@@ -72,8 +72,12 @@ class TaskDataProvider extends ChangeNotifier{
 
   //final _tasks = <TaskModel>[]; // List.empty()
 
-  UnmodifiableListView<TaskModel> get tasks{
-    return UnmodifiableListView(_tasks);
+  // UnmodifiableListView<TaskModel> get tasks{
+  //   return UnmodifiableListView(_tasks);
+  // }
+
+  List<TaskModel> get tasks{
+    return _tasks;
   }
 
   List<TaskModel> get(){

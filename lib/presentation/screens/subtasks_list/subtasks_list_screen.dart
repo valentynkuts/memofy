@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:memofy/constants/constants.dart';
-import 'package:memofy/data/dataproviders/task_data/task_data.dart';
-import 'package:memofy/models/task/task_model.dart';
-import 'package:memofy/presentation/screens/add_task/add_task_screen.dart';
 import 'package:memofy/presentation/widgets/subtasks_list/subtasks_list_widget.dart';
-import 'package:memofy/presentation/widgets/tasks_list/tasks_list_widget.dart';
-import 'package:provider/provider.dart';
+
 
 class SubtasksListScreen extends StatefulWidget {
   static const String id = 'subtasks_list_screen';

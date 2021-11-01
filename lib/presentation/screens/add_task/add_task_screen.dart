@@ -4,7 +4,6 @@ import 'package:memofy/constants/constants.dart';
 import 'package:memofy/data/dataproviders/task_data/task_data.dart';
 import 'package:memofy/validation/add_task_validation.dart';
 import 'package:provider/provider.dart';
-//import 'package:provider/provider.dart';
 
 class AddTaskScreen extends StatelessWidget {
   static const String id = 'add_list_screen';

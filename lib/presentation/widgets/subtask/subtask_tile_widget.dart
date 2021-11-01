@@ -3,7 +3,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:memofy/models/subtask/subtask_model.dart';
 import 'package:memofy/presentation/widgets/slidable/item_slidable_widget.dart';
 
-class SubtaskTileWidget extends StatelessWidget {
+class SubtaskTileWidget extends StatefulWidget {
   final SubtaskModel subtask;
   final int index;
   final bool isChecked;
@@ -20,8 +20,13 @@ class SubtaskTileWidget extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _SubtaskTileWidgetState createState() => _SubtaskTileWidgetState();
+}
+
+class _SubtaskTileWidgetState extends State<SubtaskTileWidget> {
+  @override
   Widget build(BuildContext context) {
-    return slidableTile(index, subtask);
+    return slidableTile(widget.index, widget.subtask);
   }
 
   Widget slidableTile(int index, SubtaskModel subtask) => Padding(
@@ -47,10 +52,11 @@ class SubtaskTileWidget extends StatelessWidget {
           ],
           child: Container(
             key: ValueKey(subtask),
-            //color: Colors.white,
             padding: EdgeInsets.all(10.0),
             decoration: BoxDecoration(
-                color: Colors.white,
+                //color: Colors.white,
+                //color: subtask.isDone ? Colors.white54 : Colors.white,
+                color: subtask.isDone ? Colors.green : Colors.white,
                 border: Border.all(color: Colors.black.withOpacity(0.2)),
                 //const
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -75,18 +81,30 @@ class SubtaskTileWidget extends StatelessWidget {
                 style: TextStyle(
                     fontFamily: 'Pacifico',
                     fontSize: 22.0,
-                    color: Colors.black,
+                    //color: Colors.black,
+                    //color: subtask.isDone ? Colors.grey : Colors.black,
+                    color: subtask.isDone ? Colors.white : Colors.black,
                     fontWeight: FontWeight.bold,
                     decoration: subtask.isDone ? TextDecoration.lineThrough : null),
                 maxLines: 10,
               ),
               dense: true,
               //isThreeLine: true,
-              trailing: Checkbox(
-                activeColor: Colors.lightBlueAccent,
-                value: subtask.isDone,
-                onChanged: (_) => checkboxCallback,
-                //onChanged:(_){ },
+              trailing: Transform.scale(
+                scale: 1.5,
+                child: Checkbox(
+                  shape: RoundedRectangleBorder(borderRadius:  BorderRadius.circular(5.0),),
+                  //shape: CircleBorder(),
+                  side: BorderSide(width: 3.0, color: Colors.grey),
+                  activeColor: Colors.green,
+                  value: subtask.isDone,
+                  onChanged: (value) {
+                    setState(() {
+                      subtask.isDone = !subtask.isDone;
+                    });
+                  },
+                  //onChanged:(_){ },
+                ),
               ),
               // onTap: () => print("ListTile"),
             ),

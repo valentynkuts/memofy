@@ -173,7 +173,7 @@ class TaskDataProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  bool updateSubtask1(SubtaskModel subtask){
+  bool toggleSubtaskStatus(SubtaskModel subtask){
     subtask.toggleDone();
     notifyListeners();
     return subtask.isDone;

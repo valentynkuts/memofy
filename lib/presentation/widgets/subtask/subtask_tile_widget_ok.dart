@@ -1,3 +1,4 @@
+/*
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:memofy/data/dataproviders/task_data/task_data.dart';
@@ -5,22 +6,33 @@ import 'package:memofy/models/subtask/subtask_model.dart';
 import 'package:memofy/presentation/widgets/slidable/item_slidable_widget.dart';
 import 'package:provider/provider.dart';
 
-class SubtaskTileWidget extends StatelessWidget {
+class SubtaskTileWidget extends StatefulWidget {
   final SubtaskModel subtask;
   final int index;
+  //final bool isChecked;
+  final Function checkboxCallback;
+  final Function longPressCallback;
 
   const SubtaskTileWidget({
     Key? key,
     required this.subtask,
     required this.index,
+    //required this.isChecked,
+    required this.checkboxCallback,
+    required this.longPressCallback,
   }) : super(key: key);
 
   @override
+  _SubtaskTileWidgetState createState() => _SubtaskTileWidgetState();
+}
+
+class _SubtaskTileWidgetState extends State<SubtaskTileWidget> {
+  @override
   Widget build(BuildContext context) {
-    return slidableTile(context, index, subtask);
+    return slidableTile(widget.index, widget.subtask);
   }
 
-  Widget slidableTile(BuildContext context,int index, SubtaskModel subtask) => Padding(
+  Widget slidableTile(int index, SubtaskModel subtask) => Padding(
         padding: const EdgeInsets.all(5.0),
         child: Slidable(
           key: ValueKey(subtask),
@@ -91,12 +103,19 @@ class SubtaskTileWidget extends StatelessWidget {
                   value: subtask.isDone,
                   onChanged: (value) {
                     final provider = Provider.of<TaskDataProvider>(context, listen: false);
+                    //this.isChecked = provider.toggleSubtaskStatus(subtask);
                     provider.toggleSubtaskStatus(subtask);
+                    // setState(() {
+                    //   subtask.isDone = !subtask.isDone;
+                    // });
                   },
+                  //onChanged:(_){ },
                 ),
               ),
+              // onTap: () => print("ListTile"),
             ),
           ),
         ),
       );
 }
+*/

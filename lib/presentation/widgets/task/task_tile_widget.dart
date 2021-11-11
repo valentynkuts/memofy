@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:memofy/data/dataproviders/task_data/task_data.dart';
 import 'package:memofy/models/task/task_model.dart';
 import 'package:memofy/presentation/widgets/slidable/item_slidable_widget.dart';
+import 'package:provider/provider.dart';
 
 class TaskTileWidget extends StatelessWidget {
   const TaskTileWidget({
@@ -17,29 +19,61 @@ class TaskTileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return slidableTile(index, task);
+    return slidableTile(context, index, task);
   }
 
-  Widget slidableTile(int index, TaskModel task) => Padding(
+  Widget slidableTile(BuildContext context, int index, TaskModel task) =>
+      Padding(
         padding: const EdgeInsets.all(5.0),
         child: Slidable(
           key: ValueKey(task),
           actionPane: SlidableBehindActionPane(),
           actions: [
-            ItemSlidableWidget(
-              actionName: 'Edit',
-              icon: Icons.edit,
-              color: Colors.green,
-              actionFunction: () {},
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10.0),
+              child: IconSlideAction(
+                color: Colors.green,
+                onTap: () {},
+                caption: 'Edit',
+                icon: Icons.edit,
+              ),
             ),
+
+
+            // ItemSlidableWidget(
+            //   actionName: 'Edit',
+            //   icon: Icons.edit,
+            //   color: Colors.green,
+            //   actionFunction: () {},
+            // ),
           ],
           secondaryActions: [
-            ItemSlidableWidget(
-              actionName: 'Delete',
-              icon: Icons.delete,
-              color: Colors.red,
-              actionFunction: () {},
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10.0),
+              child: IconSlideAction(
+                color: Colors.red, //Colors.green,
+                onTap: () {
+                  final provider =
+                  Provider.of<TaskDataProvider>(context, listen: false);
+
+                  provider.removeTask(task);
+                },
+                caption: 'Delete', //'Edit',
+                icon: Icons.delete, //Icons.edit,
+              ),
             ),
+
+            // ItemSlidableWidget(
+            //   actionName: 'Delete',
+            //   icon: Icons.delete,
+            //   color: Colors.red,
+            //   actionFunction: () {
+            //     final provider =
+            //         Provider.of<TaskDataProvider>(context, listen: false);
+            //
+            //     provider.removeTask(task);
+            //   },
+            // ),
           ],
           //was wrapped by Padding
           child: InkWell(

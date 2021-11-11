@@ -43,7 +43,7 @@ class _SubtasksListWidgetState extends State<SubtasksListWidget> {
                 return SubtaskTileWidget(
                   key: ValueKey(subtask),
                   subtask: subtask,
-                  index: index,
+                  index: widget.index,
                 );
 
               },

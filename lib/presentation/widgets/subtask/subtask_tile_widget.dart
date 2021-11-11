@@ -34,12 +34,31 @@ class SubtaskTileWidget extends StatelessWidget {
             ),
           ],
           secondaryActions: [
-            ItemSlidableWidget(
-              actionName: 'Delete',
-              icon: Icons.delete,
-              color: Colors.red,
-              actionFunction: () {},
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10.0),
+              child: IconSlideAction(
+                color: Colors.red, //Colors.green,
+                onTap: () {
+                  final provider = Provider.of<TaskDataProvider>(context, listen: false);
+
+                  provider.removeSubtask(index, subtask);
+                },
+                caption: 'Delete', //'Edit',
+                icon: Icons.delete, //Icons.edit,
+              ),
             ),
+
+            // ItemSlidableWidget(
+            //   actionName: 'Delete',
+            //   icon: Icons.delete,
+            //   color: Colors.red,
+            //   //actionFunction: () => deleteSubtask(context, index, subtask),
+            //   actionFunction: () {
+            //     final provider = Provider.of<TaskDataProvider>(context, listen: false);
+            //
+            //     provider.removeSubtask(index, subtask);
+            //   },
+            // ),
           ],
           child: Container(
             key: ValueKey(subtask),
@@ -99,4 +118,14 @@ class SubtaskTileWidget extends StatelessWidget {
           ),
         ),
       );
+
+  void deleteSubtask(BuildContext context, int index, SubtaskModel subtask) {
+    final provider = Provider.of<TaskDataProvider>(context, listen: false);
+
+    provider.removeSubtask(index, subtask);
+
+    //Scaffold.of(context).re
+  }
+
+
 }

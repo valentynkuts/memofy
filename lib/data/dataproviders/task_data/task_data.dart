@@ -178,10 +178,16 @@ class TaskDataProvider extends ChangeNotifier{
     notifyListeners();
     return subtask.isDone;
   }
+ void removeTask(TaskModel task){
+    _tasks.remove(task);
+    notifyListeners();
+ }
 
+  void removeSubtask(int index, SubtaskModel subtask){
+    print(index);
+    print(subtask.toString());
 
-  void deleteSubtask(TaskModel task, SubtaskModel subtask){
-    task.subtasks.remove(subtask);
+    _tasks[index].subtasks.remove(subtask);
     notifyListeners();
   }
 

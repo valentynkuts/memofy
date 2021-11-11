@@ -16,7 +16,7 @@ class _SubtasksListWidgetState extends State<SubtasksListWidget> {
   @override
   Widget build(BuildContext context) {
     return Consumer<TaskDataProvider>(builder: (context, taskData, child) {
-      return taskData.tasks[widget.index].subtasks.isEmpty
+      return taskData.tasks[widget.index].subtasks!.isEmpty
           ? Container(
               child: Center(
                 child: Text(
@@ -29,17 +29,17 @@ class _SubtasksListWidgetState extends State<SubtasksListWidget> {
               padding: EdgeInsets.only(top: 70.0),
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               //itemCount: _fillteredTasks.length,
-              itemCount: taskData.tasks[widget.index].subtasks.length,
+              itemCount: taskData.tasks[widget.index].subtasks!.length,
               onReorder: (int oldIndex, int newIndex) => setState(() {
                 final index = newIndex > oldIndex ? newIndex - 1 : newIndex;
                 final subtask =
-                    taskData.tasks[widget.index].subtasks.removeAt(oldIndex);
-                taskData.tasks[widget.index].subtasks.insert(index, subtask);
+                    taskData.tasks[widget.index].subtasks!.removeAt(oldIndex);
+                taskData.tasks[widget.index].subtasks!.insert(index, subtask);
               }),
               // itemExtent: 163, //height of element
               itemBuilder: (BuildContext context, int index) {
                 //final task = taskData.tasks[widget.index];
-                final subtask = taskData.tasks[widget.index].subtasks[index];
+                final subtask = taskData.tasks[widget.index].subtasks![index];
                 return SubtaskTileWidget(
                   key: ValueKey(subtask),
                   subtask: subtask,

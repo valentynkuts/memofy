@@ -1,8 +1,10 @@
 
 import 'package:flutter/foundation.dart';
+import 'package:hive/hive.dart';
 import 'package:memofy/models/subtask/subtask_model.dart';
 import 'package:memofy/models/task/task_model.dart';
 import 'package:intl/intl.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 // logic
 class TaskDataProvider extends ChangeNotifier{
@@ -24,7 +26,7 @@ class TaskDataProvider extends ChangeNotifier{
     SubtaskModel(
         description: "Subtask Q"),
   ];
-  final _tasks = [
+  /*final _tasks = [
     TaskModel(
         title: 'Making Paiment',
         //data: DateTime.parse('07/16/2021'),
@@ -34,42 +36,12 @@ class TaskDataProvider extends ChangeNotifier{
             'her past arises. Pursued by a force that will stop at nothing to bring'
             ' her down, Natasha must deal with her history as a spy and the broken '
             'relationships left in her wake long before she became an Avenger.',
-        subtasks:  [
-          SubtaskModel(
-              description: "1_Subtask A darker parts of her ledger when a dangerous"),
-          SubtaskModel(
-              description: "1_Subtask B"),
-          SubtaskModel(
-              description: "1_Subtask C darker parts of her ledger when a dangerous, darker parts of her ledger when a dangerous"),
-          SubtaskModel(
-              description: "1_Subtask D"),
-          SubtaskModel(
-              description: "1_Subtask E"),
-          SubtaskModel(
-              description: "1_Subtask F"),
-          SubtaskModel(
-              description: "1_Subtask G"),
-          SubtaskModel(
-              description: "1_Subtask W"),
-          SubtaskModel(
-              description: "1_Subtask H"),
-          SubtaskModel(
-              description: "1_Subtask J"),
-          SubtaskModel(
-              description: "1_Subtask K"),
-          SubtaskModel(
-              description: "1_Subtask L"),
-          SubtaskModel(
-              description: "1_Subtask M"),
-          SubtaskModel(
-              description: "1_Subtask X"),
-        ]),
+       isDone:false),
     TaskModel(
         title: 'Go to shop',
        // data:  DateTime.parse('07/16/2021'),
         data:DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
-        note: '',
-         subtasks: <SubtaskModel>[]),
+        note: '',),
     TaskModel(
         title: 'To do smth',
         //data:  DateTime.parse('Jun 30, 2021'),
@@ -78,24 +50,7 @@ class TaskDataProvider extends ChangeNotifier{
             'decides that the annual Purge does not stop at daybreak and instead '
             'should never end as they chase a group of immigrants who they want '
             'to punish because of their harsh historical past.',
-        subtasks:  [
-          SubtaskModel(
-              description: "Subtask A"),
-          SubtaskModel(
-              description: "Subtask B"),
-          SubtaskModel(
-              description: "Subtask C"),
-          SubtaskModel(
-              description: "Subtask D"),
-          SubtaskModel(
-              description: "Subtask E"),
-          SubtaskModel(
-              description: "Subtask F"),
-          SubtaskModel(
-              description: "Subtask G"),
-          SubtaskModel(
-              description: "Subtask Q"),
-        ]),
+        isDone:false),
     TaskModel(
         title: 'Took Baby from ...',
         //data:  DateTime.parse('07/02/2021'),
@@ -104,43 +59,49 @@ class TaskDataProvider extends ChangeNotifier{
             'Ted — have become adults and drifted away from each other. But a new '
             'boss baby with a cutting-edge approach and a can-do attitude is about t'
             'o bring them together again … and inspire a new family business.',
-        subtasks: <SubtaskModel>[]),
+        isDone:false),
     TaskModel(
         title: 'Bhkjhhkjhkjl kopi kjhiuh ',
         //data:  DateTime.parse('07/16/2021'),
         data:  DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
         note: 'The Templeton brothers — Tim and his Boss Baby little bro '
             'Ted — have become adults and drifted away from each other.',
-        subtasks: <SubtaskModel>[]),
+        isDone:false),
     TaskModel(
         title: 'Lucauytuyy',
         //data:  DateTime.parse('07/16/2021'),
         data:  DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
         note: 'The Templeton brothers — Tim and his Boss Baby little bro '
             'Ted — have become adults and drifted away from each other.',
-        subtasks: <SubtaskModel>[]),
+        isDone:false),
     TaskModel(
         title: 'Awake',
         //data:  DateTime.parse('07/16/2021'),
         data:  DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
         note: 'The Templeton brothers — Tim and his Boss Baby little bro '
             'Ted — have become adults and drifted away from each other.',
-        subtasks: <SubtaskModel>[]),
+        isDone:false),
     TaskModel(
         title: 'Infinite',
         //data:  DateTime.parse('07/16/2021'),
         data:  DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
         note: 'The Templeton brothers — Tim and his Boss Baby little bro '
             'Ted — have become adults and drifted away from each other.',
-        subtasks: <SubtaskModel>[]),
+        isDone:false),
     TaskModel(
         title: 'Wrauytuyt',
        // data:  DateTime.parse('Apr 22, 2021'),
         data:  DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
         note: 'The Templeton brothers — Tim and his Boss Baby little bro '
             'Ted — have become adults and drifted away from each other.',
-        subtasks: <SubtaskModel>[]),
-  ];
+        isDone:false),
+  ];*/
+
+  TaskDataProvider(){
+    load();
+  }
+
+  var _tasks = <TaskModel>[];
 
   //final _tasks = <TaskModel>[]; // List.empty()
 
@@ -156,9 +117,32 @@ class TaskDataProvider extends ChangeNotifier{
     return _tasks;
   }
 
-  void addTask(String title, String data, String note){
-    final task = TaskModel(title: title, data: data, note: note, subtasks: <SubtaskModel>[]);
-    _tasks.add(task);
+  _readTasksFromHive(Box<TaskModel> box){
+    _tasks = box.values.toList();
+    notifyListeners();
+  }
+
+  void load() async{
+    if(!Hive.isAdapterRegistered(1)){
+      Hive.registerAdapter(TaskModelAdapter());
+    }
+    final box = await Hive.openBox<TaskModel>('tasks');
+    // _tasks = box.values.toList();
+    // notifyListeners();
+    _readTasksFromHive(box);
+    box.listenable().addListener(() => _readTasksFromHive(box));
+  }
+
+  void addTask(String title, String data, String note) async{
+    //final task = TaskModel(title: title, data: data, note: note, subtasks: <SubtaskModel>[]);
+    final task = TaskModel(title: title, data: data, note: note, isDone: false);
+    //_tasks.add(task);
+
+    if(!Hive.isAdapterRegistered(0)){
+      Hive.registerAdapter(TaskModelAdapter());
+    }
+    final box = await Hive.openBox<TaskModel>('tasks');
+    await box.add(task);
     // to update
     notifyListeners();
   }
@@ -187,7 +171,7 @@ class TaskDataProvider extends ChangeNotifier{
     print(index);
     print(subtask.toString());
 
-    _tasks[index].subtasks.remove(subtask);
+    //_tasks[index].subtasks.remove(subtask);
     notifyListeners();
   }
 

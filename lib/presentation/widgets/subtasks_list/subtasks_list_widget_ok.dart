@@ -1,3 +1,4 @@
+/*
 import 'package:flutter/material.dart';
 import 'package:memofy/data/dataproviders/task_data/task_data.dart';
 import 'package:memofy/presentation/widgets/subtask/subtask_tile_widget.dart';
@@ -43,7 +44,12 @@ class _SubtasksListWidgetState extends State<SubtasksListWidget> {
                 return SubtaskTileWidget(
                   key: ValueKey(subtask),
                   subtask: subtask,
-                  index: widget.index,
+                  index: index,
+                  //isChecked: subtask.isDone,
+                  checkboxCallback: (checkBoxState) {
+                    taskData.updateSubtask(subtask);
+                  },
+                  longPressCallback: () {},
                 );
 
               },
@@ -51,3 +57,4 @@ class _SubtasksListWidgetState extends State<SubtasksListWidget> {
     });
   }
 }
+*/

@@ -57,6 +57,9 @@ class TaskTileWidget extends StatelessWidget {
                   Provider.of<TaskDataProvider>(context, listen: false);
 
                   provider.removeTask(task);
+                  //provider.removeTask(index);
+                 //print("TaskTileWidget index: $index");
+                 // print(task);
                 },
                 caption: 'Delete', //'Edit',
                 icon: Icons.delete, //Icons.edit,
@@ -141,7 +144,7 @@ class TaskTileWidget extends StatelessWidget {
                 ],
               ),
             ),
-            onTap: () => onTaskTap(index),
+            onTap: () => {}//(index),
           ),
         ),
       );

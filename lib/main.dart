@@ -9,17 +9,24 @@ import 'package:provider/provider.dart';
 
 import 'auth/auth.dart';
 import 'data/dataproviders/task_data/task_data.dart';
+import 'models/subtask/subtask_model.dart';
+import 'models/task/task_model.dart';
 
 void main() async{
+  //if main is async we add WidgetsFlutterBinding.ensureInitialized();
   WidgetsFlutterBinding.ensureInitialized();
 
   await Hive.initFlutter();
 
-  //Hive.registerAdapter(TaskModelAdapter());
-  //Hive.registerAdapter(SubtaskModelAdapter());
-  //await Hive.openBox<Transaction>('transactions');
+  Hive.registerAdapter(TaskModelAdapter());
+  Hive.registerAdapter(SubtaskModelAdapter());
+  await Hive.openBox<TaskModel>('tasks');
 
   runApp(MyApp());
+
+   //https://docs.hivedb.dev/#/advanced/compaction
+  //await box.compact();  //delete deleted data
+  //await box.close();
 }
 
 class MyApp extends StatelessWidget {

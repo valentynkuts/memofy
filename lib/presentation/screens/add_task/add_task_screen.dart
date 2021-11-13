@@ -101,6 +101,7 @@ class AddTaskScreen extends StatelessWidget {
             ? null
             : () {
                 newTitle = validationService.newTitle.value!;
+               // int id = Provider.of<TaskDataProvider>(context).tasks.length;
                 Provider.of<TaskDataProvider>(context, listen: false).addTask(
                     newTitle,
                     DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),

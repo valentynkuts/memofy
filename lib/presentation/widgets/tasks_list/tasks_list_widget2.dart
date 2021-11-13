@@ -31,27 +31,46 @@ class TasksListWidget extends StatelessWidget {
               padding: EdgeInsets.only(top: 70.0),
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               itemCount: taskData.tasks.length,
-              onReorder: (int oldIndex, int newIndex) async {
-                final index = newIndex > oldIndex ? newIndex - 1 : newIndex;
-                final task = taskData.tasks.removeAt(oldIndex);
-                taskData.tasks.insert(index, task);
+              onReorder: (int oldIndex, int newIndex) {
+                //final index = newIndex > oldIndex ? newIndex - 1 : newIndex;
+                // final task = taskData.tasks.removeAt(oldIndex);
+                // taskData.tasks.insert(index, task);
 
-                //int oldKey = await taskData.taskKeyAtHive(oldIndex);
-                //int key = await taskData.taskKeyAtHive(index);
-                
-                //taskData.tasksAtKeys(oldKey, key);
-                //print(task);
-                //print("OLD: $oldIndex");
-                //print("NEW: $index");
-                // print(taskData.tasks[0]);
-                // print(taskData.tasks[1]);
-                // print(taskData.tasks[2]);
-                // print(taskData.tasks[3]);
+
+                print("oldIndex $oldIndex");
+                final oldIndexTask = taskData.tasks[oldIndex];
+                print("oldIndexTask: $oldIndexTask");
+
+                //taskData.getIndexOfHiveOfTask(oldIndexTask);
+
+                //final newIndexTask = taskData.tasks[newIndex];
+                //print("newIndexTask $newIndexTask");
+
+                print("newIndex $newIndex");
+
+                //--------------
+
+                final index = newIndex > oldIndex ? newIndex - 1 : newIndex;
+                //final task = taskData.tasks.removeAt(oldIndex);
+                //taskData.tasks.insert(index, task);
+                final oldtask = taskData.tasks.removeAt(oldIndex);
+                taskData.tasks.insert(index, oldtask);
+                //--------------
+                ////final oldtask = taskData.tasks[oldIndex];
+                print("old task: $oldtask");
+                print("-OLD: $oldIndex");
+
+                final newtask = taskData.tasks[index];
+                print("new task: $newtask");
+                print("-NEW: $index");
+                //taskData.tasks;
+                taskData.getIndexOfHiveOfTask(newtask);
+                //------------------
+
+
               },
               itemBuilder: (BuildContext context, int index) {
                 final task = taskData.tasks[index];
-                task.id = index;
-                task.save();
                 return TaskTileWidget(
                   key: ValueKey(task),
                   task: task,

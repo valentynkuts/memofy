@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:memofy/constants/constants.dart';
+import 'package:memofy/data/dataproviders/subtask_data/subtask_data.dart';
+import 'package:memofy/models/task/task_model.dart';
 import 'package:memofy/presentation/widgets/subtasks_list/subtasks_list_widget.dart';
 
 
 class SubtasksListScreen extends StatefulWidget {
   static const String id = 'subtasks_list_screen';
 
-  final int index;
+  //final int index;
 
-  SubtasksListScreen({Key? key, required this.index}) : super(key: key);
+  TaskModel taskModel;
+
+
+
+  //SubtasksListScreen({Key? key, required this.index}) : super(key: key);
+  SubtasksListScreen({Key? key, required this.taskModel}) : super(key: key);
 
   @override
   _SubtasksListScreenState createState() => _SubtasksListScreenState();
@@ -16,16 +23,39 @@ class SubtasksListScreen extends StatefulWidget {
 
 class _SubtasksListScreenState extends State<SubtasksListScreen> {
 
+
+  //SubtaskDataProvider? _subtaskDataProvider;
+  //Provider.of<SubtaskDataProvider>(context).;
+
+  @override
+  void initState() {
+    // if(_subtaskDataProvider == null){
+    //   //_subtaskDataProvider = SubtaskDataProvider(indexTask: widget.index);
+    // }
+    super.initState();
+  }
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+
+    // if(_subtaskDataProvider == null){
+    //   _subtaskDataProvider = SubtaskDataProvider(indexTask: widget.index);
+    // }
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('SUBTASKS'),
+        title: Text('${widget.taskModel.title}'),
+        //title: Text('${widget.index}'),
+       // title: Text(_subtaskDataProvider == null ? "Ooops":'${_subtaskDataProvider!.task!.title}'),
         centerTitle: true,
       ),
       body: Stack(
           children: [
-            SubtasksListWidget(index: widget.index),
+            //SubtasksListWidget(index: widget.index), //TODO
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: TextField(

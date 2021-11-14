@@ -10,7 +10,10 @@ class SubtaskModel extends HiveObject {
   @HiveField(1)
   bool isDone;
 
-  SubtaskModel({required this.description, this.isDone = false});
+  @HiveField(2)
+  int orderby;
+
+  SubtaskModel({required this.description, required this.orderby, this.isDone = false});
 
   void toggleDone() {
     isDone = !isDone;

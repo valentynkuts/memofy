@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:memofy/data/dataproviders/subtask_data/subtask_data.dart';
 import 'package:memofy/presentation/screens/add_task/add_task_screen.dart';
 import 'package:memofy/presentation/screens/subtasks_list/subtasks_list_screen.dart';
 import 'package:memofy/presentation/screens/tasks_list/tasks_list_screen.dart';
@@ -21,6 +22,7 @@ void main() async{
   Hive.registerAdapter(TaskModelAdapter());
   Hive.registerAdapter(SubtaskModelAdapter());
   await Hive.openBox<TaskModel>('tasks');
+  await Hive.openBox<SubtaskModel>('subtasks');
 
   runApp(MyApp());
 
@@ -39,6 +41,9 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider<AddTaskValidation>(
             create: (context) => AddTaskValidation(),
+          ),
+          ChangeNotifierProvider<SubtaskDataProvider>(
+            create: (context) => SubtaskDataProvider(),
           )
         ],
       child: MaterialApp(
@@ -59,12 +64,16 @@ class MyApp extends StatelessWidget {
           TasksListScreen.id : (context) => TasksListScreen(),
           AddTaskScreen.id : (context) => AddTaskScreen(),
           SubtasksListScreen.id : (context) {
+            // final arguments = ModalRoute.of(context)?.settings.arguments;
+            // if (arguments is int) {
+            //   return SubtasksListScreen(index: arguments);
+            // } else {
+            //   return SubtasksListScreen(index: 0);
+            // }
+
             final arguments = ModalRoute.of(context)?.settings.arguments;
-            if (arguments is int) {
-              return SubtasksListScreen(index: arguments);
-            } else {
-              return SubtasksListScreen(index: 0);
-            }
+              return SubtasksListScreen(taskModel: arguments as TaskModel);
+
           },
         },
       ),

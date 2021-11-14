@@ -18,6 +18,7 @@ class SubtaskModelAdapter extends TypeAdapter<SubtaskModel> {
     };
     return SubtaskModel(
       description: fields[0] as String,
+      orderby: fields[2] as int,
       isDone: fields[1] as bool,
     );
   }
@@ -25,11 +26,13 @@ class SubtaskModelAdapter extends TypeAdapter<SubtaskModel> {
   @override
   void write(BinaryWriter writer, SubtaskModel obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.description)
       ..writeByte(1)
-      ..write(obj.isDone);
+      ..write(obj.isDone)
+      ..writeByte(2)
+      ..write(obj.orderby);
   }
 
   @override

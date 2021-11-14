@@ -13,7 +13,7 @@ class TaskTileWidget extends StatelessWidget {
     required this.onTaskTap,
   }) : super(key: key);
 
-  final TaskModel task;
+  final TaskModel task;//????
   final int index;
   final Function onTaskTap;
 
@@ -144,7 +144,7 @@ class TaskTileWidget extends StatelessWidget {
                 ],
               ),
             ),
-            onTap: () => {}//(index),
+            onTap: () => onTaskTap(task),
           ),
         ),
       );

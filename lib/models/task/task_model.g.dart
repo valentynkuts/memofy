@@ -20,7 +20,7 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
       title: fields[0] as String,
       data: fields[1] as String,
       note: fields[2] as String,
-      id: fields[5] as int,
+      orderby: fields[5] as int,
       isDone: fields[3] as bool,
     )..subtasks = (fields[4] as HiveList?)?.castHiveList();
   }
@@ -40,7 +40,7 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
       ..writeByte(4)
       ..write(obj.subtasks)
       ..writeByte(5)
-      ..write(obj.id);
+      ..write(obj.orderby);
   }
 
   @override

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:memofy/data/dataproviders/subtask_data/subtask_data.dart';
+import 'package:memofy/presentation/screens/add_subtask/add_subtask_screen.dart';
 import 'package:memofy/presentation/screens/add_task/add_task_screen.dart';
 import 'package:memofy/presentation/screens/subtasks_list/subtasks_list_screen.dart';
 import 'package:memofy/presentation/screens/tasks_list/tasks_list_screen.dart';
@@ -17,7 +18,10 @@ void main() async{
   //if main is async we add WidgetsFlutterBinding.ensureInitialized();
   WidgetsFlutterBinding.ensureInitialized();
 
+
   await Hive.initFlutter();
+
+  //Hive.deleteFromDisk();
 
   Hive.registerAdapter(TaskModelAdapter());
   Hive.registerAdapter(SubtaskModelAdapter());
@@ -75,6 +79,7 @@ class MyApp extends StatelessWidget {
               return SubtasksListScreen(taskModel: arguments as TaskModel);
 
           },
+          AddSubtaskScreen.id : (context) => AddSubtaskScreen(),
         },
       ),
     );

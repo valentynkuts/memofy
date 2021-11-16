@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:memofy/constants/constants.dart';
 import 'package:memofy/data/dataproviders/subtask_data/subtask_data.dart';
 import 'package:memofy/models/task/task_model.dart';
+import 'package:memofy/presentation/screens/add_subtask/add_subtask_screen.dart';
 import 'package:memofy/presentation/widgets/subtasks_list/subtasks_list_widget.dart';
 
 
@@ -95,7 +96,7 @@ class _SubtasksListScreenState extends State<SubtasksListScreen> {
         child: const Icon(Icons.add),
         onPressed: () {
           print("Add subtask");
-          //Navigator.of(context).pushNamed(AddSubtaskScreen.id);
+          Navigator.of(context).pushNamed(AddSubtaskScreen.id);
         },
 
       ),

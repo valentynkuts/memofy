@@ -25,12 +25,18 @@ class TaskModel extends HiveObject {
   @HiveField(5)
   int orderby;
 
+  @HiveField(6)
+  int id;
+
+  //int? get getid => id;
+
   //TaskModel(this.title,this.data,this.note,this.isDone);
   TaskModel(
       {required this.title,
       required this.data,
       required this.note,
       required this.orderby,
+      required this.id,
       this.isDone = false});
 
 // TaskModel({required this.title,
@@ -51,10 +57,8 @@ class TaskModel extends HiveObject {
     this.isDone = t.isDone;
   }
 
-  void addSubtask(Box<TaskModel>box, SubtaskModel subtask) {
+  void addSubtask(Box<TaskModel> box, SubtaskModel subtask) {
     subtasks ??= HiveList(box);
     subtasks?.add(subtask);
   }
-
-
 }

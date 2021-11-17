@@ -7,94 +7,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 // logic
 class TaskDataProvider extends ChangeNotifier {
-  // List<SubtaskModel> subtasks = [
-  //   SubtaskModel(
-  //       description: "Subtask A"),
-  //   SubtaskModel(
-  //       description: "Subtask B"),
-  //   SubtaskModel(
-  //       description: "Subtask C"),
-  //   SubtaskModel(
-  //       description: "Subtask D"),
-  //   SubtaskModel(
-  //       description: "Subtask E"),
-  //   SubtaskModel(
-  //       description: "Subtask F"),
-  //   SubtaskModel(
-  //       description: "Subtask G"),
-  //   SubtaskModel(
-  //       description: "Subtask Q"),
-  // ];
-  /*final _tasks = [
-    TaskModel(
-        title: 'Making Paiment',
-        //data: DateTime.parse('07/16/2021'),
-        data: DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
-        note: 'Text confronts the '
-            'darker parts of her ledger when a dangerous conspiracy with ties to '
-            'her past arises. Pursued by a force that will stop at nothing to bring'
-            ' her down, Natasha must deal with her history as a spy and the broken '
-            'relationships left in her wake long before she became an Avenger.',
-       isDone:false),
-    TaskModel(
-        title: 'Go to shop',
-       // data:  DateTime.parse('07/16/2021'),
-        data:DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
-        note: '',),
-    TaskModel(
-        title: 'To do smth',
-        //data:  DateTime.parse('Jun 30, 2021'),
-        data:  DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
-        note: 'All the rules are broken as a sect of lawless marauders '
-            'decides that the annual Purge does not stop at daybreak and instead '
-            'should never end as they chase a group of immigrants who they want '
-            'to punish because of their harsh historical past.',
-        isDone:false),
-    TaskModel(
-        title: 'Took Baby from ...',
-        //data:  DateTime.parse('07/02/2021'),
-        data:  DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
-        note: 'The Templeton brothers — Tim and his Boss Baby little bro '
-            'Ted — have become adults and drifted away from each other. But a new '
-            'boss baby with a cutting-edge approach and a can-do attitude is about t'
-            'o bring them together again … and inspire a new family business.',
-        isDone:false),
-    TaskModel(
-        title: 'Bhkjhhkjhkjl kopi kjhiuh ',
-        //data:  DateTime.parse('07/16/2021'),
-        data:  DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
-        note: 'The Templeton brothers — Tim and his Boss Baby little bro '
-            'Ted — have become adults and drifted away from each other.',
-        isDone:false),
-    TaskModel(
-        title: 'Lucauytuyy',
-        //data:  DateTime.parse('07/16/2021'),
-        data:  DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
-        note: 'The Templeton brothers — Tim and his Boss Baby little bro '
-            'Ted — have become adults and drifted away from each other.',
-        isDone:false),
-    TaskModel(
-        title: 'Awake',
-        //data:  DateTime.parse('07/16/2021'),
-        data:  DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
-        note: 'The Templeton brothers — Tim and his Boss Baby little bro '
-            'Ted — have become adults and drifted away from each other.',
-        isDone:false),
-    TaskModel(
-        title: 'Infinite',
-        //data:  DateTime.parse('07/16/2021'),
-        data:  DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
-        note: 'The Templeton brothers — Tim and his Boss Baby little bro '
-            'Ted — have become adults and drifted away from each other.',
-        isDone:false),
-    TaskModel(
-        title: 'Wrauytuyt',
-       // data:  DateTime.parse('Apr 22, 2021'),
-        data:  DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
-        note: 'The Templeton brothers — Tim and his Boss Baby little bro '
-            'Ted — have become adults and drifted away from each other.',
-        isDone:false),
-  ];*/
 
   TaskDataProvider() {
     load();
@@ -129,7 +41,7 @@ class TaskDataProvider extends ChangeNotifier {
     if (!Hive.isAdapterRegistered(0)) {
       Hive.registerAdapter(TaskModelAdapter());
     }
-    final box = await Hive.openBox<TaskModel>('tasks');
+    final box = await Hive.openBox<TaskModel>('tasks2');
     // _tasks = box.values.toList();
     // notifyListeners();
     _readTasksFromHive(box);
@@ -140,7 +52,7 @@ class TaskDataProvider extends ChangeNotifier {
     if (!Hive.isAdapterRegistered(0)) {
       Hive.registerAdapter(TaskModelAdapter());
     }
-    final box = await Hive.openBox<TaskModel>('tasks');
+    final box = await Hive.openBox<TaskModel>('tasks2');
     // _tasks = box.values.toList();
     // notifyListeners();
     _readTasksFromHive(box);
@@ -151,7 +63,7 @@ class TaskDataProvider extends ChangeNotifier {
     if (!Hive.isAdapterRegistered(0)) {
       Hive.registerAdapter(TaskModelAdapter());
     }
-    final box = await Hive.openBox<TaskModel>('tasks');
+    final box = await Hive.openBox<TaskModel>('tasks2');
 
     final index = await box.get(task);
     //final index = await box.;
@@ -163,14 +75,15 @@ class TaskDataProvider extends ChangeNotifier {
     if (!Hive.isAdapterRegistered(0)) {
       Hive.registerAdapter(TaskModelAdapter());
     }
-    final box = await Hive.openBox<TaskModel>('tasks');
+    final box = await Hive.openBox<TaskModel>('tasks2');
 
     //screen synchronized with box,
     // knowing index of element of screen we can get index of element of Hive
     final key = await box.keyAt(index);
+    //print("hiveKeyTaskbyIndex: $key");
 
     //print("Task at index $index : key at Hive $key");
-    notifyListeners();
+    //notifyListeners();
     return key;
   }
 
@@ -178,7 +91,7 @@ class TaskDataProvider extends ChangeNotifier {
     if (!Hive.isAdapterRegistered(0)) {
       Hive.registerAdapter(TaskModelAdapter());
     }
-    final box = await Hive.openBox<TaskModel>('tasks');
+    final box = await Hive.openBox<TaskModel>('tasks2');
 
     final task = await box.getAt(index);
     //final index = await box.;
@@ -190,7 +103,7 @@ class TaskDataProvider extends ChangeNotifier {
     if (!Hive.isAdapterRegistered(0)) {
       Hive.registerAdapter(TaskModelAdapter());
     }
-    final box = await Hive.openBox<TaskModel>('tasks');
+    final box = await Hive.openBox<TaskModel>('tasks2');
 
     final task = await box.get(key);
     //final index = await box.;
@@ -203,7 +116,7 @@ class TaskDataProvider extends ChangeNotifier {
     if (!Hive.isAdapterRegistered(0)) {
       Hive.registerAdapter(TaskModelAdapter());
     }
-    final box = await Hive.openBox<TaskModel>('tasks');
+    final box = await Hive.openBox<TaskModel>('tasks2');
 
     var taskOld = await box.get(oldKey);
     print("TaskOld at keyOld $oldKey in Hive: $taskOld");
@@ -216,7 +129,7 @@ class TaskDataProvider extends ChangeNotifier {
 
     // String temp = taskOld!.title;
     var temp =
-        TaskModel(title: "title", data: "data", note: "note", orderby: 0);
+        TaskModel(title: "title", data: "data", note: "note", id: 0, orderby: 0);
     temp.copy(taskOld!);
     print("taskOld: $taskOld");
     //taskOld.title = taskNew!.title;
@@ -233,36 +146,41 @@ class TaskDataProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addTask1(String title, String data, String note, int id) async {
-    //final task = TaskModel(title: title, data: data, note: note, subtasks: <SubtaskModel>[]);
-    final task = TaskModel(
-        title: title, data: data, note: note, orderby: id, isDone: false);
-    //_tasks.add(task);
-
-    if (!Hive.isAdapterRegistered(0)) {
-      Hive.registerAdapter(TaskModelAdapter());
-    }
-    final box = await Hive.openBox<TaskModel>('tasks');
-    final index = await box.add(task);
-    print("Added task to index: $index");
-
-    // to update
-    notifyListeners();
-  }
+  // void addTask1(String title, String data, String note, int id) async {
+  //   //final task = TaskModel(title: title, data: data, note: note, subtasks: <SubtaskModel>[]);
+  //   final task = TaskModel(
+  //       title: title, data: data, note: note, orderby: id, isDone: false);
+  //   //_tasks.add(task);
+  //
+  //   if (!Hive.isAdapterRegistered(0)) {
+  //     Hive.registerAdapter(TaskModelAdapter());
+  //   }
+  //   final box = await Hive.openBox<TaskModel>('tasks1');
+  //   final index = await box.add(task);
+  //   print("Added task to index: $index");
+  //
+  //   // to update
+  //   notifyListeners();
+  // }
 
   void addTask(String title, String data, String note) async {
     //final task = TaskModel(title: title, data: data, note: note, subtasks: <SubtaskModel>[]);
     int l = _tasks.length;
     final task = TaskModel(
-        title: title, data: data, note: note, orderby: l + 1, isDone: false);
+        title: title, data: data, note: note, orderby: l + 1, id: 0, isDone: false);
     //_tasks.add(task);
 
     if (!Hive.isAdapterRegistered(0)) {
       Hive.registerAdapter(TaskModelAdapter());
     }
-    final box = await Hive.openBox<TaskModel>('tasks');
+    final box = await Hive.openBox<TaskModel>('tasks2');
     final index = await box.add(task);
     print("Added task to index: $index");
+    //TODO
+    box.compact();
+    TaskModel? taskModel = box.get(index);
+    taskModel!.id = index;
+    taskModel.save();
 
     // to update
     notifyListeners();
@@ -288,7 +206,7 @@ class TaskDataProvider extends ChangeNotifier {
     if (!Hive.isAdapterRegistered(1)) {
       Hive.registerAdapter(TaskModelAdapter());
     }
-    final box = await Hive.openBox<TaskModel>('tasks');
+    final box = await Hive.openBox<TaskModel>('tasks2');
 
     //await box.deleteAt(index)
 
@@ -300,7 +218,7 @@ class TaskDataProvider extends ChangeNotifier {
     if (!Hive.isAdapterRegistered(0)) {
       Hive.registerAdapter(TaskModelAdapter());
     }
-    final box = await Hive.openBox<TaskModel>('tasks');
+    final box = await Hive.openBox<TaskModel>('tasks2');
     //-------------
     final index = await box.get(task);
     print("deleted index: $index");

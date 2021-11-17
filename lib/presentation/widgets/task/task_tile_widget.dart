@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:memofy/data/dataproviders/task_data/task_data.dart';
 import 'package:memofy/models/task/task_model.dart';
+import 'package:memofy/presentation/screens/subtasks_list/subtasks_list_screen.dart';
 import 'package:memofy/presentation/widgets/slidable/item_slidable_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -10,19 +11,34 @@ class TaskTileWidget extends StatelessWidget {
     Key? key,
     required this.task,
     required this.index,
-    required this.onTaskTap,
+    //required this.onTaskTap,
   }) : super(key: key);
 
   final TaskModel task;//????
   final int index;
-  final Function onTaskTap;
+  //final Function onTaskTap;
+
+
 
   @override
   Widget build(BuildContext context) {
-    return slidableTile(context, index, task);
+
+    Future<int> taskKey(BuildContext context, int index){
+      final key = Provider.of<TaskDataProvider>(context, listen: false).hiveKeyTaskbyIndex(index);
+      return key;
+    }
+
+    void onTaskTap(int index) {
+      Navigator.of(context).pushNamed(
+        SubtasksListScreen.id,
+        arguments: index,
+      );
+    }
+
+    return slidableTile(context, index, task, onTaskTap, taskKey);
   }
 
-  Widget slidableTile(BuildContext context, int index, TaskModel task) =>
+  Widget slidableTile(BuildContext context, int index, TaskModel task, Function onTaskTap, Function taskKey) =>
       Padding(
         padding: const EdgeInsets.all(5.0),
         child: Slidable(
@@ -144,7 +160,12 @@ class TaskTileWidget extends StatelessWidget {
                 ],
               ),
             ),
-            onTap: () => onTaskTap(task),
+            //onTap: () => onTaskTap(task),
+            onTap: () async{
+              final keyTask = await taskKey(context, index);
+              onTaskTap(keyTask);
+             // onTaskTap(index);
+            }
           ),
         ),
       );

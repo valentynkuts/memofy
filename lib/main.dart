@@ -25,7 +25,9 @@ void main() async{
 
   Hive.registerAdapter(TaskModelAdapter());
   Hive.registerAdapter(SubtaskModelAdapter());
-  await Hive.openBox<TaskModel>('tasks');
+
+  //TODO box  tasks   tasks1
+  await Hive.openBox<TaskModel>('tasks2');
   await Hive.openBox<SubtaskModel>('subtasks');
 
   runApp(MyApp());
@@ -68,15 +70,15 @@ class MyApp extends StatelessWidget {
           TasksListScreen.id : (context) => TasksListScreen(),
           AddTaskScreen.id : (context) => AddTaskScreen(),
           SubtasksListScreen.id : (context) {
-            // final arguments = ModalRoute.of(context)?.settings.arguments;
-            // if (arguments is int) {
-            //   return SubtasksListScreen(index: arguments);
-            // } else {
-            //   return SubtasksListScreen(index: 0);
-            // }
-
             final arguments = ModalRoute.of(context)?.settings.arguments;
-              return SubtasksListScreen(taskModel: arguments as TaskModel);
+            if (arguments is int) {
+              return SubtasksListScreen(index: arguments);
+            } else {
+              return SubtasksListScreen(index: 0);
+            }
+
+            // final arguments = ModalRoute.of(context)?.settings.arguments;
+            //   return SubtasksListScreen(taskModel: arguments as TaskModel);
 
           },
           AddSubtaskScreen.id : (context) => AddSubtaskScreen(),

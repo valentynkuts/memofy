@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:memofy/data/dataproviders/task_data/task_data.dart';
+import 'package:memofy/models/task/task_model.dart';
 import 'package:memofy/presentation/screens/subtasks_list/subtasks_list_screen.dart';
 import 'package:memofy/presentation/widgets/task/task_tile_widget.dart';
 import 'package:provider/provider.dart';
 
 class TasksListWidget extends StatelessWidget {
-  int hiveIndexTask = 0;
+  //int hiveIndexTask = 0;
   TasksListWidget({Key? key}) : super(key: key);
 
   @override
@@ -51,15 +52,18 @@ class TasksListWidget extends StatelessWidget {
               },
               itemBuilder: (BuildContext context, int index) {
                 final task = taskData.tasks[index];
-                task.orderby = index;
-                task.save();
+                if(task.orderby != index){
+                  task.orderby = index;
+                  task.save();
+                }
+
                 //int hiveIndexTask = 0;
                 //final hiveIndexTask = taskData.hiveKeyTaskbyIndex(index) as int;
                 //taskData.hiveKeyTaskbyIndex(index).then((value) {hiveIndexTask = value;});
                 return TaskTileWidget(
                   key: ValueKey(task),
                   task: task,
-                  index: index,
+                  taskKey: task.id,
                   //onTaskTap: _onTaskTap,
                 );
               },

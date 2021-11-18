@@ -10,12 +10,12 @@ class TaskTileWidget extends StatelessWidget {
   const TaskTileWidget({
     Key? key,
     required this.task,
-    required this.index,
+    required this.taskKey,
     //required this.onTaskTap,
   }) : super(key: key);
 
   final TaskModel task;//????
-  final int index;
+  final String taskKey;
   //final Function onTaskTap;
 
 
@@ -23,22 +23,22 @@ class TaskTileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    Future<int> taskKey(BuildContext context, int index){
-      final key = Provider.of<TaskDataProvider>(context, listen: false).hiveKeyTaskbyIndex(index);
-      return key;
-    }
+    // Future<int> taskKey(BuildContext context, int index){
+    //   final key = Provider.of<TaskDataProvider>(context, listen: false).hiveKeyTaskbyIndex(index);
+    //   return key;
+    // }
 
-    void onTaskTap(int index) {
+    void onTaskTap(String key) {
       Navigator.of(context).pushNamed(
         SubtasksListScreen.id,
-        arguments: index,
+        arguments: key,
       );
     }
 
-    return slidableTile(context, index, task, onTaskTap, taskKey);
+    return slidableTile(context, taskKey, task, onTaskTap);
   }
 
-  Widget slidableTile(BuildContext context, int index, TaskModel task, Function onTaskTap, Function taskKey) =>
+  Widget slidableTile(BuildContext context, String taskKey, TaskModel task, Function onTaskTap) =>
       Padding(
         padding: const EdgeInsets.all(5.0),
         child: Slidable(
@@ -162,8 +162,8 @@ class TaskTileWidget extends StatelessWidget {
             ),
             //onTap: () => onTaskTap(task),
             onTap: () async{
-              final keyTask = await taskKey(context, index);
-              onTaskTap(keyTask);
+              //final keyTask = await taskKey(context, index);
+              onTaskTap(taskKey);
              // onTaskTap(index);
             }
           ),

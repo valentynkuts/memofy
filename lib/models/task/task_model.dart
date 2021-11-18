@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:memofy/models/subtask/subtask_model.dart';
+//import 'package:memofy/models/subtask/subtask_model.dart';
 
 part 'task_model.g.dart';
 //TaskModelAdapter to use TaskModel as type in the Hive
@@ -19,14 +19,11 @@ class TaskModel extends HiveObject {
   @HiveField(3)
   bool isDone;
 
-  @HiveField(4)
-  HiveList<SubtaskModel>? subtasks;
-
   @HiveField(5)
   int orderby;
 
   @HiveField(6)
-  int id;
+  String id;
 
   //int? get getid => id;
 
@@ -50,15 +47,15 @@ class TaskModel extends HiveObject {
     return 'TaskModel{title: $title, data: $data';
   }
 
-  void copy(TaskModel t) {
-    this.title = t.title;
-    this.data = t.data;
-    this.note = t.note;
-    this.isDone = t.isDone;
-  }
+  // void copy(TaskModel t) {
+  //   this.title = t.title;
+  //   this.data = t.data;
+  //   this.note = t.note;
+  //   this.isDone = t.isDone;
+  // }
 
-  void addSubtask(Box<TaskModel> box, SubtaskModel subtask) {
-    subtasks ??= HiveList(box);
-    subtasks?.add(subtask);
-  }
+  // void addSubtask(Box<TaskModel> box, SubtaskModel subtask) {
+  //   subtasks ??= HiveList(box);
+  //   subtasks?.add(subtask);
+  // }
 }

@@ -21,15 +21,15 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
       data: fields[1] as String,
       note: fields[2] as String,
       orderby: fields[5] as int,
-      id: fields[6] as int,
+      id: fields[6] as String,
       isDone: fields[3] as bool,
-    )..subtasks = (fields[4] as HiveList?)?.castHiveList();
+    );
   }
 
   @override
   void write(BinaryWriter writer, TaskModel obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
@@ -38,8 +38,6 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
       ..write(obj.note)
       ..writeByte(3)
       ..write(obj.isDone)
-      ..writeByte(4)
-      ..write(obj.subtasks)
       ..writeByte(5)
       ..write(obj.orderby)
       ..writeByte(6)

@@ -26,8 +26,8 @@ void main() async{
   Hive.registerAdapter(TaskModelAdapter());
   Hive.registerAdapter(SubtaskModelAdapter());
 
-  //TODO box  tasks   tasks1
-  await Hive.openBox<TaskModel>('tasks2');
+  //TODO box  tasks   tasks1 tasks2
+  //await Hive.openBox<TaskModel>('tasks3');
   await Hive.openBox<SubtaskModel>('subtasks');
 
   runApp(MyApp());
@@ -48,9 +48,6 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<AddTaskValidation>(
             create: (context) => AddTaskValidation(),
           ),
-          ChangeNotifierProvider<SubtaskDataProvider>(
-            create: (context) => SubtaskDataProvider(),
-          )
         ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -71,10 +68,10 @@ class MyApp extends StatelessWidget {
           AddTaskScreen.id : (context) => AddTaskScreen(),
           SubtasksListScreen.id : (context) {
             final arguments = ModalRoute.of(context)?.settings.arguments;
-            if (arguments is int) {
-              return SubtasksListScreen(index: arguments);
+            if (arguments is String) {
+              return SubtasksListScreen(keyTask: arguments);
             } else {
-              return SubtasksListScreen(index: 0);
+              return SubtasksListScreen(keyTask: "0");
             }
 
             // final arguments = ModalRoute.of(context)?.settings.arguments;

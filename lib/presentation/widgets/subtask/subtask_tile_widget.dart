@@ -39,9 +39,9 @@ class SubtaskTileWidget extends StatelessWidget {
               child: IconSlideAction(
                 color: Colors.red, //Colors.green,
                 onTap: () {
-                  final provider = Provider.of<TaskDataProvider>(context, listen: false);
+                  //final provider = Provider.of<TaskDataProvider>(context, listen: false);
 
-                  provider.removeSubtask(index, subtask);
+                  ////provider.removeSubtask(index, subtask);
                 },
                 caption: 'Delete', //'Edit',
                 icon: Icons.delete, //Icons.edit,
@@ -119,13 +119,13 @@ class SubtaskTileWidget extends StatelessWidget {
         ),
       );
 
-  void deleteSubtask(BuildContext context, int index, SubtaskModel subtask) {
-    final provider = Provider.of<TaskDataProvider>(context, listen: false);
-
-    provider.removeSubtask(index, subtask);
-
-    //Scaffold.of(context).re
-  }
+  // void deleteSubtask(BuildContext context, int index, SubtaskModel subtask) {
+  //   final provider = Provider.of<TaskDataProvider>(context, listen: false);
+  //
+  //   provider.removeSubtask(index, subtask);
+  //
+  //   //Scaffold.of(context).re
+  // }
 
 
 }

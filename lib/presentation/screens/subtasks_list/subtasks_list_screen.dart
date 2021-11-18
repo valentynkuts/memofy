@@ -9,13 +9,13 @@ import 'package:memofy/presentation/widgets/subtasks_list/subtasks_list_widget.d
 class SubtasksListScreen extends StatefulWidget {
   static const String id = 'subtasks_list_screen';
 
-  final int index;
+  final String keyTask;
 
   //TaskModel taskModel;
 
 
 
-  SubtasksListScreen({Key? key, required this.index}) : super(key: key);
+  SubtasksListScreen({Key? key, required this.keyTask}) : super(key: key);
   //SubtasksListScreen({Key? key, required this.taskModel}) : super(key: key);
 
   @override
@@ -50,7 +50,7 @@ class _SubtasksListScreenState extends State<SubtasksListScreen> {
     return Scaffold(
       appBar: AppBar(
         //title: Text('${widget.taskModel.title}'),
-        title: Text('${widget.index}'),
+        title: Text(widget.keyTask),
        // title: Text(_subtaskDataProvider == null ? "Ooops":'${_subtaskDataProvider!.task!.title}'),
         centerTitle: true,
       ),

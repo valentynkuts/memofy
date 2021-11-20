@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:memofy/data/dataproviders/subtask_configuration.dart';
 import 'package:memofy/data/dataproviders/subtask_data/subtask_data.dart';
 import 'package:memofy/presentation/screens/add_subtask/add_subtask_screen.dart';
 import 'package:memofy/presentation/screens/add_task/add_task_screen.dart';
@@ -48,6 +49,9 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<AddTaskValidation>(
             create: (context) => AddTaskValidation(),
           ),
+          // ChangeNotifierProvider<SubtaskDataProvider>(
+          //   create: (context) => SubtaskDataProvider(subtaskConfiguration: SubtaskConfiguration(taskKey: "",titleTask: "")),
+          // ),
         ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -67,18 +71,23 @@ class MyApp extends StatelessWidget {
           TasksListScreen.id : (context) => TasksListScreen(),
           AddTaskScreen.id : (context) => AddTaskScreen(),
           SubtasksListScreen.id : (context) {
-            final arguments = ModalRoute.of(context)?.settings.arguments;
-            if (arguments is String) {
-              return SubtasksListScreen(keyTask: arguments);
-            } else {
-              return SubtasksListScreen(keyTask: "0");
-            }
-
             // final arguments = ModalRoute.of(context)?.settings.arguments;
-            //   return SubtasksListScreen(taskModel: arguments as TaskModel);
+            // if (arguments is String) {
+            //   return SubtasksListScreen(keyTask: arguments);
+            // } else {
+            //   return SubtasksListScreen(keyTask: "0");
+            // }
+
+            final arguments = ModalRoute.of(context)?.settings.arguments;
+              return SubtasksListScreen(subtaskConfiguration: arguments as SubtaskConfiguration);
 
           },
-          AddSubtaskScreen.id : (context) => AddSubtaskScreen(),
+          AddSubtaskScreen.id : (context) {
+            final arguments = ModalRoute.of(context)?.settings.arguments;
+            //return AddSubtaskScreen(taskKey: arguments as String,);
+            //return AddSubtaskScreen(subtaskConfiguration: arguments as SubtaskConfiguration,);
+            return AddSubtaskScreen(subtasksListScreenConfig: arguments as SubtasksListScreenConfig,);
+          },
         },
       ),
     );

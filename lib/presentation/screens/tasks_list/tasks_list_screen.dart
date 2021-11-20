@@ -51,7 +51,7 @@ class _TasksListScreenState extends State<TasksListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('LISTS'),
+          title: Text('TASK LIST'),
           centerTitle: true,
         ),
         body: Stack(

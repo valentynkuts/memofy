@@ -12,12 +12,12 @@ class TasksListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    void _onTaskTap(int index) {
-      Navigator.of(context).pushNamed(
-        SubtasksListScreen.id,
-        arguments: index,
-      );
-    }
+    // void _onTaskTap(int index) {
+    //   Navigator.of(context).pushNamed(
+    //     SubtasksListScreen.id,
+    //     arguments: index,
+    //   );
+    // }
 
     return Consumer<TaskDataProvider>(builder: (context, taskData, child) {
       return taskData.tasks.isEmpty
@@ -63,7 +63,6 @@ class TasksListWidget extends StatelessWidget {
                 return TaskTileWidget(
                   key: ValueKey(task),
                   task: task,
-                  taskKey: task.id,
                   //onTaskTap: _onTaskTap,
                 );
               },

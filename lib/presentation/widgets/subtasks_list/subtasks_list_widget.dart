@@ -5,16 +5,20 @@ import 'package:memofy/presentation/widgets/subtask/subtask_tile_widget.dart';
 import 'package:provider/provider.dart';
 
 class SubtasksListWidget extends StatefulWidget {
-  int index;
+  //int index;
 
-  SubtasksListWidget({Key? key, required this.index}) : super(key: key);
+  //SubtaskDataProvider subtaskDatamodel;
+
+  //SubtasksListWidget({Key? key, required this.index}) : super(key: key);
+  //SubtasksListWidget({Key? key, required this.subtaskDatamodel}) : super(key: key);
+  SubtasksListWidget({Key? key}) : super(key: key);
 
   @override
   _SubtasksListWidgetState createState() => _SubtasksListWidgetState();
 }
 
 class _SubtasksListWidgetState extends State<SubtasksListWidget> {
-  SubtaskDataProvider? _subtaskDataProvider;
+  /*SubtaskDataProvider? _subtaskDataProvider;
   //Provider.of<SubtaskDataProvider>(context).;
   @override
   void didChangeDependencies() {
@@ -24,10 +28,11 @@ class _SubtasksListWidgetState extends State<SubtasksListWidget> {
     //   _subtaskDataProvider = SubtaskDataProvider(indexTask: widget.index);
     // }
   }
-
+*/
   @override
   Widget build(BuildContext context) {
     return Consumer<SubtaskDataProvider>(builder: (context, subtaskData, child) {
+      print(subtaskData.subtasks.toString());
       return subtaskData.subtasks.isEmpty
           ? Container(
               child: Center(
@@ -55,7 +60,6 @@ class _SubtasksListWidgetState extends State<SubtasksListWidget> {
                 return SubtaskTileWidget(
                   key: ValueKey(subtask),
                   subtask: subtask,
-                  index: widget.index,
                 );
 
               },

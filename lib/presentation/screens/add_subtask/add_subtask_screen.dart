@@ -1,45 +1,74 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:memofy/constants/constants.dart';
+import 'package:memofy/data/dataproviders/subtask_configuration.dart';
+import 'package:memofy/data/dataproviders/subtask_data/add_subtask_form_model.dart';
+import 'package:memofy/data/dataproviders/subtask_data/subtask_data.dart';
 import 'package:memofy/data/dataproviders/task_data/task_data.dart';
+import 'package:memofy/presentation/screens/subtasks_list/subtasks_list_screen.dart';
 import 'package:memofy/validation/add_task_validation.dart';
 import 'package:provider/provider.dart';
 
-class AddSubtaskScreen extends StatelessWidget {
+class AddSubtaskScreen extends StatefulWidget {
   static const String id = 'add_subtask_screen';
 
-  String description = ""; // field for input
+  //SubtaskConfiguration subtaskConfiguration;
+
+  SubtasksListScreenConfig subtasksListScreenConfig;
 
 
-  AddSubtaskScreen({Key? key}) : super(key: key);
-
-  //final _formKey = GlobalKey<FormState>();
+  //AddSubtaskScreen({Key? key, required this.subtaskConfiguration}) : super(key: key);
+  AddSubtaskScreen({Key? key, required this.subtasksListScreenConfig}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  State<AddSubtaskScreen> createState() => _AddSubtaskScreenState();
+}
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add Subtask'),
-      ),
-      body: Center(
-        child: Container(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                AddDescriptionInput(),
-                SizedBox(height: 10.0),
-              ],
+class _AddSubtaskScreenState extends State<AddSubtaskScreen> {
+
+  SubtaskDataProvider? _subtaskDatamodel;
+
+  @override
+  void initState() {
+    if(_subtaskDatamodel == null){
+      _subtaskDatamodel = widget.subtasksListScreenConfig.subtaskDataProvider;
+    }
+    super.initState();
+  }
+  String description = "";
+ // final model = widget.subtasksListScreenConfig.subtaskDataProvider;
+  @override
+  Widget build(BuildContext context) {
+    //final value = context.watch<SubtaskDataProvider>();
+
+    return ChangeNotifierProvider.value(
+      //create: (context) =>AddSubtaskFormModel(taskKey: taskKey),
+      //value: SubtaskDataProvider(subtaskConfiguration: widget.subtaskConfiguration),
+      value: _subtaskDatamodel,
+      //lazy: false,
+      child: Scaffold(
+        appBar: AppBar(
+          //title: Text("${subtaskConfiguration.taskKey} - Add Subtask"),
+          //title: Text("$taskKey"),
+        ),
+        body: Center(
+          child: Container(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  AddDescriptionInput(),
+                  SizedBox(height: 10.0),
+                ],
+              ),
             ),
           ),
         ),
+        floatingActionButton: submitButton(context),
       ),
-      floatingActionButton: submitButton(context),
     );
   }
-
-  //ok
+ // used
   Widget AddDescriptionInput() => TextField(
     //Widget AddTitleInput() =>  TextFormField(
     autofocus: true,
@@ -58,7 +87,7 @@ class AddSubtaskScreen extends StatelessWidget {
         hintText: 'Enter a Title'),
     onChanged: (value) {
       //validationService.changeNewTitle(value);
-      //newTitle =  value;
+      description =  value;
     },
   );
 
@@ -87,11 +116,13 @@ class AddSubtaskScreen extends StatelessWidget {
     backgroundColor: Colors.green,
     icon: Icon(Icons.done),
     label: Text('Submit'),
-    onPressed: () {},
-    // onPressed: () {
-    //   Provider.of<TaskDataProvider>(context, listen: false)
-    //       .addTask(newTitle!, DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()), newNote!);
-    //   Navigator.pop(context);
-    // },
+    //onPressed: () {},
+     onPressed: () {
+      //context.watch<AddSubtaskFormModel>().addSubtask(description);
+      //Provider.of<AddSubtaskFormModel>(context, listen: false).addSubtask(description);
+     // Provider.of<SubtaskDataProvider>(context, listen: false).addSubtask(description);
+      _subtaskDatamodel!.addSubtask(description);
+      Navigator.pop(context);
+    },
   );
 }

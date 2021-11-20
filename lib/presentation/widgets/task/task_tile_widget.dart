@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:memofy/data/dataproviders/subtask_configuration.dart';
 import 'package:memofy/data/dataproviders/task_data/task_data.dart';
 import 'package:memofy/models/task/task_model.dart';
 import 'package:memofy/presentation/screens/subtasks_list/subtasks_list_screen.dart';
@@ -10,12 +11,12 @@ class TaskTileWidget extends StatelessWidget {
   const TaskTileWidget({
     Key? key,
     required this.task,
-    required this.taskKey,
+   // required this.taskKey,
     //required this.onTaskTap,
   }) : super(key: key);
 
   final TaskModel task;//????
-  final String taskKey;
+  //final String taskKey;
   //final Function onTaskTap;
 
 
@@ -27,18 +28,19 @@ class TaskTileWidget extends StatelessWidget {
     //   final key = Provider.of<TaskDataProvider>(context, listen: false).hiveKeyTaskbyIndex(index);
     //   return key;
     // }
+    final subtaskConfiguration = SubtaskConfiguration(taskKey: task.id, titleTask: task.title);
 
-    void onTaskTap(String key) {
+    void onTaskTap(SubtaskConfiguration subtaskConfiguration) {
       Navigator.of(context).pushNamed(
         SubtasksListScreen.id,
-        arguments: key,
+        arguments: subtaskConfiguration,
       );
     }
 
-    return slidableTile(context, taskKey, task, onTaskTap);
+    return slidableTile(context, subtaskConfiguration, onTaskTap);
   }
 
-  Widget slidableTile(BuildContext context, String taskKey, TaskModel task, Function onTaskTap) =>
+  Widget slidableTile(BuildContext context, SubtaskConfiguration subtaskConfiguration, Function onTaskTap) =>
       Padding(
         padding: const EdgeInsets.all(5.0),
         child: Slidable(
@@ -160,12 +162,11 @@ class TaskTileWidget extends StatelessWidget {
                 ],
               ),
             ),
-            //onTap: () => onTaskTap(task),
-            onTap: () async{
+            onTap: () => onTaskTap(subtaskConfiguration),
               //final keyTask = await taskKey(context, index);
-              onTaskTap(taskKey);
+
              // onTaskTap(index);
-            }
+
           ),
         ),
       );

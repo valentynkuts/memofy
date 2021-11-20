@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
+import 'package:memofy/data/dataproviders/subtask_configuration.dart';
 import 'package:memofy/models/subtask/subtask_model.dart';
 import 'package:memofy/models/task/task_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -9,13 +10,14 @@ import '../box_manager.dart';
 // logic
 class SubtaskDataProvider extends ChangeNotifier {
 
-  String taskKey;
+  //String taskKey;
+  SubtaskConfiguration subtaskConfiguration;
   late final Future<Box<SubtaskModel>> _box;
   //TaskModel? _task;
 
   //TaskModel? get task => _task;
 
-  SubtaskDataProvider({required this.taskKey}) {
+  SubtaskDataProvider({required this.subtaskConfiguration}) {
     load();
   }
 
@@ -59,8 +61,9 @@ class SubtaskDataProvider extends ChangeNotifier {
     // _readSubtasksFromHive();
     // boxSubtask.listenable().addListener(() => _readSubtasksFromHive());
 
-
+     final taskKey = subtaskConfiguration.taskKey;
     _box = BoxManager().openSubtaskBox(taskKey);
+    print("load() -> $taskKey box - $_box");
 
     // _tasks = box.values.toList();
     // notifyListeners();
@@ -104,7 +107,7 @@ class SubtaskDataProvider extends ChangeNotifier {
     //   Hive.registerAdapter(TaskModelAdapter());
     // }
     // final box = await Hive.openBox<TaskModel>('tasks2');
-    //final box = await _box;
+    //final box = await _box; //TODO
     //-------------
     //final index = await box.get(task);
     //print("deleted index: $index");

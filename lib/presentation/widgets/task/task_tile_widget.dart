@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:memofy/data/dataproviders/subtask_configuration.dart';
-import 'package:memofy/data/dataproviders/task_data/task_data.dart';
+import 'package:memofy/data/dataproviders/task_data/task_data_model.dart';
 import 'package:memofy/models/task/task_model.dart';
 import 'package:memofy/presentation/screens/subtasks_list/subtasks_list_screen.dart';
 import 'package:memofy/presentation/widgets/slidable/item_slidable_widget.dart';
@@ -72,7 +72,7 @@ class TaskTileWidget extends StatelessWidget {
                 color: Colors.red, //Colors.green,
                 onTap: () {
                   final provider =
-                  Provider.of<TaskDataProvider>(context, listen: false);
+                  Provider.of<TaskDataModel>(context, listen: false);
 
                   provider.removeTask(task);
                   //provider.removeTask(index);
@@ -117,6 +117,7 @@ class TaskTileWidget extends StatelessWidget {
                   ]),
               clipBehavior: Clip.hardEdge,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   //SizedBox(height: 10.0,),
                   ListTile(
@@ -153,7 +154,7 @@ class TaskTileWidget extends StatelessWidget {
                     task.note,
                     style: TextStyle(
                       //fontFamily: 'Pacifico',
-                      fontSize: 17.0,
+                      fontSize: 20.0,
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),

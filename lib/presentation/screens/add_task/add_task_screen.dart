@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:memofy/constants/constants.dart';
-import 'package:memofy/data/dataproviders/task_data/task_data.dart';
+import 'package:memofy/data/dataproviders/task_data/task_data_model.dart';
 import 'package:memofy/validation/add_task_validation.dart';
 import 'package:provider/provider.dart';
 
@@ -102,7 +102,7 @@ class AddTaskScreen extends StatelessWidget {
             : () {
                 newTitle = validationService.newTitle.value!;
                // int id = Provider.of<TaskDataProvider>(context).tasks.length;
-                Provider.of<TaskDataProvider>(context, listen: false).addTask(
+                Provider.of<TaskDataModel>(context, listen: false).addTask(
                     newTitle,
                     DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
                     newNote);

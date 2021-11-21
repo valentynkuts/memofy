@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:memofy/constants/constants.dart';
 import 'package:memofy/data/dataproviders/subtask_configuration.dart';
-import 'package:memofy/data/dataproviders/subtask_data/subtask_data.dart';
+import 'package:memofy/data/dataproviders/subtask_data/subtask_data_model.dart';
+import 'package:memofy/data/dataproviders/task_data/task_data_model.dart';
 import 'package:memofy/models/task/task_model.dart';
 import 'package:memofy/presentation/screens/add_subtask/add_subtask_screen.dart';
 import 'package:memofy/presentation/widgets/subtasks_list/subtasks_list_widget.dart';
 import 'package:provider/provider.dart';
 
-class SubtasksListScreenConfig{
-
-  final SubtaskConfiguration subtaskConfiguration;
-  final SubtaskDataProvider? subtaskDataProvider;
-
-  SubtasksListScreenConfig({required this.subtaskDataProvider, required this.subtaskConfiguration});
-
-
-}
+// class SubtasksListScreenConfig{
+//
+//   final SubtaskConfiguration subtaskConfiguration;
+//   final SubtaskDataProvider? subtaskDataProvider;
+//
+//   SubtasksListScreenConfig({required this.subtaskDataProvider, required this.subtaskConfiguration});
+//
+//
+// }
 
 class SubtasksListScreen extends StatefulWidget {
   static const String id = 'subtasks_list_screen';
@@ -38,14 +39,16 @@ class _SubtasksListScreenState extends State<SubtasksListScreen> {
 
 
  // final model = SubtaskDataProvider(subtaskConfiguration: widget.subtaskConfiguration);
-  SubtaskDataProvider? _subtaskDatamodel;
+  SubtaskDataModel? _subtaskDatamodel;
   //Provider.of<SubtaskDataProvider>(context).;
+
+  //final _searchController = TextEditingController(); //todo
 
 
   @override
   void initState() {
     if(_subtaskDatamodel == null){
-      _subtaskDatamodel = SubtaskDataProvider(subtaskConfiguration: widget.subtaskConfiguration);
+      _subtaskDatamodel = SubtaskDataModel(subtaskConfiguration: widget.subtaskConfiguration);
     }
     super.initState();
   }
@@ -89,8 +92,9 @@ class _SubtasksListScreenState extends State<SubtasksListScreen> {
                           borderRadius: kBorderRadius,
                         ),
                       ),
-                      //controller: _searchController,
+                     // controller: _searchController,  //todo
                       onChanged: (query) {
+                       //// Provider.of<TaskDataModel>(context, listen: false).searchTask(query); //todo
                         //_searchMovies1(query);
 
                         // if (query.isNotEmpty) {
@@ -119,11 +123,11 @@ class _SubtasksListScreenState extends State<SubtasksListScreen> {
                 print("Add subtask");
                // Navigator.of(context).pushNamed(AddSubtaskScreen.id);
                 //final keyTask = widget.subtaskConfiguration.taskKey;
-                final subtaskConf = widget.subtaskConfiguration;
-                final subtaskListConf = SubtasksListScreenConfig(subtaskConfiguration: subtaskConf, subtaskDataProvider: _subtaskDatamodel);
+                //final subtaskConf = widget.subtaskConfiguration;
+                //final subtaskListConf = SubtasksListScreenConfig(subtaskConfiguration: subtaskConf, subtaskDataProvider: _subtaskDatamodel);
                 Navigator.of(context).pushNamed(
                     AddSubtaskScreen.id,
-                    arguments: subtaskListConf,);
+                    arguments: _subtaskDatamodel,);
 
                 //context.watch<Example>()
               },

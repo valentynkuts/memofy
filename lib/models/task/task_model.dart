@@ -25,9 +25,6 @@ class TaskModel extends HiveObject {
   @HiveField(6)
   String id;
 
-  //int? get getid => id;
-
-  //TaskModel(this.title,this.data,this.note,this.isDone);
   TaskModel(
       {required this.title,
       required this.data,
@@ -36,26 +33,10 @@ class TaskModel extends HiveObject {
       required this.id,
       this.isDone = false});
 
-// TaskModel({required this.title,
-  //   required this.data,
-  //   required this.note,
-  //   this.isDone = false, HiveList<SubtaskModel>? subtasks});
-
   @override
   String toString() {
     //return 'TaskModel{title: $title, data: $data, note: $note, isDone: $isDone, subtasks: $subtasks}';
     return 'TaskModel{title: $title, data: $data';
   }
 
-  // void copy(TaskModel t) {
-  //   this.title = t.title;
-  //   this.data = t.data;
-  //   this.note = t.note;
-  //   this.isDone = t.isDone;
-  // }
-
-  // void addSubtask(Box<TaskModel> box, SubtaskModel subtask) {
-  //   subtasks ??= HiveList(box);
-  //   subtasks?.add(subtask);
-  // }
 }

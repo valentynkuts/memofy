@@ -3,8 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:memofy/constants/constants.dart';
 import 'package:memofy/data/dataproviders/subtask_configuration.dart';
 import 'package:memofy/data/dataproviders/subtask_data/add_subtask_form_model.dart';
-import 'package:memofy/data/dataproviders/subtask_data/subtask_data.dart';
-import 'package:memofy/data/dataproviders/task_data/task_data.dart';
+import 'package:memofy/data/dataproviders/subtask_data/subtask_data_model.dart';
+import 'package:memofy/data/dataproviders/task_data/task_data_model.dart';
 import 'package:memofy/presentation/screens/subtasks_list/subtasks_list_screen.dart';
 import 'package:memofy/validation/add_task_validation.dart';
 import 'package:provider/provider.dart';
@@ -12,13 +12,14 @@ import 'package:provider/provider.dart';
 class AddSubtaskScreen extends StatefulWidget {
   static const String id = 'add_subtask_screen';
 
-  //SubtaskConfiguration subtaskConfiguration;
+  SubtaskDataModel subtaskDataProvider;
 
-  SubtasksListScreenConfig subtasksListScreenConfig;
+  //SubtasksListScreenConfig subtasksListScreenConfig;
 
 
   //AddSubtaskScreen({Key? key, required this.subtaskConfiguration}) : super(key: key);
-  AddSubtaskScreen({Key? key, required this.subtasksListScreenConfig}) : super(key: key);
+  //AddSubtaskScreen({Key? key, required this.subtasksListScreenConfig}) : super(key: key);
+  AddSubtaskScreen({Key? key, required this.subtaskDataProvider}) : super(key: key);
 
   @override
   State<AddSubtaskScreen> createState() => _AddSubtaskScreenState();
@@ -26,12 +27,12 @@ class AddSubtaskScreen extends StatefulWidget {
 
 class _AddSubtaskScreenState extends State<AddSubtaskScreen> {
 
-  SubtaskDataProvider? _subtaskDatamodel;
+  SubtaskDataModel? _subtaskDatamodel;
 
   @override
   void initState() {
     if(_subtaskDatamodel == null){
-      _subtaskDatamodel = widget.subtasksListScreenConfig.subtaskDataProvider;
+      _subtaskDatamodel = widget.subtaskDataProvider;
     }
     super.initState();
   }
@@ -48,7 +49,7 @@ class _AddSubtaskScreenState extends State<AddSubtaskScreen> {
       //lazy: false,
       child: Scaffold(
         appBar: AppBar(
-          //title: Text("${subtaskConfiguration.taskKey} - Add Subtask"),
+          title: Text("Add Subtask"),
           //title: Text("$taskKey"),
         ),
         body: Center(

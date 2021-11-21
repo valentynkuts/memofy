@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:memofy/data/dataproviders/task_data/task_data.dart';
+import 'package:memofy/data/dataproviders/task_data/task_data_model.dart';
 import 'package:memofy/models/task/task_model.dart';
 import 'package:memofy/presentation/screens/subtasks_list/subtasks_list_screen.dart';
 import 'package:memofy/presentation/widgets/task/task_tile_widget.dart';
@@ -19,7 +19,7 @@ class TasksListWidget extends StatelessWidget {
     //   );
     // }
 
-    return Consumer<TaskDataProvider>(builder: (context, taskData, child) {
+    return Consumer<TaskDataModel>(builder: (context, taskData, child) {
       return taskData.tasks.isEmpty
           ? Container(
               child: Center(

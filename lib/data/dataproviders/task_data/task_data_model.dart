@@ -34,9 +34,13 @@ class TaskDataModel extends ChangeNotifier {
 
   Future<void> _readTasksFromHive() async{
     //(await _box) - waiting for the box to open
-    _tasks = (await _box).values.toList();
-    _tasks.sort((a, b) => a.orderby.compareTo(b.orderby));
-    _temp = _tasks;
+    // _tasks = (await _box).values.toList();
+    // _tasks.sort((a, b) => a.orderby.compareTo(b.orderby));
+    // _temp = _tasks;
+
+    _temp = (await _box).values.toList();
+    _temp.sort((a, b) => a.orderby.compareTo(b.orderby));
+    _tasks = _temp;
     notifyListeners();
   }
   // open box
@@ -44,8 +48,9 @@ class TaskDataModel extends ChangeNotifier {
     _box = BoxManager().openTaskBox();
     await _readTasksFromHive();
     _listenableBox = (await _box).listenable();
-    //(await _box).listenable().addListener(() => _readTasksFromHive());
-    _listenableBox?.addListener(() => _readTasksFromHive());
+
+    /////(await _box).listenable().addListener(() => _readTasksFromHive());
+    //_listenableBox?.addListener(() => _readTasksFromHive()); //ok
   }
 
   Future<int> hiveKeyTaskbyIndex(int index) async {
@@ -79,24 +84,19 @@ class TaskDataModel extends ChangeNotifier {
       _tasks = _temp.where((TaskModel task) {
         return task.title.toLowerCase().contains(query.toLowerCase());
       }).toList();
+      print("1- $_tasks");
     } else {
       _tasks = _temp;
+     // _tasks.map((task) => task.save());
+      print("2 - $_tasks");
     }
     notifyListeners();
   }
+ // TODO
+  Future<void> saveOrder()async{
+     _temp.map((task) => task.save());
+  }
 
-  // void _searchMovies1(String query) {
-  //   // final query = _searchController.text;
-  //   print(query);
-  //   if (query.isNotEmpty) {
-  //     _fillteredMovies = _movies.where((Movie movie) {
-  //       return movie.title.toLowerCase().contains(query.toLowerCase());
-  //     }).toList();
-  //   } else {
-  //     _fillteredMovies = _movies;
-  //   }
-  //   //setState(() {});
-  // }
 
   Future<void> removeTask(TaskModel task) async {
 
@@ -122,6 +122,10 @@ class TaskDataModel extends ChangeNotifier {
   // close box which was open in load()
   @override
   Future<void> dispose() async{
+    
+    //_temp.map((task) => task.save());
+   // _tasks.map((task) => task.save());
+    //await saveOrder();
     _listenableBox?.removeListener(_readTasksFromHive);
     await BoxManager().closeBox((await _box));
     super.dispose();

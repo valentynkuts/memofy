@@ -75,16 +75,6 @@ class _TasksListScreenState extends State<TasksListScreen> {
                   controller: _searchController,  //todo
                   onChanged: (query) {
                     Provider.of<TaskDataModel>(context, listen: false).searchTask(query); //todo
-                    //_searchMovies1(query);
-
-                    // if (query.isNotEmpty) {
-                    //   _fillteredMovies = _movies.where((Movie movie) {
-                    //     return movie.title.toLowerCase().contains(query.toLowerCase());
-                    //   }).toList();
-                    // } else {
-                    //   _fillteredMovies = _movies;
-                    // }
-                    // print(query);
                   },
                 ),
               )

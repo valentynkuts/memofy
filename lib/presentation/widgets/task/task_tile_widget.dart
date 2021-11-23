@@ -4,7 +4,7 @@ import 'package:memofy/data/dataproviders/subtask_configuration.dart';
 import 'package:memofy/data/dataproviders/task_data/task_data_model.dart';
 import 'package:memofy/models/task/task_model.dart';
 import 'package:memofy/presentation/screens/subtasks_list/subtasks_list_screen.dart';
-import 'package:memofy/presentation/widgets/slidable/item_slidable_widget.dart';
+//import 'package:memofy/presentation/widgets/slidable/item_slidable_widget.dart';
 import 'package:provider/provider.dart';
 
 class TaskTileWidget extends StatelessWidget {
@@ -23,6 +23,7 @@ class TaskTileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     
 
     // Future<int> taskKey(BuildContext context, int index){
     //   final key = Provider.of<TaskDataProvider>(context, listen: false).hiveKeyTaskbyIndex(index);

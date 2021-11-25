@@ -1,28 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:memofy/data/dataproviders/task_data/task_data.dart';
+import 'package:memofy/data/dataproviders/subtask_configuration.dart';
+import 'package:memofy/data/dataproviders/task_data/task_data_model.dart';
 import 'package:memofy/models/task/task_model.dart';
-import 'package:memofy/presentation/widgets/slidable/item_slidable_widget.dart';
+import 'package:memofy/presentation/screens/subtasks_list/subtasks_list_screen.dart';
+//import 'package:memofy/presentation/widgets/slidable/item_slidable_widget.dart';
 import 'package:provider/provider.dart';
 
 class TaskTileWidget extends StatelessWidget {
   const TaskTileWidget({
     Key? key,
     required this.task,
-    required this.index,
-    required this.onTaskTap,
+   // required this.taskKey,
+    //required this.onTaskTap,
   }) : super(key: key);
 
-  final TaskModel task;
-  final int index;
-  final Function onTaskTap;
+  final TaskModel task;//????
+  //final String taskKey;
+  //final Function onTaskTap;
+
+
 
   @override
   Widget build(BuildContext context) {
-    return slidableTile(context, index, task);
+     
+
+    // Future<int> taskKey(BuildContext context, int index){
+    //   final key = Provider.of<TaskDataProvider>(context, listen: false).hiveKeyTaskbyIndex(index);
+    //   return key;
+    // }
+    final subtaskConfiguration = SubtaskConfiguration(taskKey: task.id, titleTask: task.title);
+
+    void onTaskTap(SubtaskConfiguration subtaskConfiguration) {
+      Navigator.of(context).pushNamed(
+        SubtasksListScreen.id,
+        arguments: subtaskConfiguration,
+      );
+    }
+
+    return slidableTile(context, subtaskConfiguration, onTaskTap);
   }
 
-  Widget slidableTile(BuildContext context, int index, TaskModel task) =>
+  Widget slidableTile(BuildContext context, SubtaskConfiguration subtaskConfiguration, Function onTaskTap) =>
       Padding(
         padding: const EdgeInsets.all(5.0),
         child: Slidable(
@@ -54,9 +73,12 @@ class TaskTileWidget extends StatelessWidget {
                 color: Colors.red, //Colors.green,
                 onTap: () {
                   final provider =
-                  Provider.of<TaskDataProvider>(context, listen: false);
+                  Provider.of<TaskDataModel>(context, listen: false);
 
                   provider.removeTask(task);
+                  //provider.removeTask(index);
+                 //print("TaskTileWidget index: $index");
+                 // print(task);
                 },
                 caption: 'Delete', //'Edit',
                 icon: Icons.delete, //Icons.edit,
@@ -96,6 +118,7 @@ class TaskTileWidget extends StatelessWidget {
                   ]),
               clipBehavior: Clip.hardEdge,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   //SizedBox(height: 10.0,),
                   ListTile(
@@ -132,7 +155,7 @@ class TaskTileWidget extends StatelessWidget {
                     task.note,
                     style: TextStyle(
                       //fontFamily: 'Pacifico',
-                      fontSize: 17.0,
+                      fontSize: 20.0,
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
@@ -141,7 +164,11 @@ class TaskTileWidget extends StatelessWidget {
                 ],
               ),
             ),
-            onTap: () => onTaskTap(index),
+            onTap: () => onTaskTap(subtaskConfiguration),
+              //final keyTask = await taskKey(context, index);
+
+             // onTaskTap(index);
+
           ),
         ),
       );

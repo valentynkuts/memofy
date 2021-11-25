@@ -1,22 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:memofy/data/dataproviders/task_data/task_data.dart';
+import 'package:memofy/data/dataproviders/subtask_data/subtask_data_model.dart';
+import 'package:memofy/data/dataproviders/task_data/task_data_model.dart';
 import 'package:memofy/presentation/widgets/subtask/subtask_tile_widget.dart';
 import 'package:provider/provider.dart';
 
 class SubtasksListWidget extends StatefulWidget {
-  int index;
+  //int index;
 
-  SubtasksListWidget({Key? key, required this.index}) : super(key: key);
+  //SubtaskDataProvider subtaskDatamodel;
+
+  //SubtasksListWidget({Key? key, required this.index}) : super(key: key);
+  //SubtasksListWidget({Key? key, required this.subtaskDatamodel}) : super(key: key);
+  SubtasksListWidget({Key? key}) : super(key: key);
 
   @override
   _SubtasksListWidgetState createState() => _SubtasksListWidgetState();
 }
 
 class _SubtasksListWidgetState extends State<SubtasksListWidget> {
+  /*SubtaskDataProvider? _subtaskDataProvider;
+  //Provider.of<SubtaskDataProvider>(context).;
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    // if(_subtaskDataProvider == null){
+    //   _subtaskDataProvider = SubtaskDataProvider(indexTask: widget.index);
+    // }
+  }
+*/
   @override
   Widget build(BuildContext context) {
-    return Consumer<TaskDataProvider>(builder: (context, taskData, child) {
-      return taskData.tasks[widget.index].subtasks.isEmpty
+    return Consumer<SubtaskDataModel>(builder: (context, subtaskData, child) {
+      print(subtaskData.subtasks.toString());
+      return subtaskData.subtasks.isEmpty
           ? Container(
               child: Center(
                 child: Text(
@@ -29,21 +46,24 @@ class _SubtasksListWidgetState extends State<SubtasksListWidget> {
               padding: EdgeInsets.only(top: 70.0),
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               //itemCount: _fillteredTasks.length,
-              itemCount: taskData.tasks[widget.index].subtasks.length,
+              itemCount: subtaskData.subtasks.length,
               onReorder: (int oldIndex, int newIndex) => setState(() {
                 final index = newIndex > oldIndex ? newIndex - 1 : newIndex;
                 final subtask =
-                    taskData.tasks[widget.index].subtasks.removeAt(oldIndex);
-                taskData.tasks[widget.index].subtasks.insert(index, subtask);
+                subtaskData.subtasks.removeAt(oldIndex);
+                subtaskData.subtasks.insert(index, subtask);
               }),
               // itemExtent: 163, //height of element
               itemBuilder: (BuildContext context, int index) {
-                //final task = taskData.tasks[widget.index];
-                final subtask = taskData.tasks[widget.index].subtasks[index];
+                final subtask = subtaskData.subtasks[index];
+                if(subtask.orderby != index){
+                  subtask.orderby = index;
+                  subtask.save();
+                }
                 return SubtaskTileWidget(
                   key: ValueKey(subtask),
                   subtask: subtask,
-                  index: widget.index,
+                  subtaskDataProvider: subtaskData,
                 );
 
               },

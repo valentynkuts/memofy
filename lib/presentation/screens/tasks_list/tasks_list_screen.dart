@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:memofy/constants/constants.dart';
+import 'package:memofy/data/dataproviders/task_data/task_data_model.dart';
 import 'package:memofy/presentation/screens/add_task/add_task_screen.dart';
 import 'package:memofy/presentation/widgets/tasks_list/tasks_list_widget.dart';
+import 'package:provider/provider.dart';
 
 
 class TasksListScreen extends StatefulWidget {
@@ -47,11 +49,13 @@ class _TasksListScreenState extends State<TasksListScreen> {
     _searchController.addListener(_searchMovies);
   }*/
 
+  final _searchController = TextEditingController(); //todo
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('LISTS'),
+          title: Text('TASK LIST'),
           centerTitle: true,
         ),
         body: Stack(
@@ -68,18 +72,9 @@ class _TasksListScreenState extends State<TasksListScreen> {
                       borderRadius: kBorderRadius,
                     ),
                   ),
-                  //controller: _searchController,
+                  controller: _searchController,  //todo
                   onChanged: (query) {
-                    //_searchMovies1(query);
-
-                    // if (query.isNotEmpty) {
-                    //   _fillteredMovies = _movies.where((Movie movie) {
-                    //     return movie.title.toLowerCase().contains(query.toLowerCase());
-                    //   }).toList();
-                    // } else {
-                    //   _fillteredMovies = _movies;
-                    // }
-                    // print(query);
+                    Provider.of<TaskDataModel>(context, listen: false).searchTask(query); //todo
                   },
                 ),
               )

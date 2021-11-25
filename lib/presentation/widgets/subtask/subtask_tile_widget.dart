@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:memofy/data/dataproviders/task_data/task_data.dart';
+import 'package:memofy/data/dataproviders/subtask_data/subtask_data_model.dart';
+import 'package:memofy/data/dataproviders/task_data/task_data_model.dart';
 import 'package:memofy/models/subtask/subtask_model.dart';
 import 'package:memofy/presentation/widgets/slidable/item_slidable_widget.dart';
 import 'package:provider/provider.dart';
 
 class SubtaskTileWidget extends StatelessWidget {
   final SubtaskModel subtask;
-  final int index;
+  final SubtaskDataModel subtaskDataProvider;
 
   const SubtaskTileWidget({
     Key? key,
     required this.subtask,
-    required this.index,
+    required this.subtaskDataProvider,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return slidableTile(context, index, subtask);
+    return slidableTile(context, subtask);
   }
 
-  Widget slidableTile(BuildContext context,int index, SubtaskModel subtask) => Padding(
+  Widget slidableTile(BuildContext context, SubtaskModel subtask) => Padding(
         padding: const EdgeInsets.all(5.0),
         child: Slidable(
           key: ValueKey(subtask),
@@ -39,9 +40,9 @@ class SubtaskTileWidget extends StatelessWidget {
               child: IconSlideAction(
                 color: Colors.red, //Colors.green,
                 onTap: () {
-                  final provider = Provider.of<TaskDataProvider>(context, listen: false);
+                  //final provider = Provider.of<TaskDataProvider>(context, listen: false);
 
-                  provider.removeSubtask(index, subtask);
+                  subtaskDataProvider.removeSubtask(subtask);
                 },
                 caption: 'Delete', //'Edit',
                 icon: Icons.delete, //Icons.edit,
@@ -87,7 +88,7 @@ class SubtaskTileWidget extends StatelessWidget {
               //leading: const Icon(Icons.subject_rounded),
               //contentPadding: EdgeInsets.symmetric(horizontal: 2.0, vertical: 2.0),
               title: Text(
-                subtask.description,
+                subtask.description,//'Text',
                 style: TextStyle(
                     fontFamily: 'Pacifico',
                     fontSize: 22.0,
@@ -109,8 +110,8 @@ class SubtaskTileWidget extends StatelessWidget {
                   activeColor: Colors.green,
                   value: subtask.isDone,
                   onChanged: (value) {
-                    final provider = Provider.of<TaskDataProvider>(context, listen: false);
-                    provider.toggleSubtaskStatus(subtask);
+                    //final provider = Provider.of<TaskDataProvider>(context, listen: false);
+                    subtaskDataProvider.toggleSubtaskStatus(subtask);
                   },
                 ),
               ),
@@ -119,13 +120,13 @@ class SubtaskTileWidget extends StatelessWidget {
         ),
       );
 
-  void deleteSubtask(BuildContext context, int index, SubtaskModel subtask) {
-    final provider = Provider.of<TaskDataProvider>(context, listen: false);
-
-    provider.removeSubtask(index, subtask);
-
-    //Scaffold.of(context).re
-  }
+  // void deleteSubtask(BuildContext context, int index, SubtaskModel subtask) {
+  //   final provider = Provider.of<TaskDataProvider>(context, listen: false);
+  //
+  //   provider.removeSubtask(index, subtask);
+  //
+  //   //Scaffold.of(context).re
+  // }
 
 
 }

@@ -25,8 +25,22 @@ class _TasksListScreenState extends State<TasksListScreen> {
         title: !isSearching ? Text('TASK LIST') : searchField(),
         //centerTitle: true,
         actions: <Widget>[
+          isSearching ?
           Padding(
-              padding: EdgeInsets.only(right: 20.0),
+              padding: EdgeInsets.only(right: 15.0),
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    isSearching = !isSearching;
+                  });
+                },
+                child: Icon(
+                  Icons.cancel,
+                  size: 26.0,
+                ),
+              )):
+          Padding(
+              padding: EdgeInsets.only(right: 15.0),
               child: GestureDetector(
                 onTap: () {
                   setState(() {

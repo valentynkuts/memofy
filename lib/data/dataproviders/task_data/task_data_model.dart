@@ -75,6 +75,8 @@ class TaskDataModel extends ChangeNotifier {
     // box.put(key, task);
 
     (await _box).put(key, task);
+
+    _tasks.add(task);
     //await BoxManager().closeBox(box); //TODO delete
     notifyListeners();
   }
@@ -101,17 +103,18 @@ class TaskDataModel extends ChangeNotifier {
 
   Future<void> removeTask(TaskModel task) async {
 
-    final box = await _box;
+    //final box = await _box;
 
     final taskKey = task.id;
     //delete box with all subtasks
     final subtaskBox = BoxManager().makeSubtaskBoxName(taskKey);
     await Hive.deleteBoxFromDisk(subtaskBox);
-    //box.delete(task.id);
+    //delete task from db (Hive)
     task.delete();
-    //_listenableBox?.addListener(() => _readTasksFromHive());
+    //delete task from memory because _listenableBox?.addListener(() => _readTasksFromHive());
+    // interferes with search
+    _tasks.remove(task);
 
-   // print("Deleted task: $task");
     notifyListeners();
   }
 

@@ -21,7 +21,7 @@ class TasksListWidget extends StatelessWidget {
               ),
             )
           : ReorderableListView.builder(
-              padding: EdgeInsets.only(top: 70.0),
+             // padding: EdgeInsets.only(top: 70.0),
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               itemCount: taskDataModel.tasks.length,
               onReorder: (int oldIndex, int newIndex) async {

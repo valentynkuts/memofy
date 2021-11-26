@@ -5,11 +5,8 @@ import 'package:memofy/presentation/screens/add_task/add_task_screen.dart';
 import 'package:memofy/presentation/widgets/tasks_list/tasks_list_widget.dart';
 import 'package:provider/provider.dart';
 
-
 class TasksListScreen extends StatefulWidget {
   static const String id = 'Main_screen';
-
-  //final _task;
 
   const TasksListScreen({Key? key}) : super(key: key);
 
@@ -18,84 +15,78 @@ class TasksListScreen extends StatefulWidget {
 }
 
 class _TasksListScreenState extends State<TasksListScreen> {
-
-/*
-  List<TaskModel>getTasks(){
-    return Provider.of<TaskDataProvider>(context).get();
-  }
-
-  var _fillteredTasks = <TaskModel>[];
-  final _searchController = TextEditingController();
-
-
-
-  void _searchMovies() {
-    final query = _searchController.text;
-    print(query);
-    if (query.isNotEmpty) {
-      _fillteredTasks = getTasks().where((TaskModel movie) {
-        return movie.title.toLowerCase().contains(query.toLowerCase());
-      }).toList();
-    } else {
-      _fillteredTasks = getTasks();
-    }
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _fillteredTasks = getTasks();
-    _searchController.addListener(_searchMovies);
-  }*/
-
   final _searchController = TextEditingController(); //todo
+  bool isSearching = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('TASK LIST'),
-          centerTitle: true,
-        ),
-        body: Stack(
-            children: [
-              TasksListWidget(),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Search',
-                    filled: true,
-                    fillColor: Colors.white.withAlpha(235),
-                    border: OutlineInputBorder(
-                      borderRadius: kBorderRadius,
-                    ),
-                  ),
-                  controller: _searchController,  //todo
-                  onChanged: (query) {
-                    Provider.of<TaskDataModel>(context, listen: false).searchTask(query); //todo
-                  },
+      appBar: AppBar(
+        title: !isSearching ? Text('TASK LIST') : searchField(),
+        //centerTitle: true,
+        actions: <Widget>[
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    isSearching = !isSearching;
+                  });
+                },
+                child: Icon(
+                  Icons.search,
+                  size: 26.0,
                 ),
-              )
-              ]
-
-
-        )
-
-        ,
-        floatingActionButton: FloatingActionButton(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20)
-          ),
-          backgroundColor: Colors.green,
-          child: const Icon(Icons.add),
-          onPressed: () {
-            Navigator.of(context).pushNamed(AddTaskScreen.id);
-          },
-
-        ),
-      );
-
+              )),
+          IconButton(
+            icon: Icon(
+              Icons.more_vert,
+              color: Colors.white,
+            ),
+            tooltip: 'Filter',
+            onPressed: () {
+              // do something
+              print("app bar icon");
+            },
+          )
+        ],
+      ),
+      body: TasksListWidget(),
+      floatingActionButton: FloatingActionButton(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        backgroundColor: Colors.green,
+        child: const Icon(Icons.add),
+        onPressed: () {
+          Navigator.of(context).pushNamed(AddTaskScreen.id);
+        },
+      ),
+    );
   }
+
+  Widget searchField() => TextField(
+        style: TextStyle(color: Colors.white),
+        cursorColor: Colors.white,
+        decoration: InputDecoration(
+          hintText: "Search",
+          hintStyle: TextStyle(
+            color: Colors.grey,
+            fontStyle: FontStyle.italic,
+          ),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+          ),
+          border: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+          ),
+        ),
+        controller: _searchController,
+        //todo
+        onChanged: (query) {
+          Provider.of<TaskDataModel>(context, listen: false)
+              .searchTask(query); //todo
+        },
+      );
 }

@@ -7,6 +7,7 @@ import 'package:memofy/presentation/screens/add_subtask/add_subtask_screen.dart'
 import 'package:memofy/presentation/screens/add_task/add_task_screen.dart';
 import 'package:memofy/presentation/screens/subtasks_list/subtasks_list_screen.dart';
 import 'package:memofy/presentation/screens/tasks_list/tasks_list_screen.dart';
+import 'package:memofy/presentation/widgets/home/home_page_widget.dart';
 import 'package:memofy/validation/add_task_validation.dart';
 import 'package:provider/provider.dart';
 
@@ -54,20 +55,21 @@ class MyApp extends StatelessWidget {
           // ),
         ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        //title: 'Flutter Demo',
         theme: ThemeData(
           appBarTheme: AppBarTheme(
             backgroundColor: const Color.fromRGBO(3, 37, 65, 1),
           ),
-          bottomNavigationBarTheme: BottomNavigationBarThemeData(
-            backgroundColor: const Color.fromRGBO(3, 37, 65, 1),
-            selectedItemColor: Colors.white,
-            unselectedItemColor: Colors.grey,
-          ),
+          // bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          //   backgroundColor: const Color.fromRGBO(3, 37, 65, 1),
+          //   selectedItemColor: Colors.white,
+          //   unselectedItemColor: Colors.grey,
+          // ),
         ),
-        initialRoute: TasksListScreen.id,
+        initialRoute: HomePage.id,
         routes: {
-          '/auth': (context) => Auth(),
+          //'/auth': (context) => Auth(),
+          HomePage.id: (context) => HomePage(),
           TasksListScreen.id : (context) => TasksListScreen(),
           AddTaskScreen.id : (context) => AddTaskScreen(),
           SubtasksListScreen.id : (context) {

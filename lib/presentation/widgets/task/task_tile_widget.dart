@@ -104,7 +104,7 @@ class TaskTileWidget extends StatelessWidget {
               //color: Colors.white,
               padding: EdgeInsets.all(10.0),
               decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: task.isDone ? Colors.grey : Colors.white,
                   border: Border.all(color: Colors.black.withOpacity(0.2)),
                   //const
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),

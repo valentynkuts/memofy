@@ -23,25 +23,27 @@ class TaskTileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     
 
-    // Future<int> taskKey(BuildContext context, int index){
-    //   final key = Provider.of<TaskDataProvider>(context, listen: false).hiveKeyTaskbyIndex(index);
-    //   return key;
+    // final subtaskConfiguration = SubtaskConfiguration(taskKey: task.id, titleTask: task.title);
+    //
+    // void onTaskTap(SubtaskConfiguration subtaskConfiguration) {
+    //   Navigator.of(context).pushNamed(
+    //     SubtasksListScreen.id,
+    //     arguments: subtaskConfiguration,
+    //   );
     // }
-    final subtaskConfiguration = SubtaskConfiguration(taskKey: task.id, titleTask: task.title);
 
-    void onTaskTap(SubtaskConfiguration subtaskConfiguration) {
+    void onTaskTap(TaskModel task) {
       Navigator.of(context).pushNamed(
         SubtasksListScreen.id,
-        arguments: subtaskConfiguration,
+        arguments: task,
       );
     }
 
-    return slidableTile(context, subtaskConfiguration, onTaskTap);
+    return slidableTile(context, task, onTaskTap);
   }
 
-  Widget slidableTile(BuildContext context, SubtaskConfiguration subtaskConfiguration, Function onTaskTap) =>
+  Widget slidableTile(BuildContext context, TaskModel task, Function onTaskTap) =>
       Padding(
         padding: const EdgeInsets.all(5.0),
         child: Slidable(
@@ -164,7 +166,8 @@ class TaskTileWidget extends StatelessWidget {
                 ],
               ),
             ),
-            onTap: () => onTaskTap(subtaskConfiguration),
+            //onTap: () => onTaskTap(subtaskConfiguration),
+            onTap: () => onTaskTap(task),
               //final keyTask = await taskKey(context, index);
 
              // onTaskTap(index);

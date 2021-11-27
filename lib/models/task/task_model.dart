@@ -33,6 +33,10 @@ class TaskModel extends HiveObject {
       required this.id,
       this.isDone = false});
 
+  void toggleDone() {
+    isDone = !isDone;
+  }
+
   @override
   String toString() {
     //return 'TaskModel{title: $title, data: $data, note: $note, isDone: $isDone, subtasks: $subtasks}';

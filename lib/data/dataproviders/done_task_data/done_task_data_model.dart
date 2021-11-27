@@ -6,39 +6,33 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:uuid/uuid.dart';
 
 
-class TaskDataModel extends ChangeNotifier {
+class DoneTaskDataModel extends ChangeNotifier {
 
   late final Future<Box<TaskModel>> _box;
   ValueListenable<Object>? _listenableBox;
 
-  TaskDataModel() {
+  DoneTaskDataModel() {
     load();
   }
 
-  var _tasks = <TaskModel>[];
+  var _doneTasks = <TaskModel>[];
   var _temp = <TaskModel>[];
 
-  //final _tasks = <TaskModel>[]; // List.empty()
-
-  // UnmodifiableListView<TaskModel> get tasks{
-  //   return UnmodifiableListView(_tasks);
-  // }
-
-  List<TaskModel> get tasks {
-    return _tasks;
+  List<TaskModel> get doneTasks {
+    return _doneTasks;
   }
 
   List<TaskModel> get() {
-    return _tasks;
+    return _doneTasks;
   }
 
   Future<void> _readTasksFromHive() async{
     //_temp = (await _box).values.toList();
-   _temp = (await _box).values.where((task) => task.isDone == false).toList();
+   _temp = (await _box).values.where((task) => task.isDone == true).toList();
 
     //_temp = _temp.where((task) => task.isDone == false).toList();
     //_temp.sort((a, b) => a.orderby.compareTo(b.orderby));  ///////
-    _tasks = _temp;
+    _doneTasks = _temp;
     notifyListeners();
   }
   // open box
@@ -46,29 +40,23 @@ class TaskDataModel extends ChangeNotifier {
     _box = BoxManager().openTaskBox();
     await _readTasksFromHive();
     _listenableBox = (await _box).listenable();
+    //_temp = (await _box).values.toList();
 
-    //_temp = (await _box).values.where((task) => task.isDone == false).toList();
+    /////(await _box).listenable().addListener(() => _readTasksFromHive());
 
     _listenableBox?.addListener(() => _readTasksFromHive()); //ok
 
     _temp.sort((a, b) => a.orderby.compareTo(b.orderby));
-    _tasks = _temp;
+    _doneTasks = _temp;
   }
 
-  Future<int> hiveKeyTaskbyIndex(int index) async {
-    final box = await _box;
 
-    //screen synchronized with box,
-    // knowing index of element of screen we can get index of element of Hive
-    final key = await box.keyAt(index);
-    return key;
-  }
 
   Future<void> addTask(String title, String data, String note) async {
     var uuid = Uuid();
     String key = uuid.v1();
     //print(key);
-    int l = _tasks.length;
+    int l = _doneTasks.length;
     final task = TaskModel(
         title: title, data: data, note: note, orderby: l + 1, id: key, isDone: false);
     //print(task.id);
@@ -77,7 +65,7 @@ class TaskDataModel extends ChangeNotifier {
 
     (await _box).put(key, task);
 
-    _tasks.add(task);
+    _doneTasks.add(task);
     //await BoxManager().closeBox(box); //TODO delete
     notifyListeners();
   }
@@ -85,20 +73,13 @@ class TaskDataModel extends ChangeNotifier {
   void searchTask(String query) {
     print(query);
     if (query.isNotEmpty) {
-      _tasks = _temp.where((TaskModel task) {
+      _doneTasks = _temp.where((TaskModel task) {
         return task.title.toLowerCase().contains(query.toLowerCase());
       }).toList();
-      print("1- $_tasks");
     } else {
-      _tasks = _temp;
-     // _tasks.map((task) => task.save());
-      print("2 - $_tasks");
+      _doneTasks = _temp;
     }
     notifyListeners();
-  }
- // TODO
-  Future<void> saveOrder()async{
-     _temp.map((task) => task.save());
   }
 
 
@@ -114,7 +95,7 @@ class TaskDataModel extends ChangeNotifier {
     task.delete();
     //delete task from memory because _listenableBox?.addListener(() => _readTasksFromHive());
     // interferes with search
-    _tasks.remove(task);
+    _doneTasks.remove(task);
 
     notifyListeners();
   }

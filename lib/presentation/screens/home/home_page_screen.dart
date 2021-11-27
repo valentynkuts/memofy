@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:memofy/presentation/screens/done_tasks/done_tasks_list_screen.dart';
 import 'package:memofy/presentation/screens/tasks_list/tasks_list_screen.dart';
-import 'package:memofy/presentation/widgets/done_tasks/DoneListWidget.dart';
 
-class HomePage extends StatefulWidget {
+
+class HomePageScreen extends StatefulWidget {
   static const String id = 'Home_screen';
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomePageScreenState createState() => _HomePageScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageScreenState extends State<HomePageScreen> {
   int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     final tabs = [
       TasksListScreen(),
-      DoneListWidget(),
+      DoneTasksListScreen(),
     ];
 
     return Scaffold(

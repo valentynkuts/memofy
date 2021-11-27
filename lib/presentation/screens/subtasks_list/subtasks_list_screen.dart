@@ -22,13 +22,13 @@ class SubtasksListScreen extends StatefulWidget {
   static const String id = 'subtasks_list_screen';
 
   //final String keyTask;
-  SubtaskConfiguration subtaskConfiguration;
+  //SubtaskConfiguration subtaskConfiguration;
 
-  //TaskModel taskModel;
+  TaskModel taskModel;
 
 
 
-  SubtasksListScreen({Key? key, required this.subtaskConfiguration}) : super(key: key);
+  SubtasksListScreen({Key? key, required this.taskModel}) : super(key: key);
   //SubtasksListScreen({Key? key, required this.taskModel}) : super(key: key);
 
   @override
@@ -48,7 +48,7 @@ class _SubtasksListScreenState extends State<SubtasksListScreen> {
   @override
   void initState() {
     if(_subtaskDatamodel == null){
-      _subtaskDatamodel = SubtaskDataModel(subtaskConfiguration: widget.subtaskConfiguration);
+      _subtaskDatamodel = SubtaskDataModel(taskModel: widget.taskModel);
     }
     super.initState();
   }
@@ -66,7 +66,8 @@ class _SubtasksListScreenState extends State<SubtasksListScreen> {
   Widget build(BuildContext context) {
 
    // final title = widget.subtaskConfiguration.titleTask ?? 'Subtasks';
-    final title = widget.subtaskConfiguration.titleTask;
+    //final title = widget.subtaskConfiguration.titleTask;
+    final title = widget.taskModel.title;
     //return ChangeNotifierProvider(
     return ChangeNotifierProvider(
       create: (context) => _subtaskDatamodel,

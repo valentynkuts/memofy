@@ -101,6 +101,8 @@ class AddTaskScreen extends StatelessWidget {
             ? null
             : () {
                 newTitle = validationService.newTitle.value!;
+                newTitle = newTitle.trim();
+                newNote = newNote.trim();
                // int id = Provider.of<TaskDataProvider>(context).tasks.length;
                 Provider.of<TaskDataModel>(context, listen: false).addTask(
                     newTitle,

@@ -33,7 +33,7 @@ class TasksListWidget extends StatelessWidget {
                 final task = taskDataModel.tasks[index];
                  if(task.orderby != index){
                   task.orderby = index;
-                  task.save();
+                  //task.save();  //TODO
                 } 
                 return TaskTileWidget(
                   key: ValueKey(task),

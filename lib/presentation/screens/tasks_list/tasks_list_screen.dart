@@ -6,7 +6,7 @@ import 'package:memofy/presentation/widgets/tasks_list/tasks_list_widget.dart';
 import 'package:provider/provider.dart';
 
 class TasksListScreen extends StatefulWidget {
-  static const String id = 'Main_screen';
+  static const String id = 'task_list_screen';
 
   const TasksListScreen({Key? key}) : super(key: key);
 

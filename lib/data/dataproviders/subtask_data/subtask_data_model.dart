@@ -3,17 +3,21 @@ import 'package:hive/hive.dart';
 import 'package:memofy/data/dataproviders/subtask_configuration.dart';
 import 'package:memofy/models/subtask/subtask_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:memofy/models/task/task_model.dart';
 import '../box_manager.dart';
 
 // logic
 class SubtaskDataModel extends ChangeNotifier {
 
+
   //String taskKey;
-  SubtaskConfiguration subtaskConfiguration;
+  //SubtaskConfiguration subtaskConfiguration;
+  TaskModel taskModel;
   late final Future<Box<SubtaskModel>> _box;
+  late final Future<Box<TaskModel>> _boxTask;
   ValueListenable<Object>? _listenableBox;
 
-  SubtaskDataModel({required this.subtaskConfiguration}) {
+  SubtaskDataModel({required this.taskModel}) {
     load();
   }
 
@@ -28,9 +32,9 @@ class SubtaskDataModel extends ChangeNotifier {
   }
 
   void load() async {
-     final taskKey = subtaskConfiguration.taskKey;
+     final taskKey = taskModel.id;
     _box = BoxManager().openSubtaskBox(taskKey);
-   // print("load() -> $taskKey box - $_box");
+     _boxTask = BoxManager().openTaskBox();
 
     await _readSubtasksFromHive();
      _listenableBox = (await _box).listenable();
@@ -75,6 +79,22 @@ class SubtaskDataModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _isAllSubtaskDone(){
+    // every(): Returns true if all elements satisfy the condition.
+    return _subtasks.every((el) => el.isDone == true);
+  }
+  
+  Future<void> isTaskDone() async {
+     //_boxTask = BoxManager().openTaskBox();
+    TaskModel? task = (await _boxTask).get(taskModel.id);
+
+    _isAllSubtaskDone() ? task!.isDone = true : task!.isDone = false;
+    task.save();
+
+  }
+  
+  
+
   // @override
   // void dispose() async{
   //   _listenableBox?.removeListener(_readSubtasksFromHive);
@@ -86,6 +106,9 @@ class SubtaskDataModel extends ChangeNotifier {
   Future<void> dispose() async{
     _listenableBox?.removeListener(_readSubtasksFromHive);
     await BoxManager().closeBox((await _box));
+    //if(_boxTask.){ //TODO
+      await BoxManager().closeBox((await _boxTask));
+   // }
     super.dispose();
   }
 

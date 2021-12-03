@@ -7,6 +7,7 @@ import 'package:memofy/data/dataproviders/subtask_data/subtask_data_model.dart';
 import 'package:memofy/data/dataproviders/task_data/task_data_model.dart';
 import 'package:memofy/presentation/screens/subtasks_list/subtasks_list_screen.dart';
 import 'package:memofy/validation/add_task_validation.dart';
+import 'package:memofy/validation/validation_item.dart';
 import 'package:provider/provider.dart';
 
 class AddSubtaskScreen extends StatefulWidget {
@@ -29,6 +30,9 @@ class _AddSubtaskScreenState extends State<AddSubtaskScreen> {
 
   SubtaskDataModel? _subtaskDatamodel;
 
+  TextValidation validationService = TextValidation();
+  //TextValidation validationService = Provider.of<TextValidation>(context);
+
   @override
   void initState() {
     if(_subtaskDatamodel == null){
@@ -41,6 +45,7 @@ class _AddSubtaskScreenState extends State<AddSubtaskScreen> {
   @override
   Widget build(BuildContext context) {
     //final value = context.watch<SubtaskDataProvider>();
+    validationService = Provider.of<TextValidation>(context);
 
     return ChangeNotifierProvider.value(
       //create: (context) =>AddSubtaskFormModel(taskKey: taskKey),
@@ -81,14 +86,14 @@ class _AddSubtaskScreenState extends State<AddSubtaskScreen> {
     // },
     decoration: InputDecoration(
         labelText: 'Title',
-        //errorText: validationService.newTitle.error,
+        errorText: validationService.text.error,
         border: OutlineInputBorder(
           borderRadius: kBorderRadius,
         ),
         hintText: 'Enter a Title'),
     onChanged: (value) {
-      //validationService.changeNewTitle(value);
-      description =  value;
+      validationService.changeNewTitle(value);
+      //description =  value;
     },
   );
 
@@ -118,11 +123,15 @@ class _AddSubtaskScreenState extends State<AddSubtaskScreen> {
     icon: Icon(Icons.done),
     label: Text('Submit'),
     //onPressed: () {},
-     onPressed: () {
+     onPressed: (!validationService.isValid)
+         ? null
+         :() {
       //context.watch<AddSubtaskFormModel>().addSubtask(description);
       //Provider.of<AddSubtaskFormModel>(context, listen: false).addSubtask(description);
      // Provider.of<SubtaskDataProvider>(context, listen: false).addSubtask(description);
+       description = validationService.text.value;
       _subtaskDatamodel!.addSubtask(description);
+       validationService.text = ValidationItem('', null);
       Navigator.pop(context);
     },
   );

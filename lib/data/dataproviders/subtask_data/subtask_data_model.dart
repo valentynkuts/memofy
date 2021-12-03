@@ -1,9 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
+import 'package:memofy/data/dataproviders/done_task_data/done_task_data_model.dart';
 import 'package:memofy/data/dataproviders/subtask_configuration.dart';
+import 'package:memofy/data/dataproviders/task_data/task_data_model.dart';
 import 'package:memofy/models/subtask/subtask_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:memofy/models/task/task_model.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 import '../box_manager.dart';
 
 // logic
@@ -84,12 +89,23 @@ class SubtaskDataModel extends ChangeNotifier {
     return _subtasks.every((el) => el.isDone == true);
   }
   
-  Future<void> isTaskDone() async {
+  Future<void> isTaskDone(BuildContext context) async {
      //_boxTask = BoxManager().openTaskBox();
     TaskModel? task = (await _boxTask).get(taskModel.id);
 
     _isAllSubtaskDone() ? task!.isDone = true : task!.isDone = false;
     task.save();
+
+    // if(task.isDone){
+    //   Provider.of<TaskDataModel>(context, listen: false).tasks.remove(task);
+    //   //Provider.of<DoneTaskDataModel>(context, listen: false).doneTasks.add(task);
+    // } else{
+    //   Provider.of<DoneTaskDataModel>(context, listen: false).doneTasks.remove(task);
+    //   //Provider.of<TaskDataModel>(context, listen: false).tasks.add(task);
+    // }
+
+    //
+    //
 
   }
   

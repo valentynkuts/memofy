@@ -4,7 +4,6 @@ import 'package:memofy/constants/constants.dart';
 import 'package:memofy/data/dataproviders/task_data/task_data_model.dart';
 import 'package:memofy/validation/add_task_validation.dart';
 import 'package:memofy/validation/validation.dart';
-import 'package:memofy/validation/validation_item.dart';
 import 'package:provider/provider.dart';
 
 class AddTaskScreen extends StatelessWidget {
@@ -14,8 +13,8 @@ class AddTaskScreen extends StatelessWidget {
   String data = ""; // field for input
   String newNote = ""; // field for input
 
-  TextValidation validationService = TextValidation(); // = Provider.of<AddTaskValidation>(context);
-  //TaskValidation validation = TaskValidation();
+  //AddTaskValidation validationService = AddTaskValidation(); // = Provider.of<AddTaskValidation>(context);
+  TaskValidation validation = TaskValidation();
 
   AddTaskScreen({Key? key}) : super(key: key);
 
@@ -27,8 +26,8 @@ class AddTaskScreen extends StatelessWidget {
     // String data; // field for input
     // String newNote = ""; // field for input
     //
-    validationService = Provider.of<TextValidation>(context);
-    //validation = Provider.of<TaskValidation>(context);
+    //validationService = Provider.of<AddTaskValidation>(context);
+    validation = Provider.of<TaskValidation>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -64,17 +63,16 @@ class AddTaskScreen extends StatelessWidget {
         // },
         decoration: InputDecoration(
             labelText: 'Title',
-            errorText: validationService.text.error,
-            //errorText: validation.errorText,
+            //errorText: validationService.newTitle.error,
+            errorText: validation.errorText,
             border: OutlineInputBorder(
               borderRadius: kBorderRadius,
             ),
             hintText: 'Enter a Title'),
         onChanged: (value) {
-          validationService.changeNewTitle(value);
-         // validation.title = value;
-          //print(validation.title);
-          print(validationService.text.value);
+          //validationService.changeNewTitle(value);
+          validation.title = value;
+          print(validation.title);
           //newTitle =  value;
         },
       );
@@ -104,14 +102,14 @@ class AddTaskScreen extends StatelessWidget {
         backgroundColor: Colors.green,
         icon: Icon(Icons.done),
         label: Text('Submit'),
-        onPressed: (!validationService.isValid)
-        //onPressed: (!validation.isValid)
+        //onPressed: (!validationService.isValid)
+        onPressed: (!validation.isValid)
             ? null
             : () {
-                newTitle = validationService.text.value;
-                //newTitle = validation.title;
-                //newTitle = newTitle.trim(); //????
+                //newTitle = validationService.newTitle.value!;
+                newTitle = validation.title;
                 print(newTitle);
+                newTitle = newTitle.trim();
                 newNote = newNote.trim();
                // int id = Provider.of<TaskDataProvider>(context).tasks.length;
                 Provider.of<TaskDataModel>(context, listen: false).addTask(
@@ -120,7 +118,6 @@ class AddTaskScreen extends StatelessWidget {
                     newNote);
                 //validationService.newTitle.value = null;
                 //validationService.newTitle.error = null;
-                validationService.text = ValidationItem('', null);
                 Navigator.pop(context);
               },
         // onPressed: () {

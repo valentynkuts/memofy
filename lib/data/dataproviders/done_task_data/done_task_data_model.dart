@@ -31,7 +31,7 @@ class DoneTaskDataModel extends ChangeNotifier {
    _temp = (await _box).values.where((task) => task.isDone == true).toList();
 
     //_temp = _temp.where((task) => task.isDone == false).toList();
-    //_temp.sort((a, b) => a.orderby.compareTo(b.orderby));  ///////
+    _temp.sort((a, b) => a.orderby.compareTo(b.orderby));  ///////
     _doneTasks = _temp;
     notifyListeners();
   }
@@ -46,8 +46,8 @@ class DoneTaskDataModel extends ChangeNotifier {
 
     _listenableBox?.addListener(() => _readTasksFromHive()); //ok
 
-    _temp.sort((a, b) => a.orderby.compareTo(b.orderby));
-    _doneTasks = _temp;
+    //_temp.sort((a, b) => a.orderby.compareTo(b.orderby));
+    //_doneTasks = _temp;
   }
 
 

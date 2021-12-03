@@ -10,6 +10,7 @@ import 'package:memofy/presentation/screens/home/home_page_screen.dart';
 import 'package:memofy/presentation/screens/subtasks_list/subtasks_list_screen.dart';
 import 'package:memofy/presentation/screens/tasks_list/tasks_list_screen.dart';
 import 'package:memofy/validation/add_task_validation.dart';
+import 'package:memofy/validation/validation.dart';
 import 'package:provider/provider.dart';
 
 import 'auth/auth.dart';
@@ -64,9 +65,10 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<DoneTaskDataModel>(
             create: (context) => DoneTaskDataModel(),
           ),
-          ChangeNotifierProvider<AddTaskValidation>(
-            create: (context) => AddTaskValidation(),
+          ChangeNotifierProvider<TextValidation>(
+            create: (context) => TextValidation(),
           ),
+
           // ChangeNotifierProvider<SubtaskDataProvider>(
           //   create: (context) => SubtaskDataProvider(subtaskConfiguration: SubtaskConfiguration(taskKey: "",titleTask: "")),
           // ),

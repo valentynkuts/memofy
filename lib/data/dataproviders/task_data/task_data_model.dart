@@ -37,7 +37,7 @@ class TaskDataModel extends ChangeNotifier {
    _temp = (await _box).values.where((task) => task.isDone == false).toList();
 
     //_temp = _temp.where((task) => task.isDone == false).toList();
-    //_temp.sort((a, b) => a.orderby.compareTo(b.orderby));  ///////
+    _temp.sort((a, b) => a.orderby.compareTo(b.orderby));  ///////
     _tasks = _temp;
     notifyListeners();
   }
@@ -51,8 +51,8 @@ class TaskDataModel extends ChangeNotifier {
 
     _listenableBox?.addListener(() => _readTasksFromHive()); //ok
 
-    _temp.sort((a, b) => a.orderby.compareTo(b.orderby));
-    _tasks = _temp;
+    //_temp.sort((a, b) => a.orderby.compareTo(b.orderby));
+    //_tasks = _temp;
   }
 
   Future<int> hiveKeyTaskbyIndex(int index) async {

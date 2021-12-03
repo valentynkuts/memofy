@@ -113,7 +113,7 @@ class SubtaskTileWidget extends StatelessWidget {
                     //final provider = Provider.of<TaskDataProvider>(context, listen: false);
                     subtaskDataProvider.toggleSubtaskStatus(subtask);
                     //check whether all subtask done or not, as a  result change task to Done or ToDo
-                    subtaskDataProvider.isTaskDone();
+                    subtaskDataProvider.isTaskDone(context);
                   },
                 ),
               ),

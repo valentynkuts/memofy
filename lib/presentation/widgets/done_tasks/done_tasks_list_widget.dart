@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:memofy/data/dataproviders/done_task_data/done_task_data_model.dart';
+import 'package:memofy/models/task/task_model.dart';
 import 'package:memofy/presentation/widgets/task/task_tile_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -8,6 +9,7 @@ class DoneTasksListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TaskModel doneTask;
 
     return Consumer<DoneTaskDataModel>(builder: (context, doneTaskDataModel, child) {
       return doneTaskDataModel.doneTasks.isEmpty
@@ -25,18 +27,18 @@ class DoneTasksListWidget extends StatelessWidget {
         itemCount: doneTaskDataModel.doneTasks.length,
         onReorder: (int oldIndex, int newIndex) async {
           final index = newIndex > oldIndex ? newIndex - 1 : newIndex;
-          final task = doneTaskDataModel.doneTasks.removeAt(oldIndex);
-          doneTaskDataModel.doneTasks.insert(index, task);
+          doneTask = doneTaskDataModel.doneTasks.removeAt(oldIndex);
+          doneTaskDataModel.doneTasks.insert(index, doneTask);
         },
         itemBuilder: (BuildContext context, int index) {
-          final task = doneTaskDataModel.doneTasks[index];
-          if(task.orderby != index){
-            task.orderby = index;
-            task.save();
+          doneTask = doneTaskDataModel.doneTasks[index];
+          if(doneTask.orderby != index && doneTaskDataModel.searchingQuery.isEmpty){
+            doneTask.orderby = index;
+            doneTask.save();
           }
           return TaskTileWidget(
-            key: ValueKey(task),
-            task: task,
+            key: ValueKey(doneTask),
+            task: doneTask,
           );
         },
       );

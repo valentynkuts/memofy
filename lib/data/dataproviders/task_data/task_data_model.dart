@@ -10,6 +10,8 @@ class TaskDataModel extends ChangeNotifier {
 
   late final Future<Box<TaskModel>> _box;
   ValueListenable<Object>? _listenableBox;
+  String searchingQuery = '';
+  String date = '';
 
   TaskDataModel() {
     load();
@@ -17,12 +19,6 @@ class TaskDataModel extends ChangeNotifier {
 
   var _tasks = <TaskModel>[];
   var _temp = <TaskModel>[];
-
-  //final _tasks = <TaskModel>[]; // List.empty()
-
-  // UnmodifiableListView<TaskModel> get tasks{
-  //   return UnmodifiableListView(_tasks);
-  // }
 
   List<TaskModel> get tasks {
     return _tasks;
@@ -37,8 +33,10 @@ class TaskDataModel extends ChangeNotifier {
    _temp = (await _box).values.where((task) => task.isDone == false).toList();
 
     //_temp = _temp.where((task) => task.isDone == false).toList();
-    _temp.sort((a, b) => a.orderby.compareTo(b.orderby));  ///////
-    _tasks = _temp;
+   if(searchingQuery.isEmpty) {
+     _temp.sort((a, b) => a.orderby.compareTo(b.orderby)); ///////
+     _tasks = _temp;
+   }
     notifyListeners();
   }
   // open box
@@ -67,22 +65,17 @@ class TaskDataModel extends ChangeNotifier {
   Future<void> addTask(String title, String data, String note) async {
     var uuid = Uuid();
     String key = uuid.v1();
-    //print(key);
     int l = _tasks.length;
     final task = TaskModel(
-        title: title, data: data, note: note, orderby: l + 1, id: key, isDone: false);
-    //print(task.id);
-    // final box = await _box;
-    // box.put(key, task);
-
+        title: title, date: data, note: note, orderby: l + 1, id: key, isDone: false);
     (await _box).put(key, task);
-
     _tasks.add(task);
-    //await BoxManager().closeBox(box); //TODO delete
+
     notifyListeners();
   }
 
   void searchTask(String query) {
+    searchingQuery = query;
     print(query);
     if (query.isNotEmpty) {
       _tasks = _temp.where((TaskModel task) {
@@ -98,7 +91,10 @@ class TaskDataModel extends ChangeNotifier {
   }
  // TODO
   Future<void> saveOrder()async{
-     _temp.map((task) => task.save());
+     //_temp.map((task) => task.save());
+     for (final task in _tasks) {
+       task.save();
+     }
   }
 
 
@@ -119,20 +115,33 @@ class TaskDataModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // @override
-  // void dispose() async{
-  //   _listenableBox?.removeListener(_readTasksFromHive);
-  //   await BoxManager().closeBox((await _box));
-  //   super.dispose();
-  // }
+  Future<void> updateTask(TaskModel task, String newTitle, String newNote, String date) async {
+    task.title = newTitle;
+    task.note = newNote;
+    task.date = date;
+    task.save();
+
+    notifyListeners();
+  }
+
+  void updateDate1(String date){
+    this.date = date;
+    notifyListeners();
+  }
+
+  String updateDate(String date){
+    this.date = date;
+    notifyListeners();
+    return date;
+  }
+
+
 
   // close box which was open in load()
   @override
   Future<void> dispose() async{
-    
-    //_temp.map((task) => task.save());
-   // _tasks.map((task) => task.save());
-    //await saveOrder();
+    await saveOrder(); //todo
+
     _listenableBox?.removeListener(_readTasksFromHive);
     await BoxManager().closeBox((await _box));
     super.dispose();

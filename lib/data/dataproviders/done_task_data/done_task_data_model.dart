@@ -10,6 +10,7 @@ class DoneTaskDataModel extends ChangeNotifier {
 
   late final Future<Box<TaskModel>> _box;
   ValueListenable<Object>? _listenableBox;
+  String searchingQuery = '';
 
   DoneTaskDataModel() {
     load();
@@ -26,25 +27,26 @@ class DoneTaskDataModel extends ChangeNotifier {
     return _doneTasks;
   }
 
-  Future<void> _readTasksFromHive() async{
+  Future<void> _readDoneTasksFromHive() async{
     //_temp = (await _box).values.toList();
    _temp = (await _box).values.where((task) => task.isDone == true).toList();
 
     //_temp = _temp.where((task) => task.isDone == false).toList();
-    _temp.sort((a, b) => a.orderby.compareTo(b.orderby));  ///////
-    _doneTasks = _temp;
-    notifyListeners();
-  }
+   if(searchingQuery.isEmpty) {
+     _temp.sort((a, b) => a.orderby.compareTo(b.orderby)); ///////
+     _doneTasks = _temp;
+   }
+    notifyListeners();}
   // open box
   void load() async {
     _box = BoxManager().openTaskBox();
-    await _readTasksFromHive();
+    await _readDoneTasksFromHive();
     _listenableBox = (await _box).listenable();
     //_temp = (await _box).values.toList();
 
     /////(await _box).listenable().addListener(() => _readTasksFromHive());
 
-    _listenableBox?.addListener(() => _readTasksFromHive()); //ok
+    _listenableBox?.addListener(() => _readDoneTasksFromHive()); //ok
 
     //_temp.sort((a, b) => a.orderby.compareTo(b.orderby));
     //_doneTasks = _temp;
@@ -55,22 +57,16 @@ class DoneTaskDataModel extends ChangeNotifier {
   Future<void> addTask(String title, String data, String note) async {
     var uuid = Uuid();
     String key = uuid.v1();
-    //print(key);
     int l = _doneTasks.length;
     final task = TaskModel(
-        title: title, data: data, note: note, orderby: l + 1, id: key, isDone: false);
-    //print(task.id);
-    // final box = await _box;
-    // box.put(key, task);
-
+        title: title, date: data, note: note, orderby: l + 1, id: key, isDone: false);
     (await _box).put(key, task);
-
     _doneTasks.add(task);
-    //await BoxManager().closeBox(box); //TODO delete
     notifyListeners();
   }
 
   void searchTask(String query) {
+    searchingQuery = query;  ////todo
     print(query);
     if (query.isNotEmpty) {
       _doneTasks = _temp.where((TaskModel task) {
@@ -84,9 +80,6 @@ class DoneTaskDataModel extends ChangeNotifier {
 
 
   Future<void> removeTask(TaskModel task) async {
-
-    //final box = await _box;
-
     final taskKey = task.id;
     //delete box with all subtasks
     final subtaskBox = BoxManager().makeSubtaskBoxName(taskKey);
@@ -100,13 +93,6 @@ class DoneTaskDataModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // @override
-  // void dispose() async{
-  //   _listenableBox?.removeListener(_readTasksFromHive);
-  //   await BoxManager().closeBox((await _box));
-  //   super.dispose();
-  // }
-
   // close box which was open in load()
   @override
   Future<void> dispose() async{
@@ -114,7 +100,7 @@ class DoneTaskDataModel extends ChangeNotifier {
     //_temp.map((task) => task.save());
    // _tasks.map((task) => task.save());
     //await saveOrder();
-    _listenableBox?.removeListener(_readTasksFromHive);
+    _listenableBox?.removeListener(_readDoneTasksFromHive);
     await BoxManager().closeBox((await _box));
     super.dispose();
   }

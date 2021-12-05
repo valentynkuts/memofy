@@ -1,5 +1,4 @@
 import 'package:hive/hive.dart';
-//import 'package:memofy/models/subtask/subtask_model.dart';
 
 part 'task_model.g.dart';
 //TaskModelAdapter to use TaskModel as type in the Hive
@@ -11,7 +10,7 @@ class TaskModel extends HiveObject {
   String title;
 
   @HiveField(1)
-  String data;
+  String date;
 
   @HiveField(2)
   String note;
@@ -27,7 +26,7 @@ class TaskModel extends HiveObject {
 
   TaskModel(
       {required this.title,
-      required this.data,
+      required this.date,
       required this.note,
       required this.orderby,
       required this.id,
@@ -40,7 +39,7 @@ class TaskModel extends HiveObject {
   @override
   String toString() {
     //return 'TaskModel{title: $title, data: $data, note: $note, isDone: $isDone, subtasks: $subtasks}';
-    return 'TaskModel{title: $title, data: $data';
+    return 'TaskModel{title: $title, data: $date';
   }
 
 }

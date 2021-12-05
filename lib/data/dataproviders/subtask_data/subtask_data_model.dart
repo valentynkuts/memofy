@@ -1,22 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
-import 'package:memofy/data/dataproviders/done_task_data/done_task_data_model.dart';
-import 'package:memofy/data/dataproviders/subtask_configuration.dart';
-import 'package:memofy/data/dataproviders/task_data/task_data_model.dart';
 import 'package:memofy/models/subtask/subtask_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:memofy/models/task/task_model.dart';
-import 'package:provider/provider.dart';
-import 'package:provider/provider.dart';
 import '../box_manager.dart';
 
-// logic
 class SubtaskDataModel extends ChangeNotifier {
 
-
-  //String taskKey;
-  //SubtaskConfiguration subtaskConfiguration;
   TaskModel taskModel;
   late final Future<Box<SubtaskModel>> _box;
   late final Future<Box<TaskModel>> _boxTask;
@@ -53,13 +44,8 @@ class SubtaskDataModel extends ChangeNotifier {
     int l = _subtasks.length;
     final subtask = SubtaskModel(
         description: description, orderby: l + 1, isDone: false);
-
-    // final box = await _box;
-    // final index = await box.add(subtask);
-
     final index = (await _box).add(subtask);
-    print("Added subtask to index: $index");
-    //await BoxManager().closeBox(box); // TODO delete
+
     notifyListeners();
   }
 
@@ -67,13 +53,9 @@ class SubtaskDataModel extends ChangeNotifier {
     subtask.delete();
     notifyListeners();
   }
-  //
-  void searchTask() {
-    notifyListeners();
-  }
 
-  void updateSubtask(SubtaskModel subtask) {
-    //code
+  void updateSubtask(SubtaskModel subtask, String description) {
+    subtask.description = description;
     subtask.save();
     notifyListeners();
   }
@@ -108,15 +90,6 @@ class SubtaskDataModel extends ChangeNotifier {
     //
 
   }
-  
-  
-
-  // @override
-  // void dispose() async{
-  //   _listenableBox?.removeListener(_readSubtasksFromHive);
-  //   await BoxManager().closeBox((await _box));
-  //   super.dispose();
-  // }
 
   @override
   Future<void> dispose() async{

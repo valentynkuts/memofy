@@ -3,6 +3,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:memofy/data/dataproviders/subtask_configuration.dart';
 import 'package:memofy/data/dataproviders/task_data/task_data_model.dart';
 import 'package:memofy/models/task/task_model.dart';
+import 'package:memofy/presentation/screens/edit_task/edit_task_screen.dart';
 import 'package:memofy/presentation/screens/subtasks_list/subtasks_list_screen.dart';
 //import 'package:memofy/presentation/widgets/slidable/item_slidable_widget.dart';
 import 'package:provider/provider.dart';
@@ -11,19 +12,17 @@ class TaskTileWidget extends StatelessWidget {
   const TaskTileWidget({
     Key? key,
     required this.task,
-   // required this.taskKey,
+    // required this.taskKey,
     //required this.onTaskTap,
   }) : super(key: key);
 
-  final TaskModel task;//????
+  final TaskModel task; //????
   //final String taskKey;
   //final Function onTaskTap;
 
 
-
   @override
   Widget build(BuildContext context) {
-
     // final subtaskConfiguration = SubtaskConfiguration(taskKey: task.id, titleTask: task.title);
     //
     // void onTaskTap(SubtaskConfiguration subtaskConfiguration) {
@@ -43,7 +42,8 @@ class TaskTileWidget extends StatelessWidget {
     return slidableTile(context, task, onTaskTap);
   }
 
-  Widget slidableTile(BuildContext context, TaskModel task, Function onTaskTap) =>
+  Widget slidableTile(BuildContext context, TaskModel task,
+      Function onTaskTap) =>
       Padding(
         padding: const EdgeInsets.all(5.0),
         child: Slidable(
@@ -54,7 +54,7 @@ class TaskTileWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(10.0),
               child: IconSlideAction(
                 color: Colors.green,
-                onTap: () {},
+                onTap: () => editTask(context),
                 caption: 'Edit',
                 icon: Icons.edit,
               ),
@@ -79,8 +79,8 @@ class TaskTileWidget extends StatelessWidget {
 
                   provider.removeTask(task);
                   //provider.removeTask(index);
-                 //print("TaskTileWidget index: $index");
-                 // print(task);
+                  //print("TaskTileWidget index: $index");
+                  // print(task);
                 },
                 caption: 'Delete', //'Edit',
                 icon: Icons.delete, //Icons.edit,
@@ -140,7 +140,7 @@ class TaskTileWidget extends StatelessWidget {
                       maxLines: 2,
                     ),
                     subtitle: Text(
-                      task.data,
+                      task.date,
                       style: TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
@@ -168,11 +168,24 @@ class TaskTileWidget extends StatelessWidget {
             ),
             //onTap: () => onTaskTap(subtaskConfiguration),
             onTap: () => onTaskTap(task),
-              //final keyTask = await taskKey(context, index);
+            //final keyTask = await taskKey(context, index);
 
-             // onTaskTap(index);
+            // onTaskTap(index);
 
           ),
         ),
       );
+
+  void editTask(BuildContext context) =>
+      // Navigator.of(context).push(
+      //   MaterialPageRoute(
+      //     builder: (context) => EditTaskScreen(task: task),
+      //   ),);
+
+        Navigator.of(context).pushNamed(
+          EditTaskScreen.id,
+          arguments: task,
+        );
+
+
 }

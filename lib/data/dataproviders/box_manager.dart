@@ -15,18 +15,6 @@ class BoxManager{
   // private constructor
   BoxManager._();
 
-  // Future<Box<T>>_openBox<T>(
-  //     String name,
-  //     int typeId,
-  //     TypeAdapter<T> adapter,
-  //     ) async{
-  //   if (!Hive.isAdapterRegistered(typeId)) {
-  //     Hive.registerAdapter(adapter);
-  //   }
-  //   print(Hive.openBox<T>(name)); // TODO delete
-  //   return Hive.openBox<T>(name);
-  // }
-
   // ARC
   Future<Box<T>>_openBox<T>(
       String name,

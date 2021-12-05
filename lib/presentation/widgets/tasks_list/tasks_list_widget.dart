@@ -31,9 +31,9 @@ class TasksListWidget extends StatelessWidget {
               },
               itemBuilder: (BuildContext context, int index) {
                 final task = taskDataModel.tasks[index];
-                 if(task.orderby != index){
+                 if(task.orderby != index && taskDataModel.searchingQuery.isEmpty){
                   task.orderby = index;
-                  //task.save();  //TODO
+                  task.save();
                 } 
                 return TaskTileWidget(
                   key: ValueKey(task),

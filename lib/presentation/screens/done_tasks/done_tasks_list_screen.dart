@@ -21,35 +21,34 @@ class _DoneTasksListScreenState extends State<DoneTasksListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: !isSearching ? Text('DONE TASK LIST') : searchField(),
-        //centerTitle: true,
         actions: <Widget>[
-          isSearching ?
-          Padding(
-              padding: EdgeInsets.only(right: 15.0),
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    isSearching = !isSearching;
-                  });
-                },
-                child: Icon(
-                  Icons.cancel,
-                  size: 26.0,
-                ),
-              )):
-          Padding(
-              padding: EdgeInsets.only(right: 15.0),
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    isSearching = !isSearching;
-                  });
-                },
-                child: Icon(
-                  Icons.search,
-                  size: 26.0,
-                ),
-              )),
+          isSearching
+              ? Padding(
+                  padding: EdgeInsets.only(right: 15.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isSearching = !isSearching;
+                      });
+                    },
+                    child: Icon(
+                      Icons.cancel,
+                      size: 26.0,
+                    ),
+                  ))
+              : Padding(
+                  padding: EdgeInsets.only(right: 15.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isSearching = !isSearching;
+                      });
+                    },
+                    child: Icon(
+                      Icons.search,
+                      size: 26.0,
+                    ),
+                  )),
           IconButton(
             icon: Icon(
               Icons.more_vert,
@@ -68,29 +67,26 @@ class _DoneTasksListScreenState extends State<DoneTasksListScreen> {
   }
 
   Widget searchField() => TextField(
-    style: TextStyle(color: Colors.white),
-    cursorColor: Colors.white,
-    decoration: InputDecoration(
-      hintText: "Search",
-      hintStyle: TextStyle(
-        color: Colors.grey,
-        fontStyle: FontStyle.italic,
-      ),
-      enabledBorder: UnderlineInputBorder(
-        borderSide: BorderSide(color: Colors.grey),
-      ),
-      focusedBorder: UnderlineInputBorder(
-        borderSide: BorderSide(color: Colors.white),
-      ),
-      border: UnderlineInputBorder(
-        borderSide: BorderSide(color: Colors.white),
-      ),
-    ),
-    controller: _searchController,
-    //todo
-    onChanged: (query) {
-      Provider.of<DoneTaskDataModel>(context, listen: false)
-          .searchTask(query); //todo
-    },
-  );
+        style: TextStyle(color: Colors.white),
+        cursorColor: Colors.white,
+        decoration: InputDecoration(
+          hintText: "Search",
+          hintStyle: TextStyle(
+            color: Colors.grey,
+            fontStyle: FontStyle.italic,
+          ),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+          ),
+        ),
+        controller: _searchController,
+        //todo
+        onChanged: (query) {
+          Provider.of<DoneTaskDataModel>(context, listen: false)
+              .searchTask(query); //todo
+        },
+      );
 }

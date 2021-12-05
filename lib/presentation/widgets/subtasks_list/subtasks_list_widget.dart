@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:memofy/data/dataproviders/subtask_data/subtask_data_model.dart';
-import 'package:memofy/data/dataproviders/task_data/task_data_model.dart';
 import 'package:memofy/presentation/widgets/subtask/subtask_tile_widget.dart';
 import 'package:provider/provider.dart';
 
 class SubtasksListWidget extends StatefulWidget {
-  //int index;
 
-  //SubtaskDataProvider subtaskDatamodel;
-
-  //SubtasksListWidget({Key? key, required this.index}) : super(key: key);
-  //SubtasksListWidget({Key? key, required this.subtaskDatamodel}) : super(key: key);
   SubtasksListWidget({Key? key}) : super(key: key);
 
   @override
@@ -18,17 +12,7 @@ class SubtasksListWidget extends StatefulWidget {
 }
 
 class _SubtasksListWidgetState extends State<SubtasksListWidget> {
-  /*SubtaskDataProvider? _subtaskDataProvider;
-  //Provider.of<SubtaskDataProvider>(context).;
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-    // if(_subtaskDataProvider == null){
-    //   _subtaskDataProvider = SubtaskDataProvider(indexTask: widget.index);
-    // }
-  }
-*/
+
   @override
   Widget build(BuildContext context) {
     return Consumer<SubtaskDataModel>(builder: (context, subtaskData, child) {
@@ -45,7 +29,6 @@ class _SubtasksListWidgetState extends State<SubtasksListWidget> {
           : ReorderableListView.builder(
               padding: EdgeInsets.only(top: 70.0),
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-              //itemCount: _fillteredTasks.length,
               itemCount: subtaskData.subtasks.length,
               onReorder: (int oldIndex, int newIndex) => setState(() {
                 final index = newIndex > oldIndex ? newIndex - 1 : newIndex;
@@ -63,7 +46,7 @@ class _SubtasksListWidgetState extends State<SubtasksListWidget> {
                 return SubtaskTileWidget(
                   key: ValueKey(subtask),
                   subtask: subtask,
-                  subtaskDataProvider: subtaskData,
+                  subtaskDataModel: subtaskData,
                 );
 
               },

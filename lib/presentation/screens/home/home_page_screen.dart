@@ -20,9 +20,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
     ];
 
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text("HOME"),
-      // ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: const Color.fromRGBO(3, 37, 65, 1),
         selectedItemColor: Colors.white,
@@ -43,25 +40,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
         ],
       ),
       body: tabs[selectedIndex],
-      // floatingActionButton: FloatingActionButton(
-      //   shape: RoundedRectangleBorder(
-      //     borderRadius: BorderRadius.circular(20),
-      //   ),
-      //   backgroundColor: Colors.black,
-      //   onPressed: () => showDialog(
-      //     context: context,
-      //     builder: (context) => AddTodoDialogWidget(),
-      //     barrierDismissible: false,
-      //   ),
-      //   child: Icon(Icons.add),
-      // ),
     );
   }
 }
-
-
-// bottomNavigationBarTheme: BottomNavigationBarThemeData(
-// backgroundColor: const Color.fromRGBO(3, 37, 65, 1),
-// selectedItemColor: Colors.white,
-// unselectedItemColor: Colors.grey,
-// ),

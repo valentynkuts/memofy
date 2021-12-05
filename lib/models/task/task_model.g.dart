@@ -18,7 +18,7 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
     };
     return TaskModel(
       title: fields[0] as String,
-      data: fields[1] as String,
+      date: fields[1] as String,
       note: fields[2] as String,
       orderby: fields[5] as int,
       id: fields[6] as String,
@@ -33,7 +33,7 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
-      ..write(obj.data)
+      ..write(obj.date)
       ..writeByte(2)
       ..write(obj.note)
       ..writeByte(3)

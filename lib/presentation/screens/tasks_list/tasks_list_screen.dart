@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:memofy/constants/constants.dart';
 import 'package:memofy/data/dataproviders/task_data/task_data_model.dart';
 import 'package:memofy/presentation/screens/add_task/add_task_screen.dart';
 import 'package:memofy/presentation/widgets/tasks_list/tasks_list_widget.dart';
@@ -17,41 +16,44 @@ class TasksListScreen extends StatefulWidget {
 class _TasksListScreenState extends State<TasksListScreen> {
   final _searchController = TextEditingController(); //todo
   bool isSearching = false;
+  String searchingQuery = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: !isSearching ? Text('TASK LIST') : searchField(),
-        //centerTitle: true,
         actions: <Widget>[
-          isSearching ?
-          Padding(
-              padding: EdgeInsets.only(right: 15.0),
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    isSearching = !isSearching;
-                  });
-                },
-                child: Icon(
-                  Icons.cancel,
-                  size: 26.0,
-                ),
-              )):
-          Padding(
-              padding: EdgeInsets.only(right: 15.0),
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    isSearching = !isSearching;
-                  });
-                },
-                child: Icon(
-                  Icons.search,
-                  size: 26.0,
-                ),
-              )),
+          isSearching
+              ? Padding(
+                  padding: EdgeInsets.only(right: 15.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isSearching = !isSearching;
+                        //searchingQuery = '';
+                        //Provider.of<TaskDataModel>(context, listen: false).searchingQuery = '';
+                        //print(searchingQuery);
+                      });
+                    },
+                    child: Icon(
+                      Icons.cancel,
+                      size: 26.0,
+                    ),
+                  ))
+              : Padding(
+                  padding: EdgeInsets.only(right: 15.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isSearching = !isSearching;
+                      });
+                    },
+                    child: Icon(
+                      Icons.search,
+                      size: 26.0,
+                    ),
+                  )),
           IconButton(
             icon: Icon(
               Icons.more_vert,
@@ -92,15 +94,13 @@ class _TasksListScreenState extends State<TasksListScreen> {
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.white),
           ),
-          border: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.white),
-          ),
         ),
         controller: _searchController,
         //todo
         onChanged: (query) {
+          searchingQuery = query;
           Provider.of<TaskDataModel>(context, listen: false)
-              .searchTask(query); //todo
+              .searchTask(searchingQuery); //todo
         },
       );
 }

@@ -20,20 +20,23 @@ class EditTaskScreen extends StatefulWidget {
 
 class _EditTaskScreenState extends State<EditTaskScreen> {
   TextValidation validationService = TextValidation();
+
   String title = '';
-
   String date = '';
-
   String note = '';
-
-  late DateTime dateTime;
+  String tempDate = '';
+  @override
+  void initState() {
+    //Provider.of<TaskDataModel>(context, listen: false).updateDate(widget.task.date);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     title = widget.task.title;
     date = widget.task.date;
     note = widget.task.note;
-    String tempDate = '';
+    tempDate = date;
     //Provider.of<TaskDataModel>(context, listen: false).updateDate(date);
 
     validationService = Provider.of<TextValidation>(context);
@@ -52,7 +55,8 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                 SizedBox(height: 10.0),
                 //datePicker(context),
                 Text(
-                  Provider.of<TaskDataModel>(context).date,
+                  //Provider.of<TaskDataModel>(context).date,
+                  tempDate,
                   style: TextStyle(fontSize: 20, color: Colors.black),
                 ),
                 SizedBox(height: 10.0),
@@ -70,9 +74,9 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
 
                   if (newDate == null) return;
 
-                  //setState(() => tempDate = DateFormat('dd-MM-yyyy').format(newDate));
-                  tempDate = DateFormat('dd-MM-yyyy').format(newDate);
-                  Provider.of<TaskDataModel>(context, listen: false).updateDate(tempDate);
+                  setState(() => tempDate = DateFormat('dd-MM-yyyy').format(newDate));
+                 // tempDate = DateFormat('dd-MM-yyyy').format(newDate);
+                  //Provider.of<TaskDataModel>(context, listen: false).updateDate(tempDate);
                   //date = Provider.of<TaskDataModel>(context, listen: false).updateDate(tempDate);
                   print("Edit date: $tempDate");
                 },
@@ -139,7 +143,8 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
             : () {
                 title = validationService.text.value;
                 note = note.trim();
-                date =  Provider.of<TaskDataModel>(context, listen: false).date;
+                //date =  Provider.of<TaskDataModel>(context, listen: false).date;
+                date =  tempDate;
                 Provider.of<TaskDataModel>(context, listen: false)
                     .updateTask(widget.task, title, note, date);
                 // todo
@@ -171,25 +176,9 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
 
           if (newDate == null) return;
 
-          setState(() => date = DateFormat('dd-MM-yyyy').format(newDate));
+          //setState(() => date = DateFormat('dd-MM-yyyy').format(newDate));
           //date = DateFormat('dd-MM-yyyy').format(newDate);
           print("Edit date: $date");
         },
       );
-
-  // Future pickDate(BuildContext context, String date) async {
-  //   //DateTime dt = DateFormat('dd-MM-yyyy kk:mm').parse(date);
-  //   final initialDate = DateTime.now();
-  //   final newDate = await showDatePicker(
-  //     context: context,
-  //     //initialDate: dt ?? initialDate,
-  //     initialDate: initialDate,
-  //     firstDate: DateTime(DateTime.now().year - 5),
-  //     lastDate: DateTime(DateTime.now().year + 5),
-  //   );
-  //
-  //   if (newDate == null) return;
-  //   setState(() => date = DateFormat('dd-MM-yyyy').format(newDate));
-  //   //date =  DateFormat('dd-MM-yyyy').format(newDate);
-  // }
 }

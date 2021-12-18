@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:memofy/data/dataproviders/task_data/task_data_model.dart';
 import 'package:memofy/presentation/screens/add_task/add_task_screen.dart';
+import 'package:memofy/presentation/screens/mic_add_task/mic_add_task_screen.dart';
 import 'package:memofy/presentation/widgets/tasks_list/tasks_list_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 class TasksListScreen extends StatefulWidget {
   static const String id = 'task_list_screen';
@@ -68,13 +70,36 @@ class _TasksListScreenState extends State<TasksListScreen> {
         ],
       ),
       body: TasksListWidget(),
-      floatingActionButton: FloatingActionButton(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        backgroundColor: Colors.green,
-        child: const Icon(Icons.add),
-        onPressed: () {
-          Navigator.of(context).pushNamed(AddTaskScreen.id);
-        },
+      // floatingActionButton: FloatingActionButton(
+      //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      //   backgroundColor: Colors.green,
+      //   child: const Icon(Icons.add),
+      //   onPressed: () {
+      //     Navigator.of(context).pushNamed(AddTaskScreen.id);
+      //   },
+      // ),
+      floatingActionButton: SpeedDial(
+        animatedIcon: AnimatedIcons.menu_close,
+        //icon: Icons.share,
+        backgroundColor: Colors.grey,
+        overlayColor: Colors.grey,
+        overlayOpacity: 0.4,
+        spacing: 12,
+        spaceBetweenChildren: 12,
+        children: [
+          SpeedDialChild(
+            child: Icon(Icons.add),
+            backgroundColor: Colors.green,
+            label: 'Add task',
+            onTap: () => Navigator.of(context).pushNamed(AddTaskScreen.id),
+          ),
+          SpeedDialChild(
+            child: Icon(Icons.mic),
+            backgroundColor: Colors.amber,
+            label: 'Add task by voice',
+            onTap: () => Navigator.of(context).pushNamed(MicAddTaskScreen.id),
+          ),
+        ],
       ),
     );
   }

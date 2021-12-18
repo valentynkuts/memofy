@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:memofy/data/dataproviders/subtask_configuration.dart';
@@ -9,6 +10,7 @@ import 'package:memofy/presentation/screens/add_task/add_task_screen.dart';
 import 'package:memofy/presentation/screens/done_tasks/done_tasks_list_screen.dart';
 import 'package:memofy/presentation/screens/edit_task/edit_task_screen.dart';
 import 'package:memofy/presentation/screens/home/home_page_screen.dart';
+import 'package:memofy/presentation/screens/mic_add_task/mic_add_task_screen.dart';
 import 'package:memofy/presentation/screens/subtasks_list/subtasks_list_screen.dart';
 import 'package:memofy/presentation/screens/tasks_list/tasks_list_screen.dart';
 import 'package:memofy/validation/add_task_validation.dart';
@@ -39,6 +41,12 @@ task.save();  // TODO не дает искать
 void main() async{
   //if main is async we add WidgetsFlutterBinding.ensureInitialized();
   WidgetsFlutterBinding.ensureInitialized();
+
+  //WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
 
   //Initializes Hive with a valid directory in your app files.
   await Hive.initFlutter();
@@ -80,6 +88,7 @@ class MyApp extends StatelessWidget {
           TasksListScreen.id : (context) => TasksListScreen(),
           AddTaskScreen.id : (context) => AddTaskScreen(),
           DoneTasksListScreen.id : (context) => DoneTasksListScreen(),
+          MicAddTaskScreen.id : (context) => MicAddTaskScreen(),
           SubtasksListScreen.id : (context) {
             final arguments = ModalRoute.of(context)?.settings.arguments;
               return SubtasksListScreen(taskModel: arguments as TaskModel);

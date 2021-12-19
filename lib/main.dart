@@ -16,6 +16,7 @@ import 'package:memofy/presentation/screens/tasks_list/tasks_list_screen.dart';
 import 'package:memofy/validation/add_task_validation.dart';
 import 'package:provider/provider.dart';
 import 'data/dataproviders/done_task_data/done_task_data_model.dart';
+import 'data/dataproviders/speech_data/speech_data_model.dart';
 import 'data/dataproviders/task_data/task_data_model.dart';
 import 'models/task/task_model.dart';
 
@@ -73,6 +74,9 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider<TextValidation>(
             create: (context) => TextValidation(),
+          ),
+          ChangeNotifierProvider<SpeechDataModel>(
+            create: (context) => SpeechDataModel(),
           ),
         ],
       child: MaterialApp(

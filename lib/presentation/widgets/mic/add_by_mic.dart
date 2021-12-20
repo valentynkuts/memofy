@@ -1,0 +1,66 @@
+import 'package:flutter/material.dart';
+import 'package:avatar_glow/avatar_glow.dart';
+import 'package:memofy/api/speech_api.dart';
+import 'package:memofy/data/dataproviders/speech_data/speech_data_model.dart';
+import 'package:provider/provider.dart';
+
+class AddByMic extends StatefulWidget {
+  String info;
+  bool isListening = false;
+
+  AddByMic({required this.info, Key? key}) : super(key: key);
+
+  @override
+  _AddByMicState createState() => _AddByMicState();
+}
+
+class _AddByMicState extends State<AddByMic> {
+  @override
+  Widget build(BuildContext context) {
+    String text = Provider.of<SpeechDataModel>(context, listen: true)
+        .getData(widget.info);
+
+    return Container(
+      padding: EdgeInsets.all(10.0),
+      margin: const EdgeInsets.all(10.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(color: Colors.black),
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+      ),
+      child: Column(
+        children: [
+          Text(
+            text,
+            style: TextStyle(
+              fontSize: 25.0,
+              color: Colors.black,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          //SizedBox(height: 10.0),
+          AvatarGlow(
+            animate: widget.isListening,
+            endRadius: 65,
+            glowColor: Theme.of(context).primaryColor,
+            child: FloatingActionButton.extended(
+              icon: Icon(widget.isListening ? Icons.mic : Icons.mic_none,
+                  size: 36),
+              onPressed: toggleRecording,
+              label: Text(widget.info),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future toggleRecording() => SpeechApi.toggleRecording(
+        onResult: (text) => setState(() =>
+            Provider.of<SpeechDataModel>(context, listen: false)
+                .setData(widget.info, text)),
+        onListening: (isListening) {
+          setState(() => widget.isListening = isListening);
+        },
+      );
+}

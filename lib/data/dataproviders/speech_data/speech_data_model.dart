@@ -8,24 +8,25 @@ import 'package:uuid/uuid.dart';
 
 class SpeechDataModel extends ChangeNotifier {
 
-
-  String _title = 'Press the button and start speaking';
-  String _note = 'Press the button and start speaking';
+  static const String TITLE = 'TITLE';
+  static const String NOTE = 'NOTE';
+  String _title = '';
+  String _note = '';
 
 
   void setData(String info, String data){
-    if(info == 'TITLE' ){
+    if(info == TITLE ){
        _title = data;
-    } else if(info == 'NOTE'){
+    } else if(info == NOTE){
        _note = data;
     }
     notifyListeners();
   }
 
   String getData(String info){
-    if(info == 'TITLE' ){
+    if(info == TITLE ){
       return _title;
-    } else if(info == 'NOTE'){
+    } else if(info == NOTE){
       return _note;
     }
     return '';

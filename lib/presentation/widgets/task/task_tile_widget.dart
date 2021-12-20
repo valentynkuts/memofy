@@ -127,17 +127,17 @@ class TaskTileWidget extends StatelessWidget {
                     //key: ValueKey(task),
                     //focusColor: Colors.amber,
                     //tileColor: Colors.red,
-                    leading: const Icon(Icons.task),
+                    //leading: const Icon(Icons.task),
                     //contentPadding: EdgeInsets.symmetric(horizontal: 2.0, vertical: 2.0),
                     title: Text(
                       task.title,
                       style: TextStyle(
                         fontFamily: 'Pacifico',
-                        fontSize: 22.0,
+                        fontSize: 20.0,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
-                      maxLines: 2,
+                      maxLines: 5,
                     ),
                     subtitle: Text(
                       task.date,
@@ -153,15 +153,18 @@ class TaskTileWidget extends StatelessWidget {
                     isThreeLine: true,
                     // onTap: () => print("ListTile"),
                   ),
-                  Text(
-                    task.note,
-                    style: TextStyle(
-                      //fontFamily: 'Pacifico',
-                      fontSize: 20.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
+                  Container(
+                    padding: EdgeInsets.all(10.0),
+                    child: Text(
+                      task.note,
+                      style: TextStyle(
+                        //fontFamily: 'Pacifico',
+                        fontSize: 20.0,
+                        color: Colors.indigo,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      maxLines: 7,
                     ),
-                    maxLines: 3,
                   ),
                 ],
               ),

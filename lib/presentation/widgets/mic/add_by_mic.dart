@@ -17,7 +17,7 @@ class AddByMic extends StatefulWidget {
 class _AddByMicState extends State<AddByMic> {
   @override
   Widget build(BuildContext context) {
-    String text = Provider.of<SpeechDataModel>(context, listen: true)
+    String text = Provider.of<SpeechViewModel>(context, listen: true)
         .getData(widget.info);
 
     return Container(
@@ -38,12 +38,15 @@ class _AddByMicState extends State<AddByMic> {
               fontWeight: FontWeight.w400,
             ),
           ),
-          //SizedBox(height: 10.0),
           AvatarGlow(
             animate: widget.isListening,
             endRadius: 65,
             glowColor: Theme.of(context).primaryColor,
             child: FloatingActionButton.extended(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              heroTag: widget.info,
               icon: Icon(widget.isListening ? Icons.mic : Icons.mic_none,
                   size: 36),
               onPressed: toggleRecording,
@@ -57,7 +60,7 @@ class _AddByMicState extends State<AddByMic> {
 
   Future toggleRecording() => SpeechApi.toggleRecording(
         onResult: (text) => setState(() =>
-            Provider.of<SpeechDataModel>(context, listen: false)
+            Provider.of<SpeechViewModel>(context, listen: false)
                 .setData(widget.info, text)),
         onListening: (isListening) {
           setState(() => widget.isListening = isListening);

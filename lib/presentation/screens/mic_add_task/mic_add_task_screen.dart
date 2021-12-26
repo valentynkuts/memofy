@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:memofy/constants/constants.dart';
 import 'package:memofy/data/dataproviders/speech_data/speech_data_model.dart';
 import 'package:memofy/data/dataproviders/task_data/task_data_model.dart';
 import 'package:memofy/presentation/widgets/mic/add_by_mic.dart';
@@ -44,22 +45,47 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
             String title =
-                Provider.of<SpeechDataModel>(context, listen: false).title;
+                Provider.of<SpeechViewModel>(context, listen: false).title;
             String note =
-                Provider.of<SpeechDataModel>(context, listen: false).note;
+                Provider.of<SpeechViewModel>(context, listen: false).note;
 
-            if(title.isNotEmpty) {
-              Provider.of<TaskDataModel>(context, listen: false).addTask(title,
+            if (title.isNotEmpty) {
+              Provider.of<TasksViewModel>(context, listen: false).addTask(title,
                   DateFormat('dd-MM-yyyy kk:mm').format(DateTime.now()), note);
+              Provider.of<SpeechViewModel>(context, listen: false).title = '';
+              Provider.of<SpeechViewModel>(context, listen: false).note = '';
+
+              Navigator.pop(context);
+            } else {
+              showErrorDialog(context);
             }
-
-            Provider.of<SpeechDataModel>(context, listen: false).title = '';
-            Provider.of<SpeechDataModel>(context, listen: false).note = '';
-
-            Navigator.pop(context);
           },
-          icon: Icon(Icons.add),
-          label: Text('ADD TASK'),
+          //icon: Icon(Icons.add),
+          //label: Text('ADD TASK'),
+          label: Text('ADD'),
         ),
+      );
+
+  void showErrorDialog(BuildContext context) => showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: kBorderRadius),
+            content: Text(
+              'Title can not be empty',
+              style: TextStyle(
+                fontSize: 20.0,
+                color: Colors.red,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            actions: [
+              OutlinedButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text('Close')),
+            ],
+          );
+        },
       );
 }

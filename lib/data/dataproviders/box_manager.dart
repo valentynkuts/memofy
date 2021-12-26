@@ -32,7 +32,6 @@ class BoxManager{
     if (!Hive.isAdapterRegistered(typeId)) {
       Hive.registerAdapter(adapter);
     }
-    print(Hive.openBox<T>(name)); // TODO delete
     return Hive.openBox<T>(name);
   }
 

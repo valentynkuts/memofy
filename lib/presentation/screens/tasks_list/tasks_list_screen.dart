@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:memofy/constants/constants.dart';
 import 'package:memofy/data/dataproviders/task_data/task_data_model.dart';
 import 'package:memofy/presentation/screens/add_task/add_task_screen.dart';
 import 'package:memofy/presentation/screens/mic_add_task/mic_add_task_screen.dart';
 import 'package:memofy/presentation/widgets/tasks_list/tasks_list_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:expandable_text/expandable_text.dart';
 
 class TasksListScreen extends StatefulWidget {
   static const String id = 'task_list_screen';
@@ -79,7 +81,11 @@ class _TasksListScreenState extends State<TasksListScreen> {
       //   },
       // ),
       floatingActionButton: SpeedDial(
+        shape: RoundedRectangleBorder(
+          borderRadius: kBorderRadius,
+        ),
         animatedIcon: AnimatedIcons.menu_close,
+        //animatedIconTheme: IconThemeData(size: 38.0),
         //icon: Icons.share,
         backgroundColor: Colors.grey,
         overlayColor: Colors.grey,
@@ -88,12 +94,20 @@ class _TasksListScreenState extends State<TasksListScreen> {
         spaceBetweenChildren: 12,
         children: [
           SpeedDialChild(
+            labelStyle: TextStyle(fontSize: 18.0),
+            shape: RoundedRectangleBorder(
+              borderRadius: kBorderRadius,
+            ),
             child: Icon(Icons.add),
             backgroundColor: Colors.green,
             label: 'Add task',
             onTap: () => Navigator.of(context).pushNamed(AddTaskScreen.id),
           ),
           SpeedDialChild(
+            labelStyle: TextStyle(fontSize: 18.0),
+            shape: RoundedRectangleBorder(
+              borderRadius: kBorderRadius,
+            ),
             child: Icon(Icons.mic),
             backgroundColor: Colors.amber,
             label: 'Add task by voice',
@@ -124,7 +138,7 @@ class _TasksListScreenState extends State<TasksListScreen> {
         //todo
         onChanged: (query) {
           searchingQuery = query;
-          Provider.of<TaskDataModel>(context, listen: false)
+          Provider.of<TasksViewModel>(context, listen: false)
               .searchTask(searchingQuery); //todo
         },
       );

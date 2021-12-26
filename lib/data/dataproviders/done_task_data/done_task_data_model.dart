@@ -6,13 +6,13 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:uuid/uuid.dart';
 
 
-class DoneTaskDataModel extends ChangeNotifier {
+class DoneTasksViewModel extends ChangeNotifier {
 
   late final Future<Box<TaskModel>> _box;
   ValueListenable<Object>? _listenableBox;
   String searchingQuery = '';
 
-  DoneTaskDataModel() {
+  DoneTasksViewModel() {
     load();
   }
 

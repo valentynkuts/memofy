@@ -1,19 +1,18 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:memofy/data/dataproviders/subtask_configuration.dart';
 import 'package:memofy/data/dataproviders/subtask_data/subtask_data_model.dart';
 import 'package:memofy/presentation/screens/add_subtask/add_subtask_screen.dart';
 import 'package:memofy/presentation/screens/add_task/add_task_screen.dart';
 import 'package:memofy/presentation/screens/done_tasks/done_tasks_list_screen.dart';
 import 'package:memofy/presentation/screens/edit_task/edit_task_screen.dart';
 import 'package:memofy/presentation/screens/home/home_page_screen.dart';
+import 'package:memofy/presentation/screens/mic_add_subtask/mic_add_subtask_screen.dart';
 import 'package:memofy/presentation/screens/mic_add_task/mic_add_task_screen.dart';
 import 'package:memofy/presentation/screens/subtasks_list/subtasks_list_screen.dart';
 import 'package:memofy/presentation/screens/tasks_list/tasks_list_screen.dart';
-import 'package:memofy/validation/add_task_validation.dart';
+import 'package:memofy/validation/text_validation.dart';
 import 'package:provider/provider.dart';
 import 'data/dataproviders/done_task_data/done_task_data_model.dart';
 import 'data/dataproviders/speech_data/speech_data_model.dart';
@@ -66,17 +65,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers:[
-          ChangeNotifierProvider<TaskDataModel>(
-            create: (context) => TaskDataModel(),
+          ChangeNotifierProvider<TasksViewModel>(
+            create: (context) => TasksViewModel(),
           ),
-          ChangeNotifierProvider<DoneTaskDataModel>(
-            create: (context) => DoneTaskDataModel(),
+          ChangeNotifierProvider<DoneTasksViewModel>(
+            create: (context) => DoneTasksViewModel(),
           ),
           ChangeNotifierProvider<TextValidation>(
             create: (context) => TextValidation(),
           ),
-          ChangeNotifierProvider<SpeechDataModel>(
-            create: (context) => SpeechDataModel(),
+          ChangeNotifierProvider<SpeechViewModel>(
+            create: (context) => SpeechViewModel(),
           ),
         ],
       child: MaterialApp(
@@ -99,7 +98,11 @@ class MyApp extends StatelessWidget {
           },
           AddSubtaskScreen.id : (context) {
             final arguments = ModalRoute.of(context)?.settings.arguments;
-            return AddSubtaskScreen(subtaskDataProvider: arguments as SubtaskDataModel,);
+            return AddSubtaskScreen(subtaskDataProvider: arguments as SubtasksViewModel,);
+          },
+          MicAddSubtaskScreen.id : (context) {
+            final arguments = ModalRoute.of(context)?.settings.arguments;
+            return MicAddSubtaskScreen(subtasksViewModel: arguments as SubtasksViewModel,);
           },
           EditTaskScreen.id : (context) {
             final task = ModalRoute.of(context)?.settings.arguments;

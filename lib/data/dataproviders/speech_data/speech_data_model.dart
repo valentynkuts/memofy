@@ -6,7 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:uuid/uuid.dart';
 
 
-class SpeechDataModel extends ChangeNotifier {
+class SpeechViewModel extends ChangeNotifier {
 
   static const String TITLE = 'TITLE';
   static const String NOTE = 'NOTE';

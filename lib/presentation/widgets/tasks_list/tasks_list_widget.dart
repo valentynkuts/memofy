@@ -4,14 +4,12 @@ import 'package:memofy/presentation/widgets/task/task_tile_widget.dart';
 import 'package:provider/provider.dart';
 
 class TasksListWidget extends StatelessWidget {
-
   TasksListWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
-    return Consumer<TaskDataModel>(builder: (context, taskDataModel, child) {
-      return taskDataModel.tasks.isEmpty
+    return Consumer<TasksViewModel>(builder: (context, tasksViewModel, child) {
+      return tasksViewModel.tasks.isEmpty
           ? Container(
               child: Center(
                 child: Text(
@@ -21,20 +19,21 @@ class TasksListWidget extends StatelessWidget {
               ),
             )
           : ReorderableListView.builder(
-             // padding: EdgeInsets.only(top: 70.0),
+              // padding: EdgeInsets.only(top: 70.0),
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-              itemCount: taskDataModel.tasks.length,
+              itemCount: tasksViewModel.tasks.length,
               onReorder: (int oldIndex, int newIndex) async {
                 final index = newIndex > oldIndex ? newIndex - 1 : newIndex;
-                final task = taskDataModel.tasks.removeAt(oldIndex);
-                taskDataModel.tasks.insert(index, task);
+                final task = tasksViewModel.tasks.removeAt(oldIndex);
+                tasksViewModel.tasks.insert(index, task);
               },
               itemBuilder: (BuildContext context, int index) {
-                final task = taskDataModel.tasks[index];
-                 if(task.orderby != index && taskDataModel.searchingQuery.isEmpty){
+                final task = tasksViewModel.tasks[index];
+                if (task.orderby != index &&
+                    tasksViewModel.searchingQuery.isEmpty) {
                   task.orderby = index;
                   task.save();
-                } 
+                }
                 return TaskTileWidget(
                   key: ValueKey(task),
                   task: task,

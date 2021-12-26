@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:memofy/constants/constants.dart';
 import 'package:memofy/data/dataproviders/subtask_data/subtask_data_model.dart';
-import 'package:memofy/validation/add_task_validation.dart';
+import 'package:memofy/validation/text_validation.dart';
 import 'package:memofy/validation/validation_item.dart';
 import 'package:provider/provider.dart';
 
 class AddSubtaskScreen extends StatefulWidget {
   static const String id = 'add_subtask_screen';
 
-  SubtaskDataModel subtaskDataProvider;
+  SubtasksViewModel subtaskDataProvider;
 
   AddSubtaskScreen({Key? key, required this.subtaskDataProvider})
       : super(key: key);
@@ -19,7 +19,7 @@ class AddSubtaskScreen extends StatefulWidget {
 
 class _AddSubtaskScreenState extends State<AddSubtaskScreen> {
   String description = "";
-  SubtaskDataModel? _subtaskDatamodel;
+  SubtasksViewModel? _subtaskDatamodel;
 
   TextValidation validationService = TextValidation();
 

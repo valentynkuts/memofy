@@ -3,16 +3,15 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:memofy/data/dataproviders/subtask_data/subtask_data_model.dart';
 import 'package:memofy/models/subtask/subtask_model.dart';
 import 'package:memofy/presentation/screens/edit_subtask/edit_subtask_screen.dart';
-import 'package:memofy/presentation/widgets/slidable/item_slidable_widget.dart';
 
 class SubtaskTileWidget extends StatelessWidget {
   final SubtaskModel subtask;
-  final SubtaskDataModel subtaskDataModel;
+  final SubtasksViewModel subtasksViewModel;
 
   const SubtaskTileWidget({
     Key? key,
     required this.subtask,
-    required this.subtaskDataModel,
+    required this.subtasksViewModel,
   }) : super(key: key);
 
   @override
@@ -41,9 +40,7 @@ class SubtaskTileWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(10.0),
               child: IconSlideAction(
                 color: Colors.red, //Colors.green,
-                onTap: () {
-                  subtaskDataModel.removeSubtask(subtask);
-                },
+                onTap: () => subtasksViewModel.removeSubtask(subtask),
                 caption: 'Delete', //'Edit',
                 icon: Icons.delete, //Icons.edit,
               ),
@@ -87,9 +84,9 @@ class SubtaskTileWidget extends StatelessWidget {
                   activeColor: Colors.green,
                   value: subtask.isDone,
                   onChanged: (value) {
-                    subtaskDataModel.toggleSubtaskStatus(subtask);
+                    subtasksViewModel.toggleSubtaskStatus(subtask);
                     //check whether all subtask done or not, as a  result change task to Done or ToDo
-                    subtaskDataModel.isTaskDone(context);
+                    subtasksViewModel.isTaskDone(context);
                   },
                 ),
               ),
@@ -101,7 +98,7 @@ class SubtaskTileWidget extends StatelessWidget {
   void editSubtask(BuildContext context) => Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => EditSubtaskScreen(
-              subtask: subtask, subtaskDataModel: subtaskDataModel),
+              subtask: subtask, subtasksViewModel: subtasksViewModel),
         ),
       );
 }

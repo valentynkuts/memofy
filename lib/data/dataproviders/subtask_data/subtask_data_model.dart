@@ -6,14 +6,14 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:memofy/models/task/task_model.dart';
 import '../box_manager.dart';
 
-class SubtaskDataModel extends ChangeNotifier {
+class SubtasksViewModel extends ChangeNotifier {
 
   TaskModel taskModel;
   late final Future<Box<SubtaskModel>> _box;
   late final Future<Box<TaskModel>> _boxTask;
   ValueListenable<Object>? _listenableBox;
 
-  SubtaskDataModel({required this.taskModel}) {
+  SubtasksViewModel({required this.taskModel}) {
     load();
   }
 

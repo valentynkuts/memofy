@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:memofy/constants/constants.dart';
 import 'package:memofy/data/dataproviders/task_data/task_data_model.dart';
 import 'package:memofy/models/task/task_model.dart';
-import 'package:memofy/validation/add_task_validation.dart';
+import 'package:memofy/validation/text_validation.dart';
 import 'package:memofy/validation/validation_item.dart';
 import 'package:provider/provider.dart';
 
@@ -28,15 +28,19 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   @override
   void initState() {
     //Provider.of<TaskDataModel>(context, listen: false).updateDate(widget.task.date);
+    title = widget.task.title;
+    date = widget.task.date;
+    note = widget.task.note;
+    //tempDate = date;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    title = widget.task.title;
-    date = widget.task.date;
-    note = widget.task.note;
-    tempDate = date;
+    // title = widget.task.title;
+    // date = widget.task.date;
+    // note = widget.task.note;
+    // tempDate = date;
     //Provider.of<TaskDataModel>(context, listen: false).updateDate(date);
 
     validationService = Provider.of<TextValidation>(context);
@@ -56,12 +60,13 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                 //datePicker(context),
                 Text(
                   //Provider.of<TaskDataModel>(context).date,
-                  tempDate,
+                  //tempDate,
+                  date,
                   style: TextStyle(fontSize: 20, color: Colors.black),
                 ),
                 SizedBox(height: 10.0),
               ElevatedButton(
-
+                child: Text(date),
                 onPressed: () async {
                   final initialDate = DateTime.now();
                   final newDate = await showDatePicker(
@@ -74,13 +79,14 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
 
                   if (newDate == null) return;
 
-                  setState(() => tempDate = DateFormat('dd-MM-yyyy').format(newDate));
+                 // setState(() => tempDate = DateFormat('dd-MM-yyyy').format(newDate));
+                  setState(() => date = DateFormat('dd-MM-yyyy').format(newDate));
                  // tempDate = DateFormat('dd-MM-yyyy').format(newDate);
                   //Provider.of<TaskDataModel>(context, listen: false).updateDate(tempDate);
                   //date = Provider.of<TaskDataModel>(context, listen: false).updateDate(tempDate);
-                  print("Edit date: $tempDate");
+                  //print("Edit date: $tempDate");
+                  print("Edit date: $date");
                 },
-                child: null,
               ),
 
 
@@ -106,10 +112,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
               borderRadius: kBorderRadius,
             ),
             hintText: 'Enter a Title'),
-        onChanged: (value) {
-          ////value = title;
-          validationService.changeNewTitle(value);
-        },
+        onChanged: (value) => validationService.changeNewTitle(value),
       );
 
   Widget EditNoteInput() => TextFormField(
@@ -138,14 +141,14 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
         backgroundColor: Colors.green,
         icon: Icon(Icons.done),
         label: Text('Submit'),
-        onPressed: (!validationService.isValid)
-            ? null
-            : () {
-                title = validationService.text.value;
+        onPressed: () {
+                if(validationService.isValid){
+                  title = validationService.text.value;
+                }
                 note = note.trim();
                 //date =  Provider.of<TaskDataModel>(context, listen: false).date;
-                date =  tempDate;
-                Provider.of<TaskDataModel>(context, listen: false)
+                //date =  tempDate;
+                Provider.of<TasksViewModel>(context, listen: false)
                     .updateTask(widget.task, title, note, date);
                 // todo
                 validationService.text = ValidationItem('', null);

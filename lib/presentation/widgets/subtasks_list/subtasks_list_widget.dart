@@ -4,7 +4,6 @@ import 'package:memofy/presentation/widgets/subtask/subtask_tile_widget.dart';
 import 'package:provider/provider.dart';
 
 class SubtasksListWidget extends StatefulWidget {
-
   SubtasksListWidget({Key? key}) : super(key: key);
 
   @override
@@ -12,12 +11,10 @@ class SubtasksListWidget extends StatefulWidget {
 }
 
 class _SubtasksListWidgetState extends State<SubtasksListWidget> {
-
   @override
   Widget build(BuildContext context) {
-    return Consumer<SubtaskDataModel>(builder: (context, subtaskData, child) {
-      print(subtaskData.subtasks.toString());
-      return subtaskData.subtasks.isEmpty
+    return Consumer<SubtasksViewModel>(builder: (context, subtasksViewModel, child) {
+      return subtasksViewModel.subtasks.isEmpty
           ? Container(
               child: Center(
                 child: Text(
@@ -27,28 +24,25 @@ class _SubtasksListWidgetState extends State<SubtasksListWidget> {
               ),
             )
           : ReorderableListView.builder(
-              padding: EdgeInsets.only(top: 70.0),
+              padding: EdgeInsets.only(top: 75.0),
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-              itemCount: subtaskData.subtasks.length,
+              itemCount: subtasksViewModel.subtasks.length,
               onReorder: (int oldIndex, int newIndex) => setState(() {
                 final index = newIndex > oldIndex ? newIndex - 1 : newIndex;
-                final subtask =
-                subtaskData.subtasks.removeAt(oldIndex);
-                subtaskData.subtasks.insert(index, subtask);
+                final subtask = subtasksViewModel.subtasks.removeAt(oldIndex);
+                subtasksViewModel.subtasks.insert(index, subtask);
               }),
-              // itemExtent: 163, //height of element
               itemBuilder: (BuildContext context, int index) {
-                final subtask = subtaskData.subtasks[index];
-                if(subtask.orderby != index){
+                final subtask = subtasksViewModel.subtasks[index];
+                if (subtask.orderby != index) {
                   subtask.orderby = index;
                   subtask.save();
                 }
                 return SubtaskTileWidget(
                   key: ValueKey(subtask),
                   subtask: subtask,
-                  subtaskDataModel: subtaskData,
+                  subtasksViewModel: subtasksViewModel,
                 );
-
               },
             );
     });

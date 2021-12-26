@@ -11,7 +11,7 @@ class DoneTasksListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     TaskModel doneTask;
 
-    return Consumer<DoneTaskDataModel>(builder: (context, doneTaskDataModel, child) {
+    return Consumer<DoneTasksViewModel>(builder: (context, doneTaskDataModel, child) {
       return doneTaskDataModel.doneTasks.isEmpty
           ? Container(
         child: Center(

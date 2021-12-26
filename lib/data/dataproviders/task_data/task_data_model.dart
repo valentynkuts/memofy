@@ -6,14 +6,14 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:uuid/uuid.dart';
 
 
-class TaskDataModel extends ChangeNotifier {
+class TasksViewModel extends ChangeNotifier {
 
   late final Future<Box<TaskModel>> _box;
   ValueListenable<Object>? _listenableBox;
   String searchingQuery = '';
   String date = '';
 
-  TaskDataModel() {
+  TasksViewModel() {
     load();
   }
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:memofy/constants/constants.dart';
 import 'package:memofy/data/dataproviders/task_data/task_data_model.dart';
-import 'package:memofy/validation/add_task_validation.dart';
+import 'package:memofy/validation/text_validation.dart';
 import 'package:memofy/validation/validation.dart';
 import 'package:memofy/validation/validation_item.dart';
 import 'package:provider/provider.dart';
@@ -100,7 +100,7 @@ class AddTaskScreen extends StatelessWidget {
                 print(dt);
                 //print(new DateFormat('dd-MM-yyyy kk:mm').parse(data));
                 //----
-                Provider.of<TaskDataModel>(context, listen: false).addTask(
+                Provider.of<TasksViewModel>(context, listen: false).addTask(
                     newTitle,
                     date,
                     newNote);

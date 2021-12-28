@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:memofy/data/dataproviders/task_data/task_data_model.dart';
+import 'package:memofy/data/dataproviders/task_data/tasks_view_model.dart';
 import 'package:memofy/presentation/widgets/task/task_tile_widget.dart';
 import 'package:provider/provider.dart';
 

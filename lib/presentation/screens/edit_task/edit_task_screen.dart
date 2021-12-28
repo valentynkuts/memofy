@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:memofy/constants/constants.dart';
-import 'package:memofy/data/dataproviders/task_data/task_data_model.dart';
+import 'package:memofy/data/dataproviders/task_data/tasks_view_model.dart';
 import 'package:memofy/models/task/task_model.dart';
 import 'package:memofy/validation/text_validation.dart';
 import 'package:memofy/validation/validation_item.dart';

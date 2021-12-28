@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:memofy/data/dataproviders/done_task_data/done_task_data_model.dart';
+import 'package:memofy/data/dataproviders/done_task_data/done_tasks_view_model.dart';
 import 'package:memofy/presentation/widgets/done_tasks/done_tasks_list_widget.dart';
 import 'package:provider/provider.dart';
 

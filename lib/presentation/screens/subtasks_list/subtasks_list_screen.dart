@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:memofy/constants/constants.dart';
-import 'package:memofy/data/dataproviders/subtask_data/subtask_data_model.dart';
+import 'package:memofy/data/dataproviders/subtask_data/subtasks_view_model.dart';
 import 'package:memofy/models/task/task_model.dart';
 import 'package:memofy/presentation/screens/add_subtask/add_subtask_screen.dart';
 import 'package:memofy/presentation/screens/mic_add_subtask/mic_add_subtask_screen.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:memofy/constants/constants.dart';
-import 'package:memofy/data/dataproviders/speech_data/speech_data_model.dart';
-import 'package:memofy/data/dataproviders/task_data/task_data_model.dart';
+import 'package:memofy/data/dataproviders/speech_data/speech_view_model.dart';
+import 'package:memofy/data/dataproviders/task_data/tasks_view_model.dart';
 import 'package:memofy/presentation/widgets/mic/add_by_mic.dart';
 import 'package:provider/provider.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:memofy/constants/constants.dart';
-import 'package:memofy/data/dataproviders/task_data/task_data_model.dart';
+import 'package:memofy/data/dataproviders/task_data/tasks_view_model.dart';
 import 'package:memofy/presentation/screens/add_task/add_task_screen.dart';
 import 'package:memofy/presentation/screens/mic_add_task/mic_add_task_screen.dart';
 import 'package:memofy/presentation/widgets/tasks_list/tasks_list_widget.dart';

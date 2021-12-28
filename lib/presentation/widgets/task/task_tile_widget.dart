@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:memofy/data/dataproviders/task_data/task_data_model.dart';
+import 'package:memofy/data/dataproviders/task_data/tasks_view_model.dart';
 import 'package:memofy/models/task/task_model.dart';
 import 'package:memofy/presentation/screens/edit_task/edit_task_screen.dart';
 import 'package:memofy/presentation/screens/subtasks_list/subtasks_list_screen.dart';

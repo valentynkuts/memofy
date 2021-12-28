@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:memofy/data/dataproviders/subtask_data/subtask_data_model.dart';
+import 'package:memofy/data/dataproviders/subtask_data/subtasks_view_model.dart';
 import 'package:memofy/presentation/screens/add_subtask/add_subtask_screen.dart';
 import 'package:memofy/presentation/screens/add_task/add_task_screen.dart';
 import 'package:memofy/presentation/screens/done_tasks/done_tasks_list_screen.dart';
@@ -14,9 +14,9 @@ import 'package:memofy/presentation/screens/subtasks_list/subtasks_list_screen.d
 import 'package:memofy/presentation/screens/tasks_list/tasks_list_screen.dart';
 import 'package:memofy/validation/text_validation.dart';
 import 'package:provider/provider.dart';
-import 'data/dataproviders/done_task_data/done_task_data_model.dart';
-import 'data/dataproviders/speech_data/speech_data_model.dart';
-import 'data/dataproviders/task_data/task_data_model.dart';
+import 'data/dataproviders/done_task_data/done_tasks_view_model.dart';
+import 'data/dataproviders/speech_data/speech_view_model.dart';
+import 'data/dataproviders/task_data/tasks_view_model.dart';
 import 'models/task/task_model.dart';
 
 // https://docs.flutter.dev/cookbook/navigation/passing-data

@@ -37,7 +37,6 @@ class _AddSubtaskScreenState extends State<AddSubtaskScreen> {
 
     return ChangeNotifierProvider.value(
       value: _subtaskDatamodel,
-      //lazy: false,
       child: Scaffold(
         appBar: AppBar(
           title: Text("Add Subtask"),

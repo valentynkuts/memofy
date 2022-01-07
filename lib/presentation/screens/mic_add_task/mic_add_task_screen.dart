@@ -60,8 +60,6 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
               showErrorDialog(context);
             }
           },
-          //icon: Icon(Icons.add),
-          //label: Text('ADD TASK'),
           label: Text('ADD'),
         ),
       );
@@ -70,8 +68,7 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: kBorderRadius),
+            shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
             content: Text(
               'Title can not be empty',
               style: TextStyle(

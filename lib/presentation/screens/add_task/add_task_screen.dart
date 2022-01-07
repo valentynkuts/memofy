@@ -9,9 +9,9 @@ import 'package:provider/provider.dart';
 class AddTaskScreen extends StatelessWidget {
   static const String id = 'add_list_screen';
 
-  String newTitle = ""; // field for input
-  String date = ""; // field for input
-  String newNote = ""; // field for input
+  String newTitle = "";
+  String date = "";
+  String newNote = "";
 
   TextValidation validationService = TextValidation(); //TODO
 
@@ -48,7 +48,6 @@ class AddTaskScreen extends StatelessWidget {
         decoration: InputDecoration(
             labelText: 'Title',
             errorText: validationService.text.error,
-            //errorText: validation.errorText,
             border: OutlineInputBorder(
               borderRadius: kBorderRadius,
             ),

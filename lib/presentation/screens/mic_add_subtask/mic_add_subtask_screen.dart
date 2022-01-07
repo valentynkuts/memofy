@@ -11,7 +11,8 @@ class MicAddSubtaskScreen extends StatefulWidget {
 
   SubtasksViewModel subtasksViewModel;
 
-  MicAddSubtaskScreen({Key? key, required this.subtasksViewModel}) : super(key: key);
+  MicAddSubtaskScreen({Key? key, required this.subtasksViewModel})
+      : super(key: key);
 
   @override
   _MicAddSubtaskScreenState createState() => _MicAddSubtaskScreenState();
@@ -30,76 +31,66 @@ class _MicAddSubtaskScreenState extends State<MicAddSubtaskScreen> {
 
   @override
   Widget build(BuildContext context) => ChangeNotifierProvider.value(
-    value: _subtaskDatamodel,
-    child: Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Add by Mic',
+        value: _subtaskDatamodel,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              'Add by Mic',
+            ),
+            centerTitle: true,
+          ),
+          body: ListView(
+            children: [
+              Container(
+                padding: EdgeInsets.all(10.0),
+                child: Text(
+                  widget.info,
+                  style: TextStyle(
+                    fontSize: 25.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+              AddByMic(info: 'TITLE'),
+            ],
+          ),
+          floatingActionButton: FloatingActionButton.extended(
+            onPressed: () {
+              String title =
+                  Provider.of<SpeechViewModel>(context, listen: false).title;
+              if (title.isNotEmpty) {
+                _subtaskDatamodel!.addSubtask(title);
+                Provider.of<SpeechViewModel>(context, listen: false).title = '';
+                Navigator.pop(context);
+              } else {
+                showErrorDialog(context);
+              }
+            },
+            label: Text('ADD'),
+          ),
         ),
-        centerTitle: true,
-      ),
-      body: ListView(
-        children: [
-          Container(
-            padding: EdgeInsets.all(10.0),
-            child: Text(
-              widget.info,
+      );
+
+  void showErrorDialog(BuildContext context) => showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
+            content: Text(
+              'Title can not be empty',
               style: TextStyle(
-                fontSize: 25.0,
-                color: Colors.black,
+                fontSize: 20.0,
+                color: Colors.red,
                 fontWeight: FontWeight.w400,
               ),
             ),
-          ),
-          AddByMic(info: 'TITLE'),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          String title =
-              Provider.of<SpeechViewModel>(context, listen: false).title;
-          // String note =
-          //     Provider.of<SpeechViewModel>(context, listen: false).note;
-
-          if (title.isNotEmpty) {
-            _subtaskDatamodel!.addSubtask(title);
-            // Provider.of<TasksViewModel>(context, listen: false).addTask(title,
-            //     DateFormat('dd-MM-yyyy kk:mm').format(DateTime.now()), note);
-            Provider.of<SpeechViewModel>(context, listen: false).title = '';
-            //Provider.of<SpeechViewModel>(context, listen: false).note = '';
-
-            Navigator.pop(context);
-          } else {
-            showErrorDialog(context);
-          }
+            actions: [
+              OutlinedButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text('Close')),
+            ],
+          );
         },
-        //icon: Icon(Icons.add),
-        //label: Text('ADD TASK'),
-        label: Text('ADD'),
-      ),
-    ),
-  );
-
-  void showErrorDialog(BuildContext context) => showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        shape: RoundedRectangleBorder(
-            borderRadius: kBorderRadius),
-        content: Text(
-          'Title can not be empty',
-          style: TextStyle(
-            fontSize: 20.0,
-            color: Colors.red,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        actions: [
-          OutlinedButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: Text('Close')),
-        ],
       );
-    },
-  );
 }

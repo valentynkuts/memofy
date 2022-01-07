@@ -26,7 +26,6 @@ class TaskService{
     return (await _box).get(key);
   }
 
-
   Future<List<TaskModel>> getTasks() async {
     return (await _box).values.toList();
   }
@@ -43,7 +42,6 @@ class TaskService{
   }
 
   Future<void> removeTask(TaskModel task) async {
-
     final taskKey = task.id;
     //delete box with all subtasks
     final subtaskBox = BoxManager().makeSubtaskBoxName(taskKey);
@@ -61,8 +59,6 @@ class TaskService{
   }
 
   Future<void> close(Function f) async{
-    //await saveOrder(); //todo
-
     _listenableBox?.removeListener(() => f());
     await BoxManager().closeBox((await _box));
   }

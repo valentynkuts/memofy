@@ -60,7 +60,6 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: HomePageScreen.id,
         routes: {
-          //'/auth': (context) => Auth(),
           HomePageScreen.id: (context) => HomePageScreen(),
           TasksListScreen.id: (context) => TasksListScreen(),
           AddTaskScreen.id: (context) => AddTaskScreen(),

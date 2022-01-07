@@ -25,6 +25,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   String date = '';
   String note = '';
   String tempDate = '';
+
   @override
   void initState() {
     title = widget.task.title;
@@ -55,21 +56,22 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                   style: TextStyle(fontSize: 20, color: Colors.black),
                 ),
                 SizedBox(height: 10.0),
-              ElevatedButton(
-                child: Text(date),
-                onPressed: () async {
-                  final initialDate = DateTime.now();
-                  final newDate = await showDatePicker(
-                    context: context,
-                    initialDate: initialDate,
-                    firstDate: DateTime(DateTime.now().year - 5),
-                    lastDate: DateTime(DateTime.now().year + 5),
-                  );
-                  if (newDate == null) return;
-                  setState(() => date = DateFormat('dd-MM-yyyy').format(newDate));
-                },
-              ),
-              SizedBox(height: 10.0),
+                ElevatedButton(
+                  child: Text(date),
+                  onPressed: () async {
+                    final initialDate = DateTime.now();
+                    final newDate = await showDatePicker(
+                      context: context,
+                      initialDate: initialDate,
+                      firstDate: DateTime(DateTime.now().year - 5),
+                      lastDate: DateTime(DateTime.now().year + 5),
+                    );
+                    if (newDate == null) return;
+                    setState(
+                        () => date = DateFormat('dd-MM-yyyy').format(newDate));
+                  },
+                ),
+                SizedBox(height: 10.0),
                 EditNoteInput(),
               ],
             ),
@@ -86,7 +88,6 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
         decoration: InputDecoration(
             labelText: 'Title',
             errorText: validationService.text.error,
-            //errorText: validation.errorText,
             border: OutlineInputBorder(
               borderRadius: kBorderRadius,
             ),
@@ -121,46 +122,14 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
         icon: Icon(Icons.done),
         label: Text('Submit'),
         onPressed: () {
-                if(validationService.isValid){
-                  title = validationService.text.value;
-                }
-                note = note.trim();
-                //date =  Provider.of<TaskDataModel>(context, listen: false).date;
-                //date =  tempDate;
-                Provider.of<TasksViewModel>(context, listen: false)
-                    .updateTask(widget.task, title, note, date);
-                // todo
-                validationService.text = ValidationItem('', null);
-                Navigator.pop(context);
-              },
-      );
-
-  Widget datePicker(BuildContext context) => ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          minimumSize: Size.fromHeight(40),
-          primary: Colors.white,
-        ),
-        child: FittedBox(
-          child: Text(
-            date,
-            style: TextStyle(fontSize: 20, color: Colors.black),
-          ),
-        ),
-        onPressed: () async {
-          final initialDate = DateTime.now();
-          final newDate = await showDatePicker(
-            context: context,
-            //initialDate: dt ?? initialDate,
-            initialDate: initialDate,
-            firstDate: DateTime(DateTime.now().year - 5),
-            lastDate: DateTime(DateTime.now().year + 5),
-          );
-
-          if (newDate == null) return;
-
-          //setState(() => date = DateFormat('dd-MM-yyyy').format(newDate));
-          //date = DateFormat('dd-MM-yyyy').format(newDate);
-          print("Edit date: $date");
+          if (validationService.isValid) {
+            title = validationService.text.value;
+          }
+          note = note.trim();
+          Provider.of<TasksViewModel>(context, listen: false)
+              .updateTask(widget.task, title, note, date);
+          validationService.text = ValidationItem('', null);
+          Navigator.pop(context);
         },
       );
 }

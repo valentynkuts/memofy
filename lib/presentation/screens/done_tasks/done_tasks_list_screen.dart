@@ -83,7 +83,6 @@ class _DoneTasksListScreenState extends State<DoneTasksListScreen> {
           ),
         ),
         controller: _searchController,
-        //todo
         onChanged: (query) {
           Provider.of<DoneTasksViewModel>(context, listen: false)
               .searchTask(query); //todo

@@ -36,7 +36,6 @@ class TaskModel extends HiveObject {
 
   @override
   String toString() {
-    //return 'TaskModel{title: $title, data: $data, note: $note, isDone: $isDone, subtasks: $subtasks}';
     return 'TaskModel{title: $title, data: $date';
   }
 

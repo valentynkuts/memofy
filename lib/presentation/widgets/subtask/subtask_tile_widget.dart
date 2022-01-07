@@ -85,7 +85,7 @@ class SubtaskTileWidget extends StatelessWidget {
                   value: subtask.isDone,
                   onChanged: (value) {
                     subtasksViewModel.toggleSubtaskStatus(subtask);
-                    //check whether all subtask done or not, as a  result change task to Done or ToDo
+                    //check whether all subtask done or not, as a  result change task to Done or To_Do
                     subtasksViewModel.isTaskDone(context);
                   },
                 ),

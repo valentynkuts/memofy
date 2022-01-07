@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:memofy/presentation/screens/done_tasks/done_tasks_list_screen.dart';
 import 'package:memofy/presentation/screens/tasks_list/tasks_list_screen.dart';
 
-
 class HomePageScreen extends StatefulWidget {
   static const String id = 'Home_screen';
+
   @override
   _HomePageScreenState createState() => _HomePageScreenState();
 }

@@ -5,7 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:uuid/uuid.dart';
 import 'box_manager.dart';
 
-class DataProvider{
+class TaskService{
 
   late final Future<Box<TaskModel>> _box;
   ValueListenable<Object>? _listenableBox;
@@ -18,8 +18,17 @@ class DataProvider{
     _box = BoxManager().openTaskBox();
     await f();
     _listenableBox = (await _box).listenable();
-    _listenableBox?.addListener(() => f()); //ok
+    _listenableBox?.addListener(() => f());
 
+  }
+
+  Future<TaskModel?> getTaskByKey(String key) async {
+    return (await _box).get(key);
+  }
+
+
+  Future<List<TaskModel>> getTasks() async {
+    return (await _box).values.toList();
   }
 
   Future<TaskModel> addTask(List tasks, String title, String data, String note) async {

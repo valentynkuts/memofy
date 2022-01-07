@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
+import 'package:memofy/data/subtask_service.dart';
 import 'package:memofy/models/subtask/subtask_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:memofy/models/task/task_model.dart';
-import '../box_manager.dart';
 
 class SubtasksViewModel extends ChangeNotifier {
 
@@ -12,6 +12,9 @@ class SubtasksViewModel extends ChangeNotifier {
   late final Future<Box<SubtaskModel>> _box;
   late final Future<Box<TaskModel>> _boxTask;
   ValueListenable<Object>? _listenableBox;
+
+  final subtaskService = SubtaskService();
+  //final taskService = TaskService();
 
   SubtasksViewModel({required this.taskModel}) {
     load();
@@ -22,47 +25,51 @@ class SubtasksViewModel extends ChangeNotifier {
   List<SubtaskModel> get subtasks => _subtasks;
 
   _readSubtasksFromHive() async{
-    _subtasks = (await _box).values.toList();
+    _subtasks = await subtaskService.getSubtasks();
     _subtasks.sort((a, b) => a.orderby.compareTo(b.orderby));
     notifyListeners();
   }
 
   void load() async {
-     final taskKey = taskModel.id;
-    _box = BoxManager().openSubtaskBox(taskKey);
-     _boxTask = BoxManager().openTaskBox();
+    //  final taskKey = taskModel.id;
+    // _box = BoxManager().openSubtaskBox(taskKey);
+    //  _boxTask = BoxManager().openTaskBox();
+    //
+    // await _readSubtasksFromHive();
+    //  _listenableBox = (await _box).listenable();
+    //  //(await _box).listenable().addListener(() => _readSubtasksFromHive());
+    //  _listenableBox?.addListener(() => _readSubtasksFromHive());
 
-    await _readSubtasksFromHive();
-     _listenableBox = (await _box).listenable();
-     //(await _box).listenable().addListener(() => _readSubtasksFromHive());
-     _listenableBox?.addListener(() => _readSubtasksFromHive());
+    await subtaskService.load(taskModel.id, _readSubtasksFromHive);
   }
 
 
   Future<void> addSubtask(String description) async {
 
-    int l = _subtasks.length;
-    final subtask = SubtaskModel(
-        description: description, orderby: l + 1, isDone: false);
-    final index = (await _box).add(subtask);
+    await subtaskService.addSubtask(subtasks.length ,description);
+
+    // int l = _subtasks.length;
+    // final subtask = SubtaskModel(
+    //     description: description, orderby: l + 1, isDone: false);
+    // final index = (await _box).add(subtask);
 
     notifyListeners();
   }
 
   Future<void> removeSubtask(SubtaskModel subtask) async {
-    subtask.delete();
+    await subtaskService.removeSubtask(subtask);
     notifyListeners();
   }
 
-  void updateSubtask(SubtaskModel subtask, String description) {
-    subtask.description = description;
-    subtask.save();
+  Future<void> updateSubtask(SubtaskModel subtask, String description) async{
+    await subtaskService.updateSubtask(subtask, description);
     notifyListeners();
   }
 
   void toggleSubtaskStatus(SubtaskModel subtask) {
-    subtask.toggleDone();
-    subtask.save();
+    //subtask.toggleDone();
+    //subtask.save();
+    subtaskService.toggleSubtaskStatus(subtask);
     notifyListeners();
   }
 
@@ -73,8 +80,9 @@ class SubtasksViewModel extends ChangeNotifier {
   
   Future<void> isTaskDone(BuildContext context) async {
      //_boxTask = BoxManager().openTaskBox();
-    TaskModel? task = (await _boxTask).get(taskModel.id);
+    //TaskModel? task = (await _boxTask).get(taskModel.id);
 
+    TaskModel? task = await subtaskService.getTaskByKey(taskModel.id);
     _isAllSubtaskDone() ? task!.isDone = true : task!.isDone = false;
     task.save();
 
@@ -92,15 +100,17 @@ class SubtasksViewModel extends ChangeNotifier {
   }
 
   @override
-  Future<void> dispose() async{
-    _listenableBox?.removeListener(_readSubtasksFromHive);
-    await BoxManager().closeBox((await _box));
-    //if(_boxTask.){ //TODO
-      await BoxManager().closeBox((await _boxTask));
-   // }
+  void dispose() async{
+   //  _listenableBox?.removeListener(_readSubtasksFromHive);
+   //  await BoxManager().closeBox((await _box));
+   //  //if(_boxTask.){ //TODO
+   //    await BoxManager().closeBox((await _boxTask));
+   // // }
+
+    await subtaskService.close(_readSubtasksFromHive);
+
+
     super.dispose();
   }
-
-
 
 }

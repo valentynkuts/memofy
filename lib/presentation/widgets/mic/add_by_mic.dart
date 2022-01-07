@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:memofy/api/speech_api.dart';
-import 'package:memofy/data/dataproviders/speech_data/speech_data_model.dart';
+import 'package:memofy/view_models/speech/speech_view_model.dart';
 import 'package:provider/provider.dart';
 
 class AddByMic extends StatefulWidget {

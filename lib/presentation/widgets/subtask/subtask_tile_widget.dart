@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:memofy/data/dataproviders/subtask_data/subtask_data_model.dart';
 import 'package:memofy/models/subtask/subtask_model.dart';
 import 'package:memofy/presentation/screens/edit_subtask/edit_subtask_screen.dart';
+import 'package:memofy/view_models/subtask/subtask_view_model.dart';
 
 class SubtaskTileWidget extends StatelessWidget {
   final SubtaskModel subtask;

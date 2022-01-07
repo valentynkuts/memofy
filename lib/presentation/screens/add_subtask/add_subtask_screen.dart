@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:memofy/constants/constants.dart';
-import 'package:memofy/data/dataproviders/subtask_data/subtask_data_model.dart';
 import 'package:memofy/validation/text_validation.dart';
 import 'package:memofy/validation/validation_item.dart';
+import 'package:memofy/view_models/subtask/subtask_view_model.dart';
 import 'package:provider/provider.dart';
 
 class AddSubtaskScreen extends StatefulWidget {
   static const String id = 'add_subtask_screen';
 
-  SubtasksViewModel subtaskDataProvider;
+  SubtasksViewModel subtasksViewModel;
 
-  AddSubtaskScreen({Key? key, required this.subtaskDataProvider})
+  AddSubtaskScreen({Key? key, required this.subtasksViewModel})
       : super(key: key);
 
   @override
@@ -26,7 +26,7 @@ class _AddSubtaskScreenState extends State<AddSubtaskScreen> {
   @override
   void initState() {
     if (_subtaskDatamodel == null) {
-      _subtaskDatamodel = widget.subtaskDataProvider;
+      _subtaskDatamodel = widget.subtasksViewModel;
     }
     super.initState();
   }
@@ -62,6 +62,7 @@ class _AddSubtaskScreenState extends State<AddSubtaskScreen> {
 
   Widget AddDescriptionInput() => TextField(
         autofocus: true,
+        maxLines: 7,
         decoration: InputDecoration(
             labelText: 'Title',
             errorText: validationService.text.error,

@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
-import 'package:memofy/data/dataproviders/box_manager.dart';
+import 'package:memofy/data/box_manager.dart';
 import 'package:memofy/models/task/task_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:uuid/uuid.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:memofy/data/dataproviders/done_task_data/done_task_data_model.dart';
 import 'package:memofy/presentation/widgets/done_tasks/done_tasks_list_widget.dart';
+import 'package:memofy/view_models/done_task/done_task_view_model.dart';
 import 'package:provider/provider.dart';
 
 class DoneTasksListScreen extends StatefulWidget {

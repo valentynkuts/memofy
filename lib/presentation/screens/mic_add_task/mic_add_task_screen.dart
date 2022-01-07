@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:memofy/constants/constants.dart';
-import 'package:memofy/data/dataproviders/speech_data/speech_view_model.dart';
-import 'package:memofy/data/dataproviders/task_data/tasks_view_model.dart';
 import 'package:memofy/presentation/widgets/mic/add_by_mic.dart';
+import 'package:memofy/view_models/speech/speech_view_model.dart';
+import 'package:memofy/view_models/task/task_view_model.dart';
 import 'package:provider/provider.dart';
 
 class MicAddTaskScreen extends StatefulWidget {

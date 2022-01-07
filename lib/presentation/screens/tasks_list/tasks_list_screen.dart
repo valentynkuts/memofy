@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:memofy/constants/constants.dart';
-import 'package:memofy/data/dataproviders/task_data/tasks_view_model.dart';
 import 'package:memofy/presentation/screens/add_task/add_task_screen.dart';
 import 'package:memofy/presentation/screens/mic_add_task/mic_add_task_screen.dart';
 import 'package:memofy/presentation/widgets/tasks_list/tasks_list_widget.dart';
+import 'package:memofy/view_models/task/task_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:expandable_text/expandable_text.dart';
 
 class TasksListScreen extends StatefulWidget {
   static const String id = 'task_list_screen';
@@ -18,7 +17,7 @@ class TasksListScreen extends StatefulWidget {
 }
 
 class _TasksListScreenState extends State<TasksListScreen> {
-  final _searchController = TextEditingController(); //todo
+  final _searchController = TextEditingController();
   bool isSearching = false;
   String searchingQuery = '';
 
@@ -35,9 +34,6 @@ class _TasksListScreenState extends State<TasksListScreen> {
                     onTap: () {
                       setState(() {
                         isSearching = !isSearching;
-                        //searchingQuery = '';
-                        //Provider.of<TaskDataModel>(context, listen: false).searchingQuery = '';
-                        //print(searchingQuery);
                       });
                     },
                     child: Icon(
@@ -72,21 +68,11 @@ class _TasksListScreenState extends State<TasksListScreen> {
         ],
       ),
       body: TasksListWidget(),
-      // floatingActionButton: FloatingActionButton(
-      //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      //   backgroundColor: Colors.green,
-      //   child: const Icon(Icons.add),
-      //   onPressed: () {
-      //     Navigator.of(context).pushNamed(AddTaskScreen.id);
-      //   },
-      // ),
       floatingActionButton: SpeedDial(
         shape: RoundedRectangleBorder(
           borderRadius: kBorderRadius,
         ),
         animatedIcon: AnimatedIcons.menu_close,
-        //animatedIconTheme: IconThemeData(size: 38.0),
-        //icon: Icons.share,
         backgroundColor: Colors.grey,
         overlayColor: Colors.grey,
         overlayOpacity: 0.4,
@@ -135,7 +121,6 @@ class _TasksListScreenState extends State<TasksListScreen> {
           ),
         ),
         controller: _searchController,
-        //todo
         onChanged: (query) {
           searchingQuery = query;
           Provider.of<TasksViewModel>(context, listen: false)

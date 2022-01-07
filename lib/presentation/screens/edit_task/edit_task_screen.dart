@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:memofy/constants/constants.dart';
-import 'package:memofy/data/dataproviders/task_data/tasks_view_model.dart';
 import 'package:memofy/models/task/task_model.dart';
 import 'package:memofy/validation/text_validation.dart';
 import 'package:memofy/validation/validation_item.dart';
+import 'package:memofy/view_models/task/task_view_model.dart';
 import 'package:provider/provider.dart';
 
 class EditTaskScreen extends StatefulWidget {
@@ -27,22 +27,14 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   String tempDate = '';
   @override
   void initState() {
-    //Provider.of<TaskDataModel>(context, listen: false).updateDate(widget.task.date);
     title = widget.task.title;
     date = widget.task.date;
     note = widget.task.note;
-    //tempDate = date;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // title = widget.task.title;
-    // date = widget.task.date;
-    // note = widget.task.note;
-    // tempDate = date;
-    //Provider.of<TaskDataModel>(context, listen: false).updateDate(date);
-
     validationService = Provider.of<TextValidation>(context);
 
     return Scaffold(
@@ -59,8 +51,6 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                 SizedBox(height: 10.0),
                 //datePicker(context),
                 Text(
-                  //Provider.of<TaskDataModel>(context).date,
-                  //tempDate,
                   date,
                   style: TextStyle(fontSize: 20, color: Colors.black),
                 ),
@@ -71,25 +61,14 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                   final initialDate = DateTime.now();
                   final newDate = await showDatePicker(
                     context: context,
-                    //initialDate: dt ?? initialDate,
                     initialDate: initialDate,
                     firstDate: DateTime(DateTime.now().year - 5),
                     lastDate: DateTime(DateTime.now().year + 5),
                   );
-
                   if (newDate == null) return;
-
-                 // setState(() => tempDate = DateFormat('dd-MM-yyyy').format(newDate));
                   setState(() => date = DateFormat('dd-MM-yyyy').format(newDate));
-                 // tempDate = DateFormat('dd-MM-yyyy').format(newDate);
-                  //Provider.of<TaskDataModel>(context, listen: false).updateDate(tempDate);
-                  //date = Provider.of<TaskDataModel>(context, listen: false).updateDate(tempDate);
-                  //print("Edit date: $tempDate");
-                  print("Edit date: $date");
                 },
               ),
-
-
               SizedBox(height: 10.0),
                 EditNoteInput(),
               ],

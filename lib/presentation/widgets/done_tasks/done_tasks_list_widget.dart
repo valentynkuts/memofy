@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:memofy/data/dataproviders/done_task_data/done_tasks_view_model.dart';
 import 'package:memofy/models/task/task_model.dart';
 import 'package:memofy/presentation/widgets/task/task_tile_widget.dart';
+import 'package:memofy/view_models/done_task/done_task_view_model.dart';
 import 'package:provider/provider.dart';
 
 class DoneTasksListWidget extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:memofy/data/dataproviders/subtask_data/subtasks_view_model.dart';
 import 'package:memofy/presentation/widgets/subtask/subtask_tile_widget.dart';
+import 'package:memofy/view_models/subtask/subtask_view_model.dart';
 import 'package:provider/provider.dart';
 
 class SubtasksListWidget extends StatefulWidget {

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:memofy/constants/constants.dart';
-import 'package:memofy/data/dataproviders/speech_data/speech_view_model.dart';
-import 'package:memofy/data/dataproviders/subtask_data/subtasks_view_model.dart';
-import 'package:memofy/data/dataproviders/task_data/tasks_view_model.dart';
 import 'package:memofy/presentation/widgets/mic/add_by_mic.dart';
+import 'package:memofy/view_models/speech/speech_view_model.dart';
+import 'package:memofy/view_models/subtask/subtask_view_model.dart';
 import 'package:provider/provider.dart';
 
 class MicAddSubtaskScreen extends StatefulWidget {
@@ -29,7 +27,6 @@ class _MicAddSubtaskScreenState extends State<MicAddSubtaskScreen> {
     }
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) => ChangeNotifierProvider.value(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:memofy/data/dataproviders/task_data/tasks_view_model.dart';
 import 'package:memofy/models/task/task_model.dart';
 import 'package:memofy/presentation/screens/edit_task/edit_task_screen.dart';
 import 'package:memofy/presentation/screens/subtasks_list/subtasks_list_screen.dart';
+import 'package:memofy/view_models/task/task_view_model.dart';
 import 'package:provider/provider.dart';
 
 class TaskTileWidget extends StatelessWidget {
@@ -22,6 +22,7 @@ class TaskTileWidget extends StatelessWidget {
         arguments: task,
       );
     }
+
     return slidableTile(context, task, onTaskTap);
   }
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:memofy/data/dataproviders/task_data/tasks_view_model.dart';
 import 'package:memofy/presentation/widgets/task/task_tile_widget.dart';
+import 'package:memofy/view_models/task/task_view_model.dart';
 import 'package:provider/provider.dart';
 
 class TasksListWidget extends StatelessWidget {
@@ -19,7 +19,6 @@ class TasksListWidget extends StatelessWidget {
               ),
             )
           : ReorderableListView.builder(
-              // padding: EdgeInsets.only(top: 70.0),
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               itemCount: tasksViewModel.tasks.length,
               onReorder: (int oldIndex, int newIndex) async {

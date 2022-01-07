@@ -1,9 +1,7 @@
 import 'package:hive/hive.dart';
 
 part 'task_model.g.dart';
-//TaskModelAdapter to use TaskModel as type in the Hive
 
-// HiveObject makes easy to use save (update,...), delete
 @HiveType(typeId: 0)
 class TaskModel extends HiveObject {
   @HiveField(0)

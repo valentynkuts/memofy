@@ -33,6 +33,10 @@ dependencies:
   # avatar_glow: ^1.2.0
   avatar_glow: ^2.0.1
 
+  uuid: ^3.0.5
+
+  dcdg: ^4.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -41,7 +45,6 @@ dev_dependencies:
   hive_generator: ^1.1.1
   build_runner: ^2.1.5
 
-  uuid: ^3.0.5
 
 flutter:
   uses-material-design: true

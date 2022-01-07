@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:memofy/constants/constants.dart';
-import 'package:memofy/data/dataproviders/subtask_data/subtasks_view_model.dart';
 import 'package:memofy/models/subtask/subtask_model.dart';
 import 'package:memofy/validation/text_validation.dart';
 import 'package:memofy/validation/validation_item.dart';
+import 'package:memofy/view_models/subtask/subtask_view_model.dart';
 import 'package:provider/provider.dart';
 
 class EditSubtaskScreen extends StatefulWidget {
@@ -22,14 +22,14 @@ class EditSubtaskScreen extends StatefulWidget {
 
 class _EditSubtaskScreenState extends State<EditSubtaskScreen> {
   String description = '';
-  SubtasksViewModel? _subtaskDatamodel;
+  SubtasksViewModel? _subtasksViewModel;
 
   TextValidation validationService = TextValidation();
 
   @override
   void initState() {
-    if (_subtaskDatamodel == null) {
-      _subtaskDatamodel = widget.subtasksViewModel;
+    if (_subtasksViewModel == null) {
+      _subtasksViewModel = widget.subtasksViewModel;
       description = widget.subtask.description;
     }
     super.initState();
@@ -40,7 +40,7 @@ class _EditSubtaskScreenState extends State<EditSubtaskScreen> {
     validationService = Provider.of<TextValidation>(context);
 
     return ChangeNotifierProvider.value(
-      value: _subtaskDatamodel,
+      value: _subtasksViewModel,
       //lazy: false,
       child: Scaffold(
         appBar: AppBar(
@@ -91,7 +91,7 @@ class _EditSubtaskScreenState extends State<EditSubtaskScreen> {
             ? null
             : () {
                 description = validationService.text.value;
-                _subtaskDatamodel!.updateSubtask(widget.subtask, description);
+                _subtasksViewModel!.updateSubtask(widget.subtask, description);
                 validationService.text = ValidationItem('', null);
                 Navigator.pop(context);
               },

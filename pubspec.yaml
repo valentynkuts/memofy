@@ -11,7 +11,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
   # containing the default set of icon
   cupertino_icons: ^1.0.2
   # component rich slider widget
@@ -21,7 +20,7 @@ dependencies:
   provider: ^6.0.1
   # extended floatingActionButton property
   flutter_speed_dial: ^5.0.0+1
-  # expandable: ^5.0.1
+  # let's the user expand the full text
   expandable_text: ^2.2.0
   # format dates
   intl: ^0.17.0
@@ -38,7 +37,6 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
   # hive database generators
   hive_generator: ^1.1.1
   build_runner: ^2.1.5

@@ -1,0 +1,47 @@
+@startuml
+
+skinparam sequence {
+ArrowColor Black
+ActorBorderColor Black
+LifeLineBorderColor Black
+LifeLineBackgroundColor #A9DCDF
+
+ParticipantBorderColor Black
+ParticipantBackgroundColor Black
+ParticipantFontName Impact
+ParticipantFontSize 17
+ParticipantFontColor Black
+
+ActorBackgroundColor aqua
+ActorFontColor Black
+ActorFontSize 17
+ActorFontName Aapex
+}
+
+actor       Actor     as A  #FFFFFF
+participant TasksListScreen as TLS #FFFFFF
+participant TasksViewModel as TVM #FFFFFF
+participant TaskService as TS #FFFFFF
+participant LocalDB_Hive as LDBH #FFFFFF
+
+
+A ->> TLS: open application
+activate TLS
+TLS ->> TVM :
+activate TVM
+TVM ->> TS:
+activate TS
+TS ->> LDBH:
+activate LDBH
+
+LDBH -->> TS:
+deactivate LDBH
+TS -->> TVM
+deactivate TS
+TVM -->> TLS
+deactivate TVM
+TLS -->> A
+deactivate TLS
+
+
+@enduml

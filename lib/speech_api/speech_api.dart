@@ -8,6 +8,7 @@ class SpeechApi {
     required Function(String text) onResult,
     required ValueChanged<bool> onListening,
   }) async {
+
     if (_speech.isListening) {
       _speech.stop();
       return true;

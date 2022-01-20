@@ -1,0 +1,52 @@
+@startuml
+
+skinparam sequence {
+ArrowColor Black
+ActorBorderColor Black
+LifeLineBorderColor Black
+LifeLineBackgroundColor #A9DCDF
+
+ParticipantBorderColor Black
+ParticipantBackgroundColor White
+ParticipantFontName Impact
+ParticipantFontSize 17
+ParticipantFontColor Black
+
+ActorBackgroundColor White
+ActorFontColor Black
+ActorFontSize 17
+ActorFontName Aapex
+}
+
+actor       Actor     as A
+participant TasksListScreen as TLS
+participant AddTaskScreen as ATS
+participant TasksViewModel as TVM
+participant TaskService as TS
+participant LocalDB_Hive as LDBH
+
+
+A ->> TLS: add task
+activate TLS
+TLS ->> ATS:show screen to add task
+activate ATS
+ATS -> ATS: adding task
+ATS ->> TVM : press button "submit"
+deactivate ATS
+activate TVM
+TVM ->> TS: call TaskServise
+activate TS
+TS ->> LDBH: add task to local DB
+activate LDBH
+
+LDBH -->> TS:
+deactivate LDBH
+TS -->> TVM
+deactivate TS
+TVM -->> TLS:show list of tasks
+deactivate TVM
+TLS -->> A: result
+deactivate TLS
+
+
+@enduml

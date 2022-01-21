@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:memofy/constants/constants.dart';
@@ -49,13 +51,13 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
             child: Column(
               children: [
                 EditTitleInput(),
-                SizedBox(height: 10.0),
-                //datePicker(context),
-                Text(
-                  date,
-                  style: TextStyle(fontSize: 20, color: Colors.black),
-                ),
-                SizedBox(height: 10.0),
+                // SizedBox(height: 10.0),
+                // //datePicker(context),
+                // Text(
+                //   date,
+                //   style: TextStyle(fontSize: 20, color: Colors.black),
+                // ),
+                SizedBox(height: 15.0),
                 ElevatedButton(
                   child: Text(date),
                   onPressed: () async {
@@ -70,8 +72,12 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                     setState(
                         () => date = DateFormat('dd-MM-yyyy').format(newDate));
                   },
+                  style: ElevatedButton.styleFrom(
+                      fixedSize: const Size(250, 50),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10))),
                 ),
-                SizedBox(height: 10.0),
+                SizedBox(height: 15.0),
                 EditNoteInput(),
               ],
             ),
@@ -84,6 +90,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
 
   Widget EditTitleInput() => TextFormField(
         initialValue: title,
+        maxLines: 5,
         autofocus: true,
         decoration: InputDecoration(
             labelText: 'Title',
@@ -97,7 +104,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
 
   Widget EditNoteInput() => TextFormField(
         autofocus: true,
-        minLines: 3,
+        //minLines: 3,
         maxLines: 5,
         initialValue: note,
         keyboardType: TextInputType.multiline,

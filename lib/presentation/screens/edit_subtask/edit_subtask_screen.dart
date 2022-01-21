@@ -67,6 +67,7 @@ class _EditSubtaskScreenState extends State<EditSubtaskScreen> {
   Widget EditDescriptionInput() => TextFormField(
         initialValue: description,
         autofocus: true,
+        maxLines: 7,
         decoration: InputDecoration(
             labelText: 'Title',
             errorText: validationService.text.error,

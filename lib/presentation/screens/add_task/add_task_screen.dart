@@ -45,6 +45,7 @@ class AddTaskScreen extends StatelessWidget {
 
   Widget AddTitleInput() => TextField(
         autofocus: true,
+        maxLines: 5,
         decoration: InputDecoration(
             labelText: 'Title',
             errorText: validationService.text.error,
@@ -59,7 +60,7 @@ class AddTaskScreen extends StatelessWidget {
 
   Widget AddNoteInput() => TextFormField(
         autofocus: true,
-        minLines: 3,
+        //minLines: 3,
         maxLines: 5,
         keyboardType: TextInputType.multiline,
         decoration: InputDecoration(

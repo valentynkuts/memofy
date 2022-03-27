@@ -17,6 +17,9 @@ class MicAddTaskScreen extends StatefulWidget {
 }
 
 class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
+  final items = ['itemserier1', 'itererwerms2', 'itemsere3', 'items4', 'itemees5'];
+  String? selectedItem;
+
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
@@ -24,6 +27,20 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
             'Add by Mic',
           ),
           centerTitle: true,
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.more_vert,
+                color: Colors.white,
+              ),
+              tooltip: 'Setting to choose language',
+              onPressed: () {
+                // do something
+                 print("Setting to choose language");
+                //showSettingDialog(context);
+              },
+            ),
+          ],
         ),
         body: ListView(
           children: [
@@ -43,6 +60,9 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
           ],
         ),
         floatingActionButton: FloatingActionButton.extended(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
           onPressed: () {
             String title =
                 Provider.of<SpeechViewModel>(context, listen: false).title;
@@ -85,4 +105,63 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
           );
         },
       );
+
+  void showSettingDialog(BuildContext context) => showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                SizedBox(height: 12),
+                Text(
+                  'Setting to choose language',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                SizedBox(height: 12),
+                    Container(
+                      padding: EdgeInsets.only(left: 5.0,),
+                      decoration: BoxDecoration(
+                        borderRadius: kBorderRadius,
+                        border: Border.all(color: Colors.black, width: 2),
+                      ),
+                      child: DropdownButton<String>(
+                        value: selectedItem,
+                        isExpanded: true,
+                        items: items.map(menuItem).toList(),
+                        onChanged: (item) => setState(() => this.selectedItem = item),
+                      ),
+                    ),
+                ElevatedButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text('Close'),
+                ),
+              ]),
+            ),
+          );
+        },
+      );
+
+  DropdownMenuItem<String> menuItem(String item) => DropdownMenuItem(
+    value: item,
+    child: Text(
+        item,
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+    ),
+  );
 }
+
+// actions: [
+// OutlinedButton(
+// onPressed: () => Navigator.of(context).pop(),
+// child: Text('Close')),
+// ],

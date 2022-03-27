@@ -1,10 +1,14 @@
 import 'package:flutter/foundation.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 
 class SpeechViewModel extends ChangeNotifier {
   static const String TITLE = 'TITLE';
   static const String NOTE = 'NOTE';
   String _title = '';
   String _note = '';
+
+  // static List<LocaleName> _localeNames = [];
+  // static String _currentLocaleId = '';
 
   void setData(String info, String data) {
     if (info == TITLE) {
@@ -41,4 +45,12 @@ class SpeechViewModel extends ChangeNotifier {
     _note = note;
     notifyListeners();
   }
+
+  // void setLocaleNames(List<LocaleName> localNames){
+  //   _localeNames = localNames;
+  // }
+  //
+  // List<LocaleName> getLocaleNames(){
+  //   return _localeNames;
+  // }
 }

@@ -64,7 +64,7 @@ class _TasksListScreenState extends State<TasksListScreen> {
               // do something
               print("app bar icon");
             },
-          )
+          ),
         ],
       ),
       body: TasksListWidget(),

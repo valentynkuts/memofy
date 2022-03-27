@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
 class SpeechApi {
+  static List<LocaleName> _localeNames = [];
+  static String _currentLocaleId = '';
   static final _speech = SpeechToText();
 
   static Future<bool> toggleRecording({
@@ -20,7 +22,16 @@ class SpeechApi {
     );
 
     if (isAvailable) {
-      _speech.listen(onResult: (value) => onResult(value.recognizedWords));
+      //_localeNames = await _speech.locales();
+      // Provider.of<SpeechViewModel>(context, listen: false)
+      // _localeNames = await _speech.locales();
+
+      // var systemLocale = await _speech.systemLocale();
+      // _currentLocaleId = systemLocale?.localeId ?? '';
+
+      _speech.listen(
+          onResult: (value) => onResult(value.recognizedWords),
+      );  //  localeId:
     }
 
     return isAvailable;

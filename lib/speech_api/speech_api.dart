@@ -44,22 +44,10 @@ class SpeechApi {
     );
 
     if (isAvailable) {
-       //_localeNames = await _speech.locales();
-      //Provider.of<SpeechViewModel>(context, listen: false).setLocaleNames(_localeNames);
-      // //_localeNames = await _speech.locales();
-
-       // for(var ln in _localeNames){
-       //   print(ln.name);
-       // }
-
-      //
-      // var systemLocale = await _speech.systemLocale();
-      // _currentLocaleId = systemLocale?.localeId ?? '';
-
+      _currentLocaleId = Provider.of<SpeechViewModel>(context, listen: false).getLocatedId();
       _speech.listen(
           onResult: (value) => onResult(value.recognizedWords),
-          );  //  "pl_PL","uk_UA", "en_US", "ru_RU", "de_DE"
-          //localeId:"en_GB");  //  "pl_PL","uk_UA", "en_US", "ru_RU", "de_DE"
+          localeId: _currentLocaleId);
     }
 
     return isAvailable;

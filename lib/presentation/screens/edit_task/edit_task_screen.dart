@@ -105,7 +105,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   Widget EditNoteInput() => TextFormField(
         autofocus: true,
         //minLines: 3,
-        maxLines: 5,
+        maxLines: 3,
         initialValue: note,
         keyboardType: TextInputType.multiline,
         decoration: InputDecoration(

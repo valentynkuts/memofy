@@ -8,7 +8,7 @@ class SpeechViewModel extends ChangeNotifier {
   String _note = '';
 
   static List<LocaleName> _localeNames = [];
-  static String currentLocaleId = '';
+  String currentLocaleId = '';
 
   void setData(String info, String data) {
     if (info == TITLE) {
@@ -61,6 +61,7 @@ class SpeechViewModel extends ChangeNotifier {
 
   void setLocatedId(String LocatedId){
     currentLocaleId = LocatedId;
+    print(currentLocaleId);
     notifyListeners();
   }
 

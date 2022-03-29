@@ -6,7 +6,6 @@ import 'package:memofy/speech_api/speech_api.dart';
 import 'package:memofy/view_models/speech/speech_view_model.dart';
 import 'package:memofy/view_models/task/task_view_model.dart';
 import 'package:provider/provider.dart';
-import 'package:speech_to_text/speech_to_text.dart';
 
 class MicAddTaskScreen extends StatefulWidget {
   static const String id = 'mic_add_task_screen';
@@ -20,23 +19,14 @@ class MicAddTaskScreen extends StatefulWidget {
 }
 
 class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
-  final items = [
-    'itemserier1',
-    'itererwerms2',
-    'itemsere3',
-    'items4',
-    'itemees5'
-  ];
-  String? _currentLocaleId = '';
+
   String? selectedItem;
-
-  int selectedValue = 0;
-
   List<DropdownMenuItem<String>> menuItems = [
-    DropdownMenuItem(child: Text("USA--"), value: "USA"),
-    DropdownMenuItem(child: Text("Canada"), value: "Canada"),
-    DropdownMenuItem(child: Text("Brazil"), value: "Brazil"),
-    DropdownMenuItem(child: Text("England"), value: "England"),
+    DropdownMenuItem(child: Text("Polish"), value: "pl_PL"),
+    DropdownMenuItem(child: Text("English"), value: "en_US"),
+    DropdownMenuItem(child: Text("German"), value: "de_DE"),
+    DropdownMenuItem(child: Text("Ukrainian"), value: "uk_UA"),
+    DropdownMenuItem(child: Text("Russian"), value: "ru_RU"),
   ];
 
   @override
@@ -57,8 +47,6 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
             ),
             tooltip: 'Setting to choose language',
             onPressed: () {
-              // do something
-              //print("Setting to choose language");
               showSettingDialog(context);
             },
           ),
@@ -153,30 +141,6 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
                         ),
                       ),
                       SizedBox(height: 12),
-
-                      RadioListTile<int>(
-                        value: 0,
-                        groupValue: selectedValue,
-                        title: Text('Bil'),
-                        onChanged: (value) =>
-                            setState(() => this.selectedValue = value!),
-                      ),
-
-                      RadioListTile<int>(
-                        value: 1,
-                        groupValue: selectedValue,
-                        title: Text('Emmma'),
-                        onChanged: (value) =>
-                            setState(() => this.selectedValue = value!),
-                      ),
-                      RadioListTile<int>(
-                        value: 2,
-                        groupValue: selectedValue,
-                        title: Text('Kate'),
-                        onChanged: (value) =>
-                            setState(() => this.selectedValue = value!),
-                      ),
-
                       Container(
                         padding: EdgeInsets.only(
                           left: 5.0,
@@ -185,80 +149,19 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
                           borderRadius: kBorderRadius,
                           border: Border.all(color: Colors.black, width: 2),
                         ),
-                        //--------------------------------
-                        // child: DropdownButton(
-                        //   value: _currentLocaleId,
-                        //   isExpanded: true,
-                        //   // items: Provider.of<SpeechViewModel>(context, listen: false)
-                        //   //         .getLocaleNames()
-                        //   //         .map(menuItem)
-                        //   //         .toList(),
-                        //   onChanged: (selectedVal) => _switchLang(selectedVal),
-                        //
-                        //   items: Provider.of<SpeechViewModel>(context, listen: false).getLocaleNames()
-                        //       .map(
-                        //         (localeName) => DropdownMenuItem(
-                        //       value: localeName.name,
-                        //       child: Text(localeName.name),
-                        //     ),
-                        //   )
-                        //       .toList(),
-                        // ),
-                        //-----------------------------------
-
-                        // child: DropdownButton<String>(
-                        //   value: selectedItem,
-                        //   isExpanded: true,
-                        //   items: items.map(menuItem1).toList(),
-                        //   onChanged: (item) => setState(() => this.selectedItem = item),
-                        // ),
-                        //--------
-                        // child: DropdownButton<String>(
-                        //   value: selectedItem,
-                        //   isExpanded: true,
-                        //   items: Provider.of<SpeechViewModel>(context, listen: false).getLocaleNames().map(menuItem).toList(),
-                        //   onChanged: (item) => setState(() => this.selectedItem = item),
-                        // ),
-                        //--------
-
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton<String>(
-                            //value: Provider.of<SpeechViewModel>(context, listen: false).getLocatedId(),//selectedItem,
-                            value: selectedItem,
-                            isExpanded: true,
-                            items: menuItems,
-                            onChanged: (value) =>
-                                setState(() => this.selectedItem = value),
-                            //onChanged: (item) => Provider.of<SpeechViewModel>(context, listen: false).setLocatedId(item!),
-                          ),
+                              value: selectedItem,
+                              isExpanded: true,
+                              items: menuItems,
+                              onChanged: (item) {
+                                setState(() => this.selectedItem = item);
+                                Provider.of<SpeechViewModel>(context,
+                                        listen: false)
+                                    .setLocatedId(item!);
+                              }),
                         ),
-
-                        //----------------------------------
-                        /* child: ListView(
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        children: [
-                          RadioListTile<int>(
-                              value: 1,
-                              groupValue: selectedValue,
-                              title: Text('Emmma'),
-                              onChanged: (value) => setState(() => this.selectedValue = 1),
-                          ),
-                        ],
-
-                      ),*/
-                        //-----------
-                        /*child:
-                          RadioListTile<int>(
-                            value: 1,
-                            groupValue: selectedValue,
-                            title: Text('Emmma'),
-                            onChanged: (value) => setState(() => this.selectedValue = 1),
-                          ),*/
-
-                        //-----------------
                       ),
-
-                      //------------------
                       ElevatedButton(
                         onPressed: () => Navigator.of(context).pop(),
                         child: Text('Close'),
@@ -269,44 +172,4 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
           });
         },
       );
-
-  DropdownMenuItem<String> menuItem(LocaleName localeName) => DropdownMenuItem(
-        value: localeName.name,
-        child: Text(
-          "${localeName.name}: ${localeName.localeId}",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        ),
-      );
-
-  DropdownMenuItem<String> menuItem1(String item) => DropdownMenuItem(
-        value: item,
-        child: Text(
-          item,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        ),
-      );
-
-  void _switchLang(selectedVal) {
-    setState(() {
-      _currentLocaleId = selectedVal;
-    });
-    print(selectedVal);
-  }
 }
-
-// onChanged: (selectedVal) => _switchLang(selectedVal),
-// value: _currentLocaleId,
-// items: _localeNames
-//     .map(
-// (localeName) => DropdownMenuItem(
-// value: localeName.localeId,
-// child: Text(localeName.name),
-// ),
-// )
-// .toList(),
-
-// actions: [
-// OutlinedButton(
-// onPressed: () => Navigator.of(context).pop(),
-// child: Text('Close')),
-// ],

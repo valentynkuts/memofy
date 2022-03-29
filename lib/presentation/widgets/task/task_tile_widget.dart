@@ -5,14 +5,27 @@ import 'package:memofy/presentation/screens/edit_task/edit_task_screen.dart';
 import 'package:memofy/presentation/screens/subtasks_list/subtasks_list_screen.dart';
 import 'package:memofy/view_models/task/task_view_model.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
-class TaskTileWidget extends StatelessWidget {
+class TaskTileWidget extends StatefulWidget {
   final TaskModel task;
 
-  const TaskTileWidget({
+  TaskTileWidget({
     Key? key,
     required this.task,
   }) : super(key: key);
+
+  @override
+  State<TaskTileWidget> createState() => _TaskTileWidgetState();
+}
+
+class _TaskTileWidgetState extends State<TaskTileWidget> {
+  Color pickerColor = Color(0xff443a49);
+  Color currentColor = Color(0xff443a49);
+
+  void changeColor(Color color) {
+    setState(() => pickerColor = color);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +36,7 @@ class TaskTileWidget extends StatelessWidget {
       );
     }
 
-    return slidableTile(context, task, onTaskTap);
+    return slidableTile(context, widget.task, onTaskTap);
   }
 
   Widget slidableTile(
@@ -63,7 +76,8 @@ class TaskTileWidget extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.all(10.0),
               decoration: BoxDecoration(
-                  color: task.isDone ? Colors.grey : Colors.white,
+                  //color: task.isDone ? Colors.grey : Colors.white, //colors todo
+                  color: task.isDone ? Colors.grey : pickerColor, //colors todo
                   border: Border.all(color: Colors.black.withOpacity(0.2)),
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   boxShadow: [
@@ -100,6 +114,16 @@ class TaskTileWidget extends StatelessWidget {
                     ),
                     dense: true,
                     isThreeLine: true,
+                    trailing: IconButton(
+                      icon: Icon(
+                        Icons.more_vert,
+                        color: Colors.black,
+                      ),
+                      tooltip: 'Setting to choose color',
+                      onPressed: () {
+                        showSettingColorDialog(context);
+                      },
+                    ),
                   ),
                   Container(
                     padding: EdgeInsets.all(10.0),
@@ -124,6 +148,49 @@ class TaskTileWidget extends StatelessWidget {
 
   void editTask(BuildContext context) => Navigator.of(context).pushNamed(
         EditTaskScreen.id,
-        arguments: task,
+        arguments: widget.task,
       );
+
+  void showSettingColorDialog(BuildContext context) => showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Pick a color!'),
+        content: SingleChildScrollView(
+          child: ColorPicker(
+            pickerColor: pickerColor,
+            onColorChanged: changeColor,
+          ),
+          // Use Material color picker:
+          //
+          // child: MaterialPicker(
+          //   pickerColor: pickerColor,
+          //   onColorChanged: changeColor,
+          //   showLabel: true, // only on portrait mode
+          // ),
+          //
+          // Use Block color picker:
+          //
+          // child: BlockPicker(
+          //   pickerColor: pickerColor,
+          //   onColorChanged: changeColor,
+          // ),
+          //
+          // child: MultipleChoiceBlockPicker(
+          //   pickerColors: pickerColor,
+          //   onColorsChanged: changeColors,
+          // ),
+        ),
+        actions: <Widget>[
+          ElevatedButton(
+            child: const Text('Got it'),
+            onPressed: () {
+              setState(() => currentColor = pickerColor);
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

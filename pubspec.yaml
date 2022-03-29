@@ -33,6 +33,8 @@ dependencies:
   avatar_glow: ^2.0.1
   # cryptographically strong random number generation
   uuid: ^3.0.5
+  # color picker
+  flutter_colorpicker: ^1.0.3
 
 dev_dependencies:
   flutter_test:

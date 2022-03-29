@@ -12,6 +12,7 @@ class MicAddTaskScreen extends StatefulWidget {
   static const String id = 'mic_add_task_screen';
   String info = 'Press the button and start speaking';
   SpeechApi speechApi = SpeechApi();
+
   MicAddTaskScreen({Key? key}) : super(key: key);
 
   @override
@@ -27,18 +28,19 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
     'itemees5'
   ];
   String? _currentLocaleId = '';
-  String? selectedItem ;
+  String? selectedItem;
+
+  int selectedValue = 0;
 
   List<DropdownMenuItem<String>> menuItems = [
-    DropdownMenuItem(child: Text("USA--"),value: "USA"),
-    DropdownMenuItem(child: Text("Canada"),value: "Canada"),
-    DropdownMenuItem(child: Text("Brazil"),value: "Brazil"),
-    DropdownMenuItem(child: Text("England"),value: "England"),
+    DropdownMenuItem(child: Text("USA--"), value: "USA"),
+    DropdownMenuItem(child: Text("Canada"), value: "Canada"),
+    DropdownMenuItem(child: Text("Brazil"), value: "Brazil"),
+    DropdownMenuItem(child: Text("England"), value: "England"),
   ];
 
   @override
   Widget build(BuildContext context) {
-
     widget.speechApi.init(context);
 
     return Scaffold(
@@ -85,23 +87,15 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
         ),
         onPressed: () {
           String title =
-              Provider
-                  .of<SpeechViewModel>(context, listen: false)
-                  .title;
+              Provider.of<SpeechViewModel>(context, listen: false).title;
           String note =
-              Provider
-                  .of<SpeechViewModel>(context, listen: false)
-                  .note;
+              Provider.of<SpeechViewModel>(context, listen: false).note;
 
           if (title.isNotEmpty) {
             Provider.of<TasksViewModel>(context, listen: false).addTask(title,
                 DateFormat('dd-MM-yyyy kk:mm').format(DateTime.now()), note);
-            Provider
-                .of<SpeechViewModel>(context, listen: false)
-                .title = '';
-            Provider
-                .of<SpeechViewModel>(context, listen: false)
-                .note = '';
+            Provider.of<SpeechViewModel>(context, listen: false).title = '';
+            Provider.of<SpeechViewModel>(context, listen: false).note = '';
 
             Navigator.pop(context);
           } else {
@@ -112,6 +106,7 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
       ),
     );
   }
+
   void showErrorDialog(BuildContext context) => showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -138,86 +133,140 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
-          return Dialog(
-            shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(height: 12),
-                    Text(
-                      'Setting to choose language',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w400,
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState) {
+            return Dialog(
+              shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 12),
+                      Text(
+                        'Setting to choose language',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 12),
-                    Container(
-                      padding: EdgeInsets.only(
-                        left: 5.0,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: kBorderRadius,
-                        border: Border.all(color: Colors.black, width: 2),
-                      ),
-                      // child: DropdownButton(
-                      //   value: _currentLocaleId,
-                      //   isExpanded: true,
-                      //   // items: Provider.of<SpeechViewModel>(context, listen: false)
-                      //   //         .getLocaleNames()
-                      //   //         .map(menuItem)
-                      //   //         .toList(),
-                      //   onChanged: (selectedVal) => _switchLang(selectedVal),
-                      //
-                      //   items: Provider.of<SpeechViewModel>(context, listen: false).getLocaleNames()
-                      //       .map(
-                      //         (localeName) => DropdownMenuItem(
-                      //       value: localeName.name,
-                      //       child: Text(localeName.name),
-                      //     ),
-                      //   )
-                      //       .toList(),
-                      // ),
-                      //-----------------------------------
+                      SizedBox(height: 12),
 
-                      // child: DropdownButton<String>(
-                      //   value: selectedItem,
-                      //   isExpanded: true,
-                      //   items: items.map(menuItem1).toList(),
-                      //   onChanged: (item) => setState(() => this.selectedItem = item),
-                      // ),
-
-                      // child: DropdownButton<String>(
-                      //   value: selectedItem,
-                      //   isExpanded: true,
-                      //   items: Provider.of<SpeechViewModel>(context, listen: false).getLocaleNames().map(menuItem).toList(),
-                      //   onChanged: (item) => setState(() => this.selectedItem = item),
-                      // ),
-                      child: DropdownButton<String>(
-                        //value: Provider.of<SpeechViewModel>(context, listen: false).getLocatedId(),//selectedItem,
-                        value: selectedItem,
-                        isExpanded: true,
-                        items: menuItems,
-                        onChanged: (value) => setState(() => this.selectedItem = value),
-                        //onChanged: (item) => Provider.of<SpeechViewModel>(context, listen: false).setLocatedId(item!),
+                      RadioListTile<int>(
+                        value: 0,
+                        groupValue: selectedValue,
+                        title: Text('Bil'),
+                        onChanged: (value) =>
+                            setState(() => this.selectedValue = value!),
                       ),
 
+                      RadioListTile<int>(
+                        value: 1,
+                        groupValue: selectedValue,
+                        title: Text('Emmma'),
+                        onChanged: (value) =>
+                            setState(() => this.selectedValue = value!),
+                      ),
+                      RadioListTile<int>(
+                        value: 2,
+                        groupValue: selectedValue,
+                        title: Text('Kate'),
+                        onChanged: (value) =>
+                            setState(() => this.selectedValue = value!),
+                      ),
 
-                    ),
+                      Container(
+                        padding: EdgeInsets.only(
+                          left: 5.0,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: kBorderRadius,
+                          border: Border.all(color: Colors.black, width: 2),
+                        ),
+                        //--------------------------------
+                        // child: DropdownButton(
+                        //   value: _currentLocaleId,
+                        //   isExpanded: true,
+                        //   // items: Provider.of<SpeechViewModel>(context, listen: false)
+                        //   //         .getLocaleNames()
+                        //   //         .map(menuItem)
+                        //   //         .toList(),
+                        //   onChanged: (selectedVal) => _switchLang(selectedVal),
+                        //
+                        //   items: Provider.of<SpeechViewModel>(context, listen: false).getLocaleNames()
+                        //       .map(
+                        //         (localeName) => DropdownMenuItem(
+                        //       value: localeName.name,
+                        //       child: Text(localeName.name),
+                        //     ),
+                        //   )
+                        //       .toList(),
+                        // ),
+                        //-----------------------------------
 
+                        // child: DropdownButton<String>(
+                        //   value: selectedItem,
+                        //   isExpanded: true,
+                        //   items: items.map(menuItem1).toList(),
+                        //   onChanged: (item) => setState(() => this.selectedItem = item),
+                        // ),
+                        //--------
+                        // child: DropdownButton<String>(
+                        //   value: selectedItem,
+                        //   isExpanded: true,
+                        //   items: Provider.of<SpeechViewModel>(context, listen: false).getLocaleNames().map(menuItem).toList(),
+                        //   onChanged: (item) => setState(() => this.selectedItem = item),
+                        // ),
+                        //--------
 
-                    //------------------
-                    ElevatedButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: Text('Close'),
-                    ),
-                  ]),
-            ),
-          );
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            //value: Provider.of<SpeechViewModel>(context, listen: false).getLocatedId(),//selectedItem,
+                            value: selectedItem,
+                            isExpanded: true,
+                            items: menuItems,
+                            onChanged: (value) =>
+                                setState(() => this.selectedItem = value),
+                            //onChanged: (item) => Provider.of<SpeechViewModel>(context, listen: false).setLocatedId(item!),
+                          ),
+                        ),
+
+                        //----------------------------------
+                        /* child: ListView(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        children: [
+                          RadioListTile<int>(
+                              value: 1,
+                              groupValue: selectedValue,
+                              title: Text('Emmma'),
+                              onChanged: (value) => setState(() => this.selectedValue = 1),
+                          ),
+                        ],
+
+                      ),*/
+                        //-----------
+                        /*child:
+                          RadioListTile<int>(
+                            value: 1,
+                            groupValue: selectedValue,
+                            title: Text('Emmma'),
+                            onChanged: (value) => setState(() => this.selectedValue = 1),
+                          ),*/
+
+                        //-----------------
+                      ),
+
+                      //------------------
+                      ElevatedButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: Text('Close'),
+                      ),
+                    ]),
+              ),
+            );
+          });
         },
       );
 
@@ -230,12 +279,12 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
       );
 
   DropdownMenuItem<String> menuItem1(String item) => DropdownMenuItem(
-    value: item,
-    child: Text(
-      item,
-      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-    ),
-  );
+        value: item,
+        child: Text(
+          item,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        ),
+      );
 
   void _switchLang(selectedVal) {
     setState(() {

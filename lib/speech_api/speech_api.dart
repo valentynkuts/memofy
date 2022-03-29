@@ -58,7 +58,8 @@ class SpeechApi {
 
       _speech.listen(
           onResult: (value) => onResult(value.recognizedWords),
-          localeId:"en_GB");  //  "pl_PL","uk_UA", "en_US", "ru_RU", "de_DE"
+          );  //  "pl_PL","uk_UA", "en_US", "ru_RU", "de_DE"
+          //localeId:"en_GB");  //  "pl_PL","uk_UA", "en_US", "ru_RU", "de_DE"
     }
 
     return isAvailable;

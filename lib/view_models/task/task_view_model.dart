@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:memofy/data/task_service.dart';
 import 'package:memofy/models/task/task_model.dart';
@@ -5,6 +6,8 @@ import 'package:memofy/models/task/task_model.dart';
 class TasksViewModel extends ChangeNotifier {
   String searchingQuery = '';
   final taskService = TaskService();
+
+  Color tileColor = Color(0xFFFFFFFF);
 
   TasksViewModel() {
     load();
@@ -39,7 +42,7 @@ class TasksViewModel extends ChangeNotifier {
   }
 
   Future<void> addTask(String title, String data, String note) async {
-    final task = await taskService.addTask(_tasks, title, data, note);
+    final task = await taskService.addTask(_tasks, title, data, note, tileColor.value);
     _tasks.add(task);
     notifyListeners();
   }
@@ -67,6 +70,12 @@ class TasksViewModel extends ChangeNotifier {
     await taskService.updateTask(task, newTitle, newNote, date);
     notifyListeners();
   }
+
+  Future<void> updateTaskColor(TaskModel task, int colorValue) async {
+    await taskService.updateTaskColor(task, colorValue);
+    notifyListeners();
+  }
+
 
   // close box which was open in load()
   @override

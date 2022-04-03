@@ -20,12 +20,29 @@ class TaskTileWidget extends StatefulWidget {
 }
 
 class _TaskTileWidgetState extends State<TaskTileWidget> {
-  Color pickerColor = Color(0xff443a49);
-  Color currentColor = Color(0xff443a49);
+  //Color col = Color(0xff443a49);
+  //int val = col.value;
+  //Color col1 = Color(val);
+  //int col_white = 0xFFFFFFFF; //0xffffffff;
+  Color pickerColor = Color(0xFFFFFFFF);
+  //Color currentColor = Color(0xff443a49);
+
+  //Provider.of<TasksViewModel>(context, listen: false).updateTaskColor(widget.task, pickerColor_value);
 
   void changeColor(Color color) {
-    setState(() => pickerColor = color);
+    setState((){
+      pickerColor = color.withOpacity(0.4);
+      Provider.of<TasksViewModel>(context, listen: false).updateTaskColor(widget.task, pickerColor_value);
+    });  //write color to DB
+
   }
+
+  int get pickerColor_value => pickerColor.value;
+
+  void set pickerCol(int value) {
+    pickerColor = Color(value);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +94,8 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
               padding: EdgeInsets.all(10.0),
               decoration: BoxDecoration(
                   //color: task.isDone ? Colors.grey : Colors.white, //colors todo
-                  color: task.isDone ? Colors.grey : pickerColor, //colors todo
+                  //color: task.isDone ? Colors.grey : pickerColor, //colors todo
+                  color: task.isDone ? Colors.grey : Color(task.colorValue), //colors todo
                   border: Border.all(color: Colors.black.withOpacity(0.2)),
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   boxShadow: [
@@ -157,17 +175,18 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
       return AlertDialog(
         title: const Text('Pick a color!'),
         content: SingleChildScrollView(
-          child: ColorPicker(
-            pickerColor: pickerColor,
-            onColorChanged: changeColor,
-          ),
-          // Use Material color picker:
-          //
-          // child: MaterialPicker(
+          // child: ColorPicker(
           //   pickerColor: pickerColor,
           //   onColorChanged: changeColor,
-          //   showLabel: true, // only on portrait mode
           // ),
+
+          // Use Material color picker:
+          //
+          child: MaterialPicker(
+            pickerColor: pickerColor,
+            onColorChanged: changeColor,
+            //showLabel: true, // only on portrait mode
+          ),
           //
           // Use Block color picker:
           //
@@ -185,7 +204,7 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
           ElevatedButton(
             child: const Text('Got it'),
             onPressed: () {
-              setState(() => currentColor = pickerColor);
+              //setState(() => currentColor = pickerColor);
               Navigator.of(context).pop();
             },
           ),

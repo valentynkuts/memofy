@@ -5,27 +5,14 @@ import 'package:memofy/presentation/screens/edit_task/edit_task_screen.dart';
 import 'package:memofy/presentation/screens/subtasks_list/subtasks_list_screen.dart';
 import 'package:memofy/view_models/task/task_view_model.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
-class TaskTileWidget extends StatefulWidget {
+class TaskTileWidget extends StatelessWidget {
   final TaskModel task;
 
-  TaskTileWidget({
+  const TaskTileWidget({
     Key? key,
     required this.task,
   }) : super(key: key);
-
-  @override
-  State<TaskTileWidget> createState() => _TaskTileWidgetState();
-}
-
-class _TaskTileWidgetState extends State<TaskTileWidget> {
-  Color pickerColor = Color(0xff443a49);
-  Color currentColor = Color(0xff443a49);
-
-  void changeColor(Color color) {
-    setState(() => pickerColor = color);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +23,11 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
       );
     }
 
-    return slidableTile(context, widget.task, onTaskTap);
+    return slidableTile(context, task, onTaskTap);
   }
 
   Widget slidableTile(
-          BuildContext context, TaskModel task, Function onTaskTap) =>
+      BuildContext context, TaskModel task, Function onTaskTap) =>
       Padding(
         padding: const EdgeInsets.all(5.0),
         child: Slidable(
@@ -64,7 +51,7 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                 color: Colors.red, //Colors.green,
                 onTap: () {
                   final provider =
-                      Provider.of<TasksViewModel>(context, listen: false);
+                  Provider.of<TasksViewModel>(context, listen: false);
                   provider.removeTask(task);
                 },
                 caption: 'Delete', //'Edit',
@@ -76,8 +63,7 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
             child: Container(
               padding: EdgeInsets.all(10.0),
               decoration: BoxDecoration(
-                  //color: task.isDone ? Colors.grey : Colors.white, //colors todo
-                  color: task.isDone ? Colors.grey : pickerColor, //colors todo
+                  color: task.isDone ? Colors.grey : Colors.white,
                   border: Border.all(color: Colors.black.withOpacity(0.2)),
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   boxShadow: [
@@ -114,16 +100,6 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                     ),
                     dense: true,
                     isThreeLine: true,
-                    trailing: IconButton(
-                      icon: Icon(
-                        Icons.more_vert,
-                        color: Colors.black,
-                      ),
-                      tooltip: 'Setting to choose color',
-                      onPressed: () {
-                        showSettingColorDialog(context);
-                      },
-                    ),
                   ),
                   Container(
                     padding: EdgeInsets.all(10.0),
@@ -147,50 +123,7 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
       );
 
   void editTask(BuildContext context) => Navigator.of(context).pushNamed(
-        EditTaskScreen.id,
-        arguments: widget.task,
-      );
-
-  void showSettingColorDialog(BuildContext context) => showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('Pick a color!'),
-        content: SingleChildScrollView(
-          child: ColorPicker(
-            pickerColor: pickerColor,
-            onColorChanged: changeColor,
-          ),
-          // Use Material color picker:
-          ////
-          // child: MaterialPicker(
-          //   pickerColor: pickerColor,
-          //   onColorChanged: changeColor,
-          //   showLabel: true, // only on portrait mode
-          // ),
-          //
-          // Use Block color picker:
-          //
-          // child: BlockPicker(
-          //   pickerColor: pickerColor,
-          //   onColorChanged: changeColor,
-          // ),
-          //
-          // child: MultipleChoiceBlockPicker(
-          //   pickerColors: pickerColor,
-          //   onColorsChanged: changeColors,
-          // ),
-        ),
-        actions: <Widget>[
-          ElevatedButton(
-            child: const Text('Got it'),
-            onPressed: () {
-              setState(() => currentColor = pickerColor);
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
+    EditTaskScreen.id,
+    arguments: task,
   );
 }

@@ -162,7 +162,7 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
             onColorChanged: changeColor,
           ),
           // Use Material color picker:
-          //
+          ////
           // child: MaterialPicker(
           //   pickerColor: pickerColor,
           //   onColorChanged: changeColor,

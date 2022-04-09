@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:memofy/constants/constants.dart';
 import 'package:memofy/models/task/task_model.dart';
 import 'package:memofy/presentation/screens/edit_task/edit_task_screen.dart';
 import 'package:memofy/presentation/screens/subtasks_list/subtasks_list_screen.dart';
@@ -25,16 +26,18 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
   //Color col1 = Color(val);
   //int col_white = 0xFFFFFFFF; //0xffffffff;
   Color pickerColor = Color(0xFFFFFFFF);
+
   //Color currentColor = Color(0xff443a49);
+  bool value = false;
 
   //Provider.of<TasksViewModel>(context, listen: false).updateTaskColor(widget.task, pickerColor_value);
 
   void changeColor(Color color) {
-    setState((){
+    setState(() {
       pickerColor = color.withOpacity(0.4);
-      Provider.of<TasksViewModel>(context, listen: false).updateTaskColor(widget.task, pickerColor_value);
-    });  //write color to DB
-
+      Provider.of<TasksViewModel>(context, listen: false)
+          .updateTaskColor(widget.task, pickerColor_value);
+    }); //write color to DB
   }
 
   int get pickerColor_value => pickerColor.value;
@@ -42,7 +45,6 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
   void set pickerCol(int value) {
     pickerColor = Color(value);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +97,8 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
               decoration: BoxDecoration(
                   //color: task.isDone ? Colors.grey : Colors.white, //colors todo
                   //color: task.isDone ? Colors.grey : pickerColor, //colors todo
-                  color: task.isDone ? Colors.grey : Color(task.colorValue), //colors todo
+                  color: task.isDone ? Colors.grey : Color(task.colorValue),
+                  //colors todo
                   border: Border.all(color: Colors.black.withOpacity(0.2)),
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   boxShadow: [
@@ -139,7 +142,8 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                       ),
                       tooltip: 'Setting to choose color',
                       onPressed: () {
-                        showSettingColorDialog(context);
+                        //showSettingColorDialog(context);
+                        settingDialog(context);
                       },
                     ),
                   ),
@@ -170,46 +174,118 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
       );
 
   void showSettingColorDialog(BuildContext context) => showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('Pick a color!'),
-        content: SingleChildScrollView(
-          // child: ColorPicker(
-          //   pickerColor: pickerColor,
-          //   onColorChanged: changeColor,
-          // ),
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Pick a color!'),
+            content: SingleChildScrollView(
+              // child: ColorPicker(
+              //   pickerColor: pickerColor,
+              //   onColorChanged: changeColor,
+              // ),
 
-          // Use Material color picker:
-          //
-          child: MaterialPicker(
-            pickerColor: pickerColor,
-            onColorChanged: changeColor,
-            //showLabel: true, // only on portrait mode
-          ),
-          //
-          // Use Block color picker:
-          //
-          // child: BlockPicker(
-          //   pickerColor: pickerColor,
-          //   onColorChanged: changeColor,
-          // ),
-          //
-          // child: MultipleChoiceBlockPicker(
-          //   pickerColors: pickerColor,
-          //   onColorsChanged: changeColors,
-          // ),
-        ),
-        actions: <Widget>[
-          ElevatedButton(
-            child: const Text('Got it'),
-            onPressed: () {
-              //setState(() => currentColor = pickerColor);
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
+              // Use Material color picker:
+              //
+              child: MaterialPicker(
+                pickerColor: pickerColor,
+                onColorChanged: changeColor,
+                //showLabel: true, // only on portrait mode
+              ),
+              //
+              // Use Block color picker:
+              //
+              // child: BlockPicker(
+              //   pickerColor: pickerColor,
+              //   onColorChanged: changeColor,
+              // ),
+              //
+              // child: MultipleChoiceBlockPicker(
+              //   pickerColors: pickerColor,
+              //   onColorsChanged: changeColors,
+              // ),
+            ),
+            actions: <Widget>[
+              ElevatedButton(
+                child: const Text('Got it'),
+                onPressed: () {
+                  //setState(() => currentColor = pickerColor);
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
       );
-    },
-  );
+
+  void settingDialog(BuildContext context) => showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState) {
+            return Dialog(
+              shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 5),
+                      Row(
+                        children: [
+                          Text(
+                            'Choose color',
+                            style: TextStyle(
+                              //fontFamily: 'Pacifico',
+                              fontSize: 20.0,
+                              color: Colors.green,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(width: 20),
+                          ElevatedButton(
+                            onPressed: () => showSettingColorDialog(context),
+                            child: Text('Color picker'),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 12),
+                      Row(
+                        children: [
+                          Text(
+                            'Notification',
+                            style: TextStyle(
+                              //fontFamily: 'Pacifico',
+                              fontSize: 20.0,
+                              color: Colors.green,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(width: 40),
+                          Transform.scale(
+                            scale: 2,
+                            child: Switch.adaptive(
+                              activeColor: Colors.green,
+                              value: value,
+                              onChanged: (value) =>
+                                  setState(() => this.value = value),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: ElevatedButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: Text('Close'),
+                        ),
+                      ),
+                    ]),
+              ),
+            );
+          });
+        },
+      );
 }

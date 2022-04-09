@@ -89,10 +89,17 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                           final initialTime = TimeOfDay.now();
                           final newTime = await showTimePicker(
                               context: context,
-                              initialTime: initialTime);
+                              initialTime: initialTime,
+                              builder:  (context, childWidget) {
+                                return MediaQuery(
+                                    data: MediaQuery.of(context).copyWith(
+                                      // Using 24-Hour format
+                                        alwaysUse24HourFormat: true),
+                                    // If you want 12-Hour format, just change alwaysUse24HourFormat to false or remove all the builder argument
+                                    child: childWidget!);
+                              });
                               if (newTime == null) return;
-                              setState(
-                              () => dateTime[1] = newTime.format(context));
+                              setState(() => dateTime[1] = newTime.format(context));
                         },
                         style: ElevatedButton.styleFrom(
                             fixedSize: const Size(130, 50),

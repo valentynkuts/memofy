@@ -28,7 +28,7 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
   Color pickerColor = Color(0xFFFFFFFF);
 
   //Color currentColor = Color(0xff443a49);
-  bool value = false;
+  bool value = false; // for notification
 
   //Provider.of<TasksViewModel>(context, listen: false).updateTaskColor(widget.task, pickerColor_value);
 

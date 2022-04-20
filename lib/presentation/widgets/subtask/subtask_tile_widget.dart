@@ -50,7 +50,7 @@ class SubtaskTileWidget extends StatelessWidget {
             key: ValueKey(subtask),
             padding: EdgeInsets.all(10.0),
             decoration: BoxDecoration(
-                color: subtask.isDone ? Colors.green[300] : Colors.white,
+                color: subtask.isDone ? Colors.grey : Colors.white,
                 border: Border.all(color: Colors.black.withOpacity(0.2)),
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 boxShadow: [

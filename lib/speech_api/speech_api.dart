@@ -7,11 +7,11 @@ import 'package:provider/provider.dart';
 //   poland("pl_PL");
 // }
 class SpeechApi {
-  static List<LocaleName> _localeNames = [];
+  //static List<LocaleName> _localeNames = [];
   static String _currentLocaleId = '';
   static final _speech = SpeechToText();
 
-  void init(BuildContext context) async {
+ /* void init(BuildContext context) async {
     _localeNames = await _speech.locales();
     for(var ln in _localeNames){
       print(ln.name);
@@ -25,7 +25,7 @@ class SpeechApi {
     // var systemLocale = await _speech.systemLocale();
     // _currentLocaleId = systemLocale?.localeId ?? '';
     // print(_currentLocaleId);
-  }
+  }*/
 
   static Future<bool> toggleRecording({
     required Function(String text) onResult,

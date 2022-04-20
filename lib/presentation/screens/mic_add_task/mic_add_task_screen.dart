@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 class MicAddTaskScreen extends StatefulWidget {
   static const String id = 'mic_add_task_screen';
   String info = 'Press the button and start speaking';
-  SpeechApi speechApi = SpeechApi();
+  //SpeechApi speechApi = SpeechApi();
 
   MicAddTaskScreen({Key? key}) : super(key: key);
 
@@ -31,7 +31,7 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
 
   @override
   Widget build(BuildContext context) {
-    widget.speechApi.init(context);
+    //widget.speechApi.init(context);
 
     return Scaffold(
       appBar: AppBar(

@@ -56,6 +56,9 @@ class _MicAddSubtaskScreenState extends State<MicAddSubtaskScreen> {
             ],
           ),
           floatingActionButton: FloatingActionButton.extended(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
             onPressed: () {
               String title =
                   Provider.of<SpeechViewModel>(context, listen: false).title;

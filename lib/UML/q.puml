@@ -60,6 +60,7 @@ class "memofy::data::task_service.dart::TaskService" {
   +Future<TaskModel> addTask()
   +Future<void> removeTask()
   +Future<void> updateTask()
+  +Future<void> updateTaskColor()
   +Future<void> close()
 }
 
@@ -72,6 +73,7 @@ class "memofy::models::task::task_model.dart::TaskModel" {
   +bool isDone
   +int orderby
   +String id
+  +int colorValue
   +void toggleDone()
   +String toString()
 }
@@ -95,6 +97,7 @@ class "memofy::models::task::task_model.dart::TaskModel" {
   +bool isDone
   +int orderby
   +String id
+  +int colorValue
   +void toggleDone()
   +String toString()
 }
@@ -154,6 +157,7 @@ class "memofy::models::subtask::subtask_model.dart::SubtaskModelAdapter" {
 class "memofy::view_models::task::task_view_model.dart::TasksViewModel" {
   +String searchingQuery
   +TaskService taskService
+  +Color tileColor
   -List<TaskModel> _tasks
   -List<TaskModel> _temp
   +List<TaskModel> tasks
@@ -164,10 +168,12 @@ class "memofy::view_models::task::task_view_model.dart::TasksViewModel" {
   +void searchTask()
   +Future<void> removeTask()
   +Future<void> updateTask()
+  +Future<void> updateTaskColor()
   +void dispose()
 }
 
 "memofy::view_models::task::task_view_model.dart::TasksViewModel" o-- "memofy::data::task_service.dart::TaskService"
+"memofy::view_models::task::task_view_model.dart::TasksViewModel" o-- "dart::ui::Color"
 "flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "memofy::view_models::task::task_view_model.dart::TasksViewModel"
 
 class "memofy::view_models::done_task::done_task_view_model.dart::DoneTasksViewModel" {
@@ -212,23 +218,43 @@ class "memofy::view_models::speech::speech_view_model.dart::SpeechViewModel" {
   {static} +String NOTE
   -String _title
   -String _note
+  {static} -List<LocaleName> _localeNames
+  +String currentLocaleId
   +String title
   +String note
   +void setData()
   +String getData()
+  +void setLocaleNames()
+  +List<LocaleName> getLocaleNames()
+  +void setLocatedId()
+  +String getLocatedId()
 }
 
 "flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "memofy::view_models::speech::speech_view_model.dart::SpeechViewModel"
 
 class "memofy::presentation::widgets::task::task_tile_widget.dart::TaskTileWidget" {
   +TaskModel task
-  +Widget build()
-  +Widget slidableTile()
-  +void editTask()
+  +State<TaskTileWidget> createState()
 }
 
 "memofy::presentation::widgets::task::task_tile_widget.dart::TaskTileWidget" o-- "memofy::models::task::task_model.dart::TaskModel"
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "memofy::presentation::widgets::task::task_tile_widget.dart::TaskTileWidget"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "memofy::presentation::widgets::task::task_tile_widget.dart::TaskTileWidget"
+
+class "memofy::presentation::widgets::task::task_tile_widget.dart::_TaskTileWidgetState" {
+  +Color pickerColor
+  +bool value
+  +int pickerColor_value
+  +int pickerCol
+  +void changeColor()
+  +Widget build()
+  +Widget slidableTile()
+  +void editTask()
+  +void showSettingColorDialog()
+  +void settingDialog()
+}
+
+"memofy::presentation::widgets::task::task_tile_widget.dart::_TaskTileWidgetState" o-- "dart::ui::Color"
+"flutter::src::widgets::framework.dart::State" <|-- "memofy::presentation::widgets::task::task_tile_widget.dart::_TaskTileWidgetState"
 
 class "memofy::presentation::widgets::mic::add_by_mic.dart::AddByMic" {
   +String info
@@ -241,7 +267,7 @@ class "memofy::presentation::widgets::mic::add_by_mic.dart::AddByMic" {
 class "memofy::presentation::widgets::mic::add_by_mic.dart::_AddByMicState" {
   +Widget build()
   +Future<dynamic> toggleRecording()
-}`
+}
 
 "flutter::src::widgets::framework.dart::State" <|-- "memofy::presentation::widgets::mic::add_by_mic.dart::_AddByMicState"
 
@@ -290,8 +316,11 @@ class "memofy::presentation::screens::mic_add_task::mic_add_task_screen.dart::Mi
 "flutter::src::widgets::framework.dart::StatefulWidget" <|-- "memofy::presentation::screens::mic_add_task::mic_add_task_screen.dart::MicAddTaskScreen"
 
 class "memofy::presentation::screens::mic_add_task::mic_add_task_screen.dart::_MicAddTaskScreenState" {
+  +String? selectedItem
+  +List<DropdownMenuItem<String>> menuItems
   +Widget build()
   +void showErrorDialog()
+  +void showSettingDialog()
 }
 
 "flutter::src::widgets::framework.dart::State" <|-- "memofy::presentation::screens::mic_add_task::mic_add_task_screen.dart::_MicAddTaskScreenState"
@@ -401,7 +430,7 @@ class "memofy::presentation::screens::edit_task::edit_task_screen.dart::EditTask
 class "memofy::presentation::screens::edit_task::edit_task_screen.dart::_EditTaskScreenState" {
   +TextValidation validationService
   +String title
-  +String date
+  +List<dynamic> dateTime
   +String note
   +String tempDate
   +void initState()
@@ -472,6 +501,7 @@ class "memofy::presentation::screens::home::home_page_screen.dart::_HomePageScre
 "flutter::src::widgets::framework.dart::State" <|-- "memofy::presentation::screens::home::home_page_screen.dart::_HomePageScreenState"
 
 class "memofy::speech_api::speech_api.dart::SpeechApi" {
+  {static} -String _currentLocaleId
   {static} -SpeechToText _speech
   {static} +Future<bool> toggleRecording()
 }

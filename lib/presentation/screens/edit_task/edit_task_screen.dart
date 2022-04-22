@@ -24,14 +24,14 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   TextValidation validationService = TextValidation();
 
   String title = '';
-  String date = '';
+  List dateTime = [];
   String note = '';
   String tempDate = '';
 
   @override
   void initState() {
     title = widget.task.title;
-    date = widget.task.date;
+    dateTime = widget.task.date.split(' ');
     note = widget.task.note;
     super.initState();
   }
@@ -58,24 +58,56 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                 //   style: TextStyle(fontSize: 20, color: Colors.black),
                 // ),
                 SizedBox(height: 15.0),
-                ElevatedButton(
-                  child: Text(date),
-                  onPressed: () async {
-                    final initialDate = DateTime.now();
-                    final newDate = await showDatePicker(
-                      context: context,
-                      initialDate: initialDate,
-                      firstDate: DateTime(DateTime.now().year - 5),
-                      lastDate: DateTime(DateTime.now().year + 5),
-                    );
-                    if (newDate == null) return;
-                    setState(
-                        () => date = DateFormat('dd-MM-yyyy').format(newDate));
-                  },
-                  style: ElevatedButton.styleFrom(
-                      fixedSize: const Size(250, 50),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10))),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        child: Text(dateTime[0]),
+                        onPressed: () async {
+                          final initialDate = DateTime.now();
+                          final newDate = await showDatePicker(
+                            context: context,
+                            initialDate: initialDate,
+                            firstDate: DateTime(DateTime.now().year - 5),
+                            lastDate: DateTime(DateTime.now().year + 5),
+                          );
+                          if (newDate == null) return;
+                          setState(
+                              () => dateTime[0] = DateFormat('dd-MM-yyyy').format(newDate));
+                        },
+                        style: ElevatedButton.styleFrom(
+                            fixedSize: const Size(130, 50),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10))),
+                      ),
+                    ),
+                    SizedBox(width: 15.0),
+                    Expanded(
+                      child: ElevatedButton(
+                        child: Text(dateTime[1]),
+                        onPressed: () async{
+                          final initialTime = TimeOfDay.now();
+                          final newTime = await showTimePicker(
+                              context: context,
+                              initialTime: initialTime,
+                              builder:  (context, childWidget) {
+                                return MediaQuery(
+                                    data: MediaQuery.of(context).copyWith(
+                                      // Using 24-Hour format
+                                        alwaysUse24HourFormat: true),
+                                    // If you want 12-Hour format, just change alwaysUse24HourFormat to false or remove all the builder argument
+                                    child: childWidget!);
+                              });
+                              if (newTime == null) return;
+                              setState(() => dateTime[1] = newTime.format(context));
+                        },
+                        style: ElevatedButton.styleFrom(
+                            fixedSize: const Size(130, 50),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10))),
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(height: 15.0),
                 EditNoteInput(),
@@ -105,7 +137,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   Widget EditNoteInput() => TextFormField(
         autofocus: true,
         //minLines: 3,
-        maxLines: 5,
+        maxLines: 3,
         initialValue: note,
         keyboardType: TextInputType.multiline,
         decoration: InputDecoration(
@@ -133,6 +165,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
             title = validationService.text.value;
           }
           note = note.trim();
+          String date = dateTime[0] + ' ' + dateTime[1];
           Provider.of<TasksViewModel>(context, listen: false)
               .updateTask(widget.task, title, note, date);
           validationService.text = ValidationItem('', null);

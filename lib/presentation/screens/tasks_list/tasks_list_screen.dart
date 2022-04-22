@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:memofy/constants/constants.dart';
+import 'package:memofy/notification_api/notification_api.dart';
 import 'package:memofy/presentation/screens/add_task/add_task_screen.dart';
 import 'package:memofy/presentation/screens/mic_add_task/mic_add_task_screen.dart';
 import 'package:memofy/presentation/widgets/tasks_list/tasks_list_widget.dart';
@@ -20,6 +21,14 @@ class _TasksListScreenState extends State<TasksListScreen> {
   final _searchController = TextEditingController();
   bool isSearching = false;
   String searchingQuery = '';
+
+  @override
+  void initState() {
+    super.initState();
+    NotificationApi.init();
+    //listeNotification();
+  }
+  //void listeNotification() => NotificationApi.onNotifications.stream.listen(onClickedNotification);
 
   @override
   Widget build(BuildContext context) {
@@ -63,8 +72,13 @@ class _TasksListScreenState extends State<TasksListScreen> {
             onPressed: () {
               // do something
               print("app bar icon");
+              NotificationApi.showNotification(
+                title: 'Thsdskdfjfkjdjf asjdklsfjdslfkj',
+                body: 'dsjskadj erjweoijrio',
+                payload: 'sa.abs',
+              );
             },
-          )
+          ),
         ],
       ),
       body: TasksListWidget(),

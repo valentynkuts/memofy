@@ -22,12 +22,16 @@ class TaskModel extends HiveObject {
   @HiveField(6)
   String id;
 
+  @HiveField(7)
+  int colorValue;
+
   TaskModel(
       {required this.title,
       required this.date,
       required this.note,
       required this.orderby,
       required this.id,
+      required this.colorValue,
       this.isDone = false});
 
   void toggleDone() {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:intl/intl.dart';
 import 'package:memofy/constants/constants.dart';
 import 'package:memofy/models/task/task_model.dart';
 import 'package:memofy/notification_api/notification_api.dart';
@@ -40,6 +41,19 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
           .updateTaskColor(widget.task, pickerColor_value);
     }); //write color to DB
   }
+
+  @override
+  void initState() {
+    super.initState();
+    NotificationApi.init(initScheduled: true);
+    listeNotification();
+  }
+  void listeNotification() => NotificationApi.onNotifications.stream.listen(onClickedNotification);
+
+  void onClickedNotification(String? payload) => Navigator.of(context).pushNamed(
+    SubtasksListScreen.id,
+    arguments: widget.task,
+  );
 
   int get pickerColor_value => pickerColor.value;
 
@@ -144,12 +158,28 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                       tooltip: 'Setting to choose color',
                       onPressed: () {
                         ////showSettingColorDialog(context);
-                        settingDialog(context);
-                        // NotificationApi.showNotification(
-                        //
-                        //   title: widget.task.title,
-                        //   body: widget.task.note
-                        // );
+                        //settingDialog(context); // ok
+
+                       // NotificationApi.showNotification(
+                       //    title: widget.task.title,
+                       //    body: widget.task.note,
+                       //    //payload: 'sa.abs',
+                       //  );
+
+                        List dateTime = [];
+                        dateTime = widget.task.date.split(' ');
+                        //DateTime dt = DateTime.parse(dateTime[1]);
+                        DateTime dt = DateFormat('dd-MM-yyyy HH:mm').parse(widget.task.date);
+                        print(dt);
+
+                        NotificationApi.showScheduledNotification(
+                          title: widget.task.title,
+                          body: widget.task.note,
+                          //payload: 'sa.abs',
+                          scheduledDate: dt,
+                          //scheduledDate: DateTime.now(),
+                        );
+
                       },
                     ),
                   ),

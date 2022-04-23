@@ -39,6 +39,8 @@ dependencies:
   flutter_local_notifications: ^9.4.0
   # lisgten for notifications
   rxdart: ^0.27.3
+  # show scheduled notifications
+  flutter_native_timezone: ^2.0.0
 
 dev_dependencies:
   flutter_test:

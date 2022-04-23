@@ -26,9 +26,12 @@ class _TasksListScreenState extends State<TasksListScreen> {
   void initState() {
     super.initState();
     NotificationApi.init();
+
     //listeNotification();
   }
-  //void listeNotification() => NotificationApi.onNotifications.stream.listen(onClickedNotification);
+ // void listeNotification() => NotificationApi.onNotifications.stream.listen(onClickedNotification);
+
+  //void onClickedNotification() =>
 
   @override
   Widget build(BuildContext context) {

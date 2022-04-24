@@ -63,6 +63,11 @@ class TaskService{
     task.save();
   }
 
+  Future<void> switchTaskNotification(TaskModel task, bool isNotificationOn) async {
+    task.isNotificationOn = isNotificationOn;
+    task.save();
+  }
+
   Future<void> close(Function f) async{
     _listenableBox?.removeListener(() => f());
     await BoxManager().closeBox((await _box));

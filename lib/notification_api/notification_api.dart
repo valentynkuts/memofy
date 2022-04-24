@@ -1,4 +1,3 @@
-
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:timezone/timezone.dart' as tz;
@@ -12,9 +11,9 @@ class NotificationApi{
   static Future _notificationDetails() async {
     return NotificationDetails(
       android: AndroidNotificationDetails(
-        'channel id',
-        'channel name',
-        channelDescription: 'channel name',
+        'channelId',
+        'channelName',
+        channelDescription: 'channelDescription',
         importance: Importance.max,
       ),
     );
@@ -28,6 +27,7 @@ class NotificationApi{
         onSelectNotification: (payload) async{
           onNotifications.add(payload);
         },);
+
     if(initScheduled){
       tz.initializeTimeZones();
       final locationName = await FlutterNativeTimezone.getLocalTimezone();
@@ -63,28 +63,7 @@ class NotificationApi{
   );
 
   static tz.TZDateTime _scheduledDate(DateTime scheduledDate){
-    //final now = tz.TZDateTime.now(tz.local);
-    //Location location = tz.local;
-    print(tz.local); // error
     return tz.TZDateTime.from(scheduledDate, tz.local);
   }
-
-
-  static Future showScheduledNotification1({
-    int id = 0,
-    String? title,
-    String? body,
-    String? payload,
-    required DateTime scheduledDate,
-  }) async => _notification.schedule(
-    id,
-    title,
-    body,
-    //tz.TZDateTime.from(scheduledDate, tz.local),
-    _scheduledDate(scheduledDate),
-    await _notificationDetails(),
-    payload: payload,
-    androidAllowWhileIdle: true,
-  );
 
 }

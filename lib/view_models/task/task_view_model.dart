@@ -76,6 +76,11 @@ class TasksViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> switchTaskNotification(TaskModel task, bool isNotificationOn) async {
+    await taskService.switchTaskNotification(task, isNotificationOn);
+    notifyListeners();
+  }
+
 
   // close box which was open in load()
   @override

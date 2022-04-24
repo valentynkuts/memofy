@@ -30,9 +30,9 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
   Color pickerColor = Color(0xFFFFFFFF);
 
   //Color currentColor = Color(0xff443a49);
-  bool value = false; // for notification
+  //bool isNotificationOn = false; // for notification
 
-  //Provider.of<TasksViewModel>(context, listen: false).updateTaskColor(widget.task, pickerColor_value);
+  //Provider.of<TasksViewModel(context, listen: false).updateTaskColor(widget.task, pickerColor_value);
 
   void changeColor(Color color) {
     setState(() {
@@ -46,9 +46,9 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
   void initState() {
     super.initState();
     NotificationApi.init(initScheduled: true);
-    listeNotification();
+    listenNotification();
   }
-  void listeNotification() => NotificationApi.onNotifications.stream.listen(onClickedNotification);
+  void listenNotification() => NotificationApi.onNotifications.stream.listen(onClickedNotification);
 
   void onClickedNotification(String? payload) => Navigator.of(context).pushNamed(
     SubtasksListScreen.id,
@@ -158,7 +158,7 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                       tooltip: 'Setting to choose color',
                       onPressed: () {
                         ////showSettingColorDialog(context);
-                        //settingDialog(context); // ok
+                        settingDialog(context); // ok
 
                        // NotificationApi.showNotification(
                        //    title: widget.task.title,
@@ -166,19 +166,15 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                        //    //payload: 'sa.abs',
                        //  );
 
-                        List dateTime = [];
-                        dateTime = widget.task.date.split(' ');
-                        //DateTime dt = DateTime.parse(dateTime[1]);
-                        DateTime dt = DateFormat('dd-MM-yyyy HH:mm').parse(widget.task.date);
-                        print(dt);
 
-                        NotificationApi.showScheduledNotification(
-                          title: widget.task.title,
-                          body: widget.task.note,
-                          //payload: 'sa.abs',
-                          scheduledDate: dt,
-                          //scheduledDate: DateTime.now(),
-                        );
+                        // DateTime dt = DateFormat('dd-MM-yyyy HH:mm').parse(widget.task.date);
+                        //
+                        // NotificationApi.showScheduledNotification(
+                        //   title: widget.task.title,
+                        //   body: widget.task.note,
+                        //   payload: 'sa.abs',
+                        //   scheduledDate: dt,
+                        // );
 
                       },
                     ),
@@ -303,9 +299,27 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                             scale: 2,
                             child: Switch.adaptive(
                               activeColor: Colors.green,
-                              value: value,
-                              onChanged: (value) =>
-                                  setState(() => this.value = value),
+                              value: widget.task.isNotificationOn,
+                              onChanged: (value) {
+                                setState(() => widget.task.isNotificationOn = value);
+                                //setState(() => Provider.of<TasksViewModel>(context, listen: false).switchTaskNotification(widget.task, value));
+                                Provider.of<TasksViewModel>(context, listen: false).switchTaskNotification(widget.task, value);
+                                //print(widget.task.isNotificationOn);
+
+                                if(widget.task.isNotificationOn){
+                                  DateTime dt = DateFormat('dd-MM-yyyy HH:mm').parse(widget.task.date);
+                                  if(dt.isAfter(DateTime.now())){
+                                    NotificationApi.showScheduledNotification(
+                                      title: widget.task.title,
+                                      body: widget.task.note,
+                                      //payload: 'test for UUUUU',
+                                      scheduledDate: dt,
+                                    );
+                                  }
+                                } else{
+                                  //notification cancel
+                                }
+                              }
                             ),
                           ),
                         ],

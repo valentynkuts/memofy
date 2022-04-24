@@ -25,6 +25,9 @@ class TaskModel extends HiveObject {
   @HiveField(7)
   int colorValue;
 
+  @HiveField(8)
+  bool isNotificationOn;
+
   TaskModel(
       {required this.title,
       required this.date,
@@ -32,7 +35,8 @@ class TaskModel extends HiveObject {
       required this.orderby,
       required this.id,
       required this.colorValue,
-      this.isDone = false});
+      this.isDone = false,
+      this.isNotificationOn = false});
 
   void toggleDone() {
     isDone = !isDone;
@@ -42,5 +46,4 @@ class TaskModel extends HiveObject {
   String toString() {
     return 'TaskModel{title: $title, data: $date';
   }
-
 }

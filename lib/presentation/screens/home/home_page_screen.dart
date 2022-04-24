@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memofy/constants/constants.dart';
 import 'package:memofy/presentation/screens/done_tasks/done_tasks_list_screen.dart';
 import 'package:memofy/presentation/screens/tasks_list/tasks_list_screen.dart';
 
@@ -21,7 +22,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
 
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color.fromRGBO(3, 37, 65, 1),
+        //backgroundColor: const Color.fromRGBO(3, 37, 65, 1),
+        backgroundColor: appBarColor,
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.grey,
         currentIndex: selectedIndex,

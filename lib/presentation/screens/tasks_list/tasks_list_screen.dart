@@ -37,7 +37,7 @@ class _TasksListScreenState extends State<TasksListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: !isSearching ? Text('TASK LIST') : searchField(),
+        title: !isSearching ? Text('TASKS LIST') : searchField(),
         actions: <Widget>[
           isSearching
               ? Padding(

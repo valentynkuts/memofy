@@ -21,7 +21,12 @@ class NotificationApi{
   static Future init({bool initScheduled = false}) async{
     final android = AndroidInitializationSettings('@mipmap/ic_launcher');
     final setting = InitializationSettings(android: android);
-    
+
+    //when app is closed
+    final details = await _notification.getNotificationAppLaunchDetails();
+    if(details != null && details.didNotificationLaunchApp){
+      onNotifications.add(details.payload);
+    }
     await _notification.initialize(
         setting,
         onSelectNotification: (payload) async{
@@ -52,8 +57,8 @@ class NotificationApi{
       id,
       title,
       body,
-      //tz.TZDateTime.from(scheduledDate, tz.local),
-      _scheduledDate(scheduledDate),
+      tz.TZDateTime.from(scheduledDate, tz.local),
+      //_scheduledDate(scheduledDate),
       await _notificationDetails(),
       payload: payload,
       androidAllowWhileIdle: true,
@@ -62,8 +67,12 @@ class NotificationApi{
 
   );
 
-  static tz.TZDateTime _scheduledDate(DateTime scheduledDate){
-    return tz.TZDateTime.from(scheduledDate, tz.local);
-  }
+  // static tz.TZDateTime _scheduledDate(DateTime scheduledDate){
+  //   return tz.TZDateTime.from(scheduledDate, tz.local);
+  // }
+
+  static void cancel(int id) => _notification.cancel(id);
+
+  static void cancelAll() => _notification.cancelAll();
 
 }

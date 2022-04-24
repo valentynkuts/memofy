@@ -25,13 +25,14 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
       colorValue: fields[7] as int,
       isDone: fields[3] as bool,
       isNotificationOn: fields[8] as bool,
+      notificationId: fields[9] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, TaskModel obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
@@ -47,7 +48,9 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
       ..writeByte(7)
       ..write(obj.colorValue)
       ..writeByte(8)
-      ..write(obj.isNotificationOn);
+      ..write(obj.isNotificationOn)
+      ..writeByte(9)
+      ..write(obj.notificationId);
   }
 
   @override

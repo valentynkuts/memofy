@@ -68,6 +68,11 @@ class TaskService{
     task.save();
   }
 
+  Future<void> updateTaskNotificationId(TaskModel task, int notificationId) async {
+    task.notificationId = notificationId;
+    task.save();
+  }
+
   Future<void> close(Function f) async{
     _listenableBox?.removeListener(() => f());
     await BoxManager().closeBox((await _box));

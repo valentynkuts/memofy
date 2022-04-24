@@ -38,10 +38,11 @@ class BoxManager {
   }
 
   Future<Box<TaskModel>> openTaskBox() async {
-    //return _openBox('tasks_box', 0, TaskModelAdapter());
+    //return _openBox('tasks_box', 0, TaskModelAdapter());  //todo
     //return _openBox('tasks3', 0, TaskModelAdapter());
     //return _openBox('tasks4', 0, TaskModelAdapter());
-    return _openBox('tasks5', 0, TaskModelAdapter());
+    //return _openBox('tasks5', 0, TaskModelAdapter());
+    return _openBox('tasks6', 0, TaskModelAdapter());
   }
 
   String makeSubtaskBoxName(String taskKey) => 'subtask_box_$taskKey';

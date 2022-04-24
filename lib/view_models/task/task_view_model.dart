@@ -81,6 +81,11 @@ class TasksViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> updateTaskNotificationId(TaskModel task, int notificationId) async {
+    await taskService.updateTaskNotificationId(task, notificationId);
+    notifyListeners();
+  }
+
 
   // close box which was open in load()
   @override

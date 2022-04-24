@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
@@ -50,10 +52,16 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
   }
   void listenNotification() => NotificationApi.onNotifications.stream.listen(onClickedNotification);
 
-  void onClickedNotification(String? payload) => Navigator.of(context).pushNamed(
-    SubtasksListScreen.id,
-    arguments: widget.task,
-  );
+  void onClickedNotification(String? payload) {
+    // Navigator.of(context).pushNamed(
+    //   SubtasksListScreen.id,
+    //   arguments: widget.task,
+    // );
+
+    // Full clean of Navigator's history and navigate to new route
+    Navigator.pushNamedAndRemoveUntil(context, SubtasksListScreen.id, (route) => false, arguments: widget.task);
+    Provider.of<TasksViewModel>(context, listen: false).switchTaskNotification(widget.task, false);
+  }
 
   int get pickerColor_value => pickerColor.value;
 
@@ -309,15 +317,23 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                                 if(widget.task.isNotificationOn){
                                   DateTime dt = DateFormat('dd-MM-yyyy HH:mm').parse(widget.task.date);
                                   if(dt.isAfter(DateTime.now())){
+                                    int notificationId = intGenerator();
+                                    print(notificationId);
+                                    Provider.of<TasksViewModel>(context, listen: false).updateTaskNotificationId(widget.task, notificationId);
+                                    print(widget.task.notificationId);
                                     NotificationApi.showScheduledNotification(
+                                      id: notificationId,
                                       title: widget.task.title,
                                       body: widget.task.note,
                                       //payload: 'test for UUUUU',
                                       scheduledDate: dt,
                                     );
+                                    //print(widget.task.notificationId);
+                                    //print(notificationId);
                                   }
                                 } else{
-                                  //notification cancel
+                                  NotificationApi.cancel(widget.task.notificationId);
+                                  print('cancel  ${widget.task.notificationId}');
                                 }
                               }
                             ),
@@ -338,4 +354,11 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
           });
         },
       );
+
+  int intGenerator() {
+    int _randomInt = Random().nextInt(10000)*4 +
+        Random().nextInt(1000)*3 +
+        Random().nextInt(100)*2;
+    return _randomInt;
+  }
 }

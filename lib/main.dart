@@ -17,6 +17,7 @@ import 'package:memofy/view_models/speech/speech_view_model.dart';
 import 'package:memofy/view_models/subtask/subtask_view_model.dart';
 import 'package:memofy/view_models/task/task_view_model.dart';
 import 'package:provider/provider.dart';
+import 'constants/constants.dart';
 import 'models/task/task_model.dart';
 
 void main() async {
@@ -30,7 +31,13 @@ void main() async {
 
   //Initializes Hive with a valid directory in app files.
   await Hive.initFlutter();
-
+  // todo ----------------
+  // if (!Hive.isAdapterRegistered(0)) {
+  //   Hive.registerAdapter(TaskModelAdapter());
+  // }
+  // var b1 = await Hive.openBox<TaskModel>('tasks5');
+  // b1.deleteFromDisk();
+  //-------------------
   runApp(MyApp());
 }
 
@@ -55,7 +62,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         theme: ThemeData(
           appBarTheme: AppBarTheme(
-            backgroundColor: const Color.fromRGBO(3, 37, 65, 1),
+            //backgroundColor: const Color.fromRGBO(3, 37, 65, 1),
+            backgroundColor: appBarColor,
           ),
         ),
         initialRoute: HomePageScreen.id,

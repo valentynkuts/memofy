@@ -28,6 +28,9 @@ class TaskModel extends HiveObject {
   @HiveField(8)
   bool isNotificationOn;
 
+  @HiveField(9)
+  int notificationId;
+
   TaskModel(
       {required this.title,
       required this.date,
@@ -36,7 +39,8 @@ class TaskModel extends HiveObject {
       required this.id,
       required this.colorValue,
       this.isDone = false,
-      this.isNotificationOn = false});
+      this.isNotificationOn = false,
+      this.notificationId = 0});
 
   void toggleDone() {
     isDone = !isDone;

@@ -30,12 +30,12 @@ class TaskService{
     return (await _box).values.toList();
   }
 
-  Future<TaskModel> addTask(List tasks, String title, String data, String note) async {
+  Future<TaskModel> addTask(List tasks, String title, String data, String note, int colorValue) async {
     var uuid = Uuid();
     String key = uuid.v1();
     int l = tasks.length;
     final task = TaskModel(
-        title: title, date: data, note: note, orderby: l + 1, id: key, isDone: false);
+        title: title, date: data, note: note, orderby: l + 1, id: key, colorValue: colorValue, isDone: false);
     (await _box).put(key, task);
 
     return task;
@@ -56,6 +56,21 @@ class TaskService{
     task.date = date;
     task.save();
 
+  }
+
+  Future<void> updateTaskColor(TaskModel task, int colorValue) async {
+    task.colorValue = colorValue;
+    task.save();
+  }
+
+  Future<void> switchTaskNotification(TaskModel task, bool isNotificationOn) async {
+    task.isNotificationOn = isNotificationOn;
+    task.save();
+  }
+
+  Future<void> updateTaskNotificationId(TaskModel task, int notificationId) async {
+    task.notificationId = notificationId;
+    task.save();
   }
 
   Future<void> close(Function f) async{

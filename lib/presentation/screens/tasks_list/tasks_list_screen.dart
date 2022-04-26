@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:memofy/constants/constants.dart';
+import 'package:memofy/notification_api/notification_api.dart';
 import 'package:memofy/presentation/screens/add_task/add_task_screen.dart';
 import 'package:memofy/presentation/screens/mic_add_task/mic_add_task_screen.dart';
 import 'package:memofy/presentation/widgets/tasks_list/tasks_list_widget.dart';
@@ -22,10 +23,21 @@ class _TasksListScreenState extends State<TasksListScreen> {
   String searchingQuery = '';
 
   @override
+  void initState() {
+    super.initState();
+    NotificationApi.init();
+
+    //listeNotification();
+  }
+ // void listeNotification() => NotificationApi.onNotifications.stream.listen(onClickedNotification);
+
+  //void onClickedNotification() =>
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: !isSearching ? Text('TASK LIST') : searchField(),
+        title: !isSearching ? Text('TASKS LIST') : searchField(),
         actions: <Widget>[
           isSearching
               ? Padding(
@@ -63,8 +75,13 @@ class _TasksListScreenState extends State<TasksListScreen> {
             onPressed: () {
               // do something
               print("app bar icon");
+              NotificationApi.showNotification(
+                title: 'Thsdskdfjfkjdjf asjdklsfjdslfkj',
+                body: 'dsjskadj erjweoijrio',
+                payload: 'sa.abs',
+              );
             },
-          )
+          ),
         ],
       ),
       body: TasksListWidget(),

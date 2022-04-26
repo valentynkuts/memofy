@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:memofy/constants/constants.dart';
 import 'package:memofy/presentation/widgets/mic/add_by_mic.dart';
+import 'package:memofy/speech_api/speech_api.dart';
 import 'package:memofy/view_models/speech/speech_view_model.dart';
 import 'package:memofy/view_models/task/task_view_model.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +10,7 @@ import 'package:provider/provider.dart';
 class MicAddTaskScreen extends StatefulWidget {
   static const String id = 'mic_add_task_screen';
   String info = 'Press the button and start speaking';
+  //SpeechApi speechApi = SpeechApi();
 
   MicAddTaskScreen({Key? key}) : super(key: key);
 
@@ -17,52 +19,81 @@ class MicAddTaskScreen extends StatefulWidget {
 }
 
 class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
+
+  String? selectedItem;
+  List<DropdownMenuItem<String>> menuItems = [
+    DropdownMenuItem(child: Text("Polish"), value: "pl_PL"),
+    DropdownMenuItem(child: Text("English"), value: "en_US"),
+    DropdownMenuItem(child: Text("German"), value: "de_DE"),
+    DropdownMenuItem(child: Text("Ukrainian"), value: "uk_UA"),
+    DropdownMenuItem(child: Text("Russian"), value: "ru_RU"),
+  ];
+
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Add by Mic',
-          ),
-          centerTitle: true,
+  Widget build(BuildContext context) {
+    //widget.speechApi.init(context);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Add by Mic',
         ),
-        body: ListView(
-          children: [
-            Container(
-              padding: EdgeInsets.all(10.0),
-              child: Text(
-                widget.info,
-                style: TextStyle(
-                  fontSize: 25.0,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w400,
-                ),
+        centerTitle: true,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.more_vert,
+              color: Colors.white,
+            ),
+            tooltip: 'Setting to choose language',
+            onPressed: () {
+              showSettingDialog(context);
+            },
+          ),
+        ],
+      ),
+      body: ListView(
+        children: [
+          Container(
+            padding: EdgeInsets.all(10.0),
+            child: Text(
+              widget.info,
+              style: TextStyle(
+                fontSize: 25.0,
+                color: Colors.black,
+                fontWeight: FontWeight.w400,
               ),
             ),
-            AddByMic(info: 'TITLE'),
-            AddByMic(info: 'NOTE'),
-          ],
+          ),
+          AddByMic(info: 'TITLE'),
+          AddByMic(info: 'NOTE'),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
         ),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            String title =
-                Provider.of<SpeechViewModel>(context, listen: false).title;
-            String note =
-                Provider.of<SpeechViewModel>(context, listen: false).note;
+        onPressed: () {
+          String title =
+              Provider.of<SpeechViewModel>(context, listen: false).title;
+          String note =
+              Provider.of<SpeechViewModel>(context, listen: false).note;
 
-            if (title.isNotEmpty) {
-              Provider.of<TasksViewModel>(context, listen: false).addTask(title,
-                  DateFormat('dd-MM-yyyy kk:mm').format(DateTime.now()), note);
-              Provider.of<SpeechViewModel>(context, listen: false).title = '';
-              Provider.of<SpeechViewModel>(context, listen: false).note = '';
+          if (title.isNotEmpty) {
+            Provider.of<TasksViewModel>(context, listen: false).addTask(title,
+                DateFormat('dd-MM-yyyy kk:mm').format(DateTime.now()), note);
+            Provider.of<SpeechViewModel>(context, listen: false).title = '';
+            Provider.of<SpeechViewModel>(context, listen: false).note = '';
 
-              Navigator.pop(context);
-            } else {
-              showErrorDialog(context);
-            }
-          },
-          label: Text('ADD'),
-        ),
-      );
+            Navigator.pop(context);
+          } else {
+            showErrorDialog(context);
+          }
+        },
+        label: Text('ADD'),
+      ),
+    );
+  }
 
   void showErrorDialog(BuildContext context) => showDialog(
         context: context,
@@ -83,6 +114,62 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
                   child: Text('Close')),
             ],
           );
+        },
+      );
+
+  void showSettingDialog(BuildContext context) => showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState) {
+            return Dialog(
+              shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 12),
+                      Text(
+                        'Setting to choose language',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      SizedBox(height: 12),
+                      Container(
+                        padding: EdgeInsets.only(
+                          left: 5.0,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: kBorderRadius,
+                          border: Border.all(color: Colors.black, width: 2),
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                              value: selectedItem,
+                              isExpanded: true,
+                              items: menuItems,
+                              onChanged: (item) {
+                                setState(() => this.selectedItem = item);
+                                Provider.of<SpeechViewModel>(context,
+                                        listen: false)
+                                    .setLocatedId(item!);
+                              }),
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: Text('Close'),
+                      ),
+                    ]),
+              ),
+            );
+          });
         },
       );
 }

@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:memofy/models/settings/settings.dart';
 import 'package:memofy/models/subtask/subtask_model.dart';
 import 'package:memofy/models/task/task_model.dart';
 
@@ -49,6 +50,10 @@ class BoxManager {
 
   Future<Box<SubtaskModel>> openSubtaskBox(String taskKey) async {
     return _openBox(makeSubtaskBoxName(taskKey), 1, SubtaskModelAdapter());
+  }
+
+  Future<Box<Settings>> openSettingsBox() async {
+    return _openBox('settings1', 2, SettingsAdapter());
   }
 
   // ARC

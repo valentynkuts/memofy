@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:memofy/view_models/settings/settings_view_model.dart';
 import 'package:memofy/view_models/speech/speech_view_model.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +9,7 @@ import 'package:provider/provider.dart';
 // }
 class SpeechApi {
   //static List<LocaleName> _localeNames = [];
-  static String _currentLocaleId = '';
+  static String _langId = '';
   static final _speech = SpeechToText();
 
  /* void init(BuildContext context) async {
@@ -44,10 +45,11 @@ class SpeechApi {
     );
 
     if (isAvailable) {
-      _currentLocaleId = Provider.of<SpeechViewModel>(context, listen: false).getLocatedId();
+      //_langId = Provider.of<SpeechViewModel>(context, listen: false).getLangId();
+      _langId = Provider.of<SettingsViewModel>(context, listen: false).getSettings().lang;
       _speech.listen(
           onResult: (value) => onResult(value.recognizedWords),
-          localeId: _currentLocaleId);
+          localeId: _langId);
     }
 
     return isAvailable;

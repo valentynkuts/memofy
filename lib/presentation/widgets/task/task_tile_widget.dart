@@ -274,37 +274,45 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                       SizedBox(height: 5),
                       Row(
                         children: [
-                          Text(
-                            'Choose color',
-                            style: TextStyle(
-                              //fontFamily: 'Pacifico',
-                              fontSize: 20.0,
-                              color: Colors.green,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                          // Text(
+                          //   'Choose color',
+                          //   style: TextStyle(
+                          //     //fontFamily: 'Pacifico',
+                          //     fontSize: 20.0,
+                          //     color: Colors.green,
+                          //     fontWeight: FontWeight.bold,
+                          //   ),
+                          // ),
                           SizedBox(width: 20),
                           ElevatedButton(
                             onPressed: () => showSettingColorDialog(context),
-                            child: Text('Color picker'),
+                            child: Text('PRESS to select COLOR'),
+                            style: ElevatedButton.styleFrom(
+                                fixedSize: const Size(250, 50),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50)),
+                                primary: Colors.grey,
+                                //padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                                textStyle:
+                                const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                           ),
                         ],
                       ),
-                      SizedBox(height: 12),
+                      SizedBox(height: 30),
                       Row(
                         children: [
                           Text(
-                            'Notification',
+                            'NOTIFICATION',
                             style: TextStyle(
                               //fontFamily: 'Pacifico',
                               fontSize: 20.0,
-                              color: Colors.green,
+                              color: Colors.grey,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(width: 40),
+                          SizedBox(width: 55),
                           Transform.scale(
-                            scale: 2,
+                            scale: 3,
                             child: Switch.adaptive(
                               activeColor: Colors.green,
                               value: widget.task.isNotificationOn,
@@ -340,12 +348,22 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 50),
                       Align(
-                        alignment: Alignment.topRight,
-                        child: ElevatedButton(
+                        alignment: Alignment.center,
+                        child: ElevatedButton.icon(
                           onPressed: () => Navigator.of(context).pop(),
-                          child: Text('Close'),
+                          //child: //Text('X'),
+                          icon: Icon(Icons.close),  //icon data for elevated button
+                          label: Text("CLOSE"),
+                          style: ElevatedButton.styleFrom(
+                              fixedSize: const Size(250, 45),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50)),
+                              primary: Colors.grey,
+                              //padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                              textStyle:
+                              const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                         ),
                       ),
                     ]),

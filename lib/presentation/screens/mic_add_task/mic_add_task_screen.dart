@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:memofy/constants/constants.dart';
 import 'package:memofy/presentation/widgets/mic/add_by_mic.dart';
 import 'package:memofy/speech_api/speech_api.dart';
+import 'package:memofy/view_models/settings/settings_view_model.dart';
 import 'package:memofy/view_models/speech/speech_view_model.dart';
 import 'package:memofy/view_models/task/task_view_model.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +11,7 @@ import 'package:provider/provider.dart';
 class MicAddTaskScreen extends StatefulWidget {
   static const String id = 'mic_add_task_screen';
   String info = 'Press the button and start speaking';
+
   //SpeechApi speechApi = SpeechApi();
 
   MicAddTaskScreen({Key? key}) : super(key: key);
@@ -19,15 +21,23 @@ class MicAddTaskScreen extends StatefulWidget {
 }
 
 class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
+  String? selectedItem = '';
 
-  String? selectedItem;
-  List<DropdownMenuItem<String>> menuItems = [
-    DropdownMenuItem(child: Text("Polish"), value: "pl_PL"),
-    DropdownMenuItem(child: Text("English"), value: "en_US"),
-    DropdownMenuItem(child: Text("German"), value: "de_DE"),
-    DropdownMenuItem(child: Text("Ukrainian"), value: "uk_UA"),
-    DropdownMenuItem(child: Text("Russian"), value: "ru_RU"),
-  ];
+  // List<DropdownMenuItem<String>> menuItems = [
+  //   DropdownMenuItem(child: Text("Polish"), value: "pl_PL"),
+  //   DropdownMenuItem(child: Text("English"), value: "en_US"),
+  //   DropdownMenuItem(child: Text("German"), value: "de_DE"),
+  //   DropdownMenuItem(child: Text("Ukrainian"), value: "uk_UA"),
+  //   DropdownMenuItem(child: Text("Russian"), value: "ru_RU"),
+  // ];
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<SettingsViewModel>(context, listen: false).getSettings();  //TODO
+    //selectedItem = menuItems[2].value;
+    selectedItem = "pl_PL";
+    //selectedItem =  Provider.of<SettingsViewModel>(context,listen: false).getSettings().lang;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +57,13 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
             ),
             tooltip: 'Setting to choose language',
             onPressed: () {
+              selectedItem =
+                  Provider.of<SettingsViewModel>(context, listen: false)
+                      .getSettings()
+                      .lang;
+              print(Provider.of<SettingsViewModel>(context, listen: false)
+                  .getSettings()
+                  .lang);
               showSettingDialog(context);
             },
           ),
@@ -133,11 +150,11 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
                     children: [
                       SizedBox(height: 12),
                       Text(
-                        'Setting to choose language',
+                        'CHOOSE LANGUAGE', //'CHOOSE LANGUAGE'
                         style: TextStyle(
                           fontSize: 20.0,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w400,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                       SizedBox(height: 12),
@@ -147,25 +164,50 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
                         ),
                         decoration: BoxDecoration(
                           borderRadius: kBorderRadius,
-                          border: Border.all(color: Colors.black, width: 2),
+                          border: Border.all(color: Colors.grey, width: 3),
                         ),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton<String>(
-                              value: selectedItem,
+                              value: this.selectedItem,
                               isExpanded: true,
                               items: menuItems,
                               onChanged: (item) {
-                                setState(() => this.selectedItem = item);
-                                Provider.of<SpeechViewModel>(context,
+                                setState(() {
+                                  this.selectedItem = item;
+                                  // Provider.of<SettingsViewModel>(context,
+                                  //     listen: false)
+                                  //     .updateSettingsLang(item!);
+                                });
+                                // Provider.of<SpeechViewModel>(context,
+                                //         listen: false)
+                                //     .setLangId(item!);
+
+                                Provider.of<SettingsViewModel>(context,
                                         listen: false)
-                                    .setLocatedId(item!);
+                                    .updateSettingsLang(this.selectedItem!);
                               }),
                         ),
                       ),
-                      ElevatedButton(
+                      SizedBox(height: 40),
+                      ElevatedButton.icon(
                         onPressed: () => Navigator.of(context).pop(),
-                        child: Text('Close'),
+                        //child: //Text('X'),
+                        icon: Icon(Icons.close),  //icon data for elevated button
+                        label: Text("CLOSE"),
+                        style: ElevatedButton.styleFrom(
+                            fixedSize: const Size(250, 45),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50)),
+                            primary: Colors.grey,
+                            //padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                            textStyle:
+                            const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                       ),
+                      // ElevatedButton(
+                      //   onPressed: () => Navigator.of(context).pop(),
+                      //   child: Text('Close'),
+                      //
+                      // ),
                     ]),
               ),
             );

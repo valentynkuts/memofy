@@ -1,14 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:memofy/models/settings/settings.dart';
-import 'package:memofy/models/subtask/subtask_model.dart';
-import 'package:memofy/models/task/task_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'box_manager.dart';
 
-class SubtaskService {
+class SettingsService {
   late final Future<Box<Settings>> _box;
   ValueListenable<Object>? _listenableBox;
+
+  Future<Box<Settings>> get box{
+    return _box;
+  }
 
   Future<void> load(Function f) async {
     _box = BoxManager().openSettingsBox();
@@ -26,6 +28,11 @@ class SubtaskService {
     (await _box).put(key, settings);
 
     return settings;
+  }
+
+  Future<void> updateSettingsLang(Settings settings, String lang) async {
+    settings.lang = lang;
+    settings.save();
   }
 
   Future<void> close(Function f) async {

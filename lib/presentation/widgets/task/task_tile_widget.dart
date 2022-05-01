@@ -38,7 +38,7 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
 
   void changeColor(Color color) {
     setState(() {
-      pickerColor = color.withOpacity(0.4);
+      pickerColor = color.withOpacity(0.3);
       Provider.of<TasksViewModel>(context, listen: false)
           .updateTaskColor(widget.task, pickerColor_value);
     }); //write color to DB
@@ -84,7 +84,7 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
   Widget slidableTile(
           BuildContext context, TaskModel task, Function onTaskTap) =>
       Padding(
-        padding: const EdgeInsets.all(5.0),
+        padding: const EdgeInsets.all(3.0),
         child: Slidable(
           key: ValueKey(task),
           actionPane: SlidableBehindActionPane(),
@@ -122,11 +122,11 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                   //color: task.isDone ? Colors.grey : pickerColor, //colors todo
                   color: task.isDone ? Colors.grey : Color(task.colorValue),
                   //colors todo
-                  border: Border.all(color: Colors.black.withOpacity(0.2)),
+                  border: Border.all(color: Colors.black.withOpacity(0.5)),
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
+                      color: Colors.black.withOpacity(0.05),
                       blurRadius: 8,
                       offset: Offset(0, 2),
                     )
@@ -142,6 +142,7 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                         fontFamily: 'Pacifico',
                         fontSize: 20.0,
                         color: Colors.black,
+                        //fontStyle: FontStyle.normal,
                         fontWeight: FontWeight.bold,
                       ),
                       maxLines: 5,
@@ -149,8 +150,9 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                     subtitle: Text(
                       task.date,
                       style: TextStyle(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontStyle: FontStyle.italic,
+                        //fontWeight: FontWeight.bold,
                         fontSize: 17.0,
                       ),
                       maxLines: 1,
@@ -194,7 +196,7 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                       style: TextStyle(
                         //fontFamily: 'Pacifico',
                         fontSize: 20.0,
-                        color: Colors.indigo,
+                        color: Colors.black54,
                         fontWeight: FontWeight.bold,
                       ),
                       maxLines: 7,
@@ -299,7 +301,7 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                         ],
                       ),
                       SizedBox(height: 30),
-                      Row(
+                      Column(
                         children: [
                           Text(
                             'NOTIFICATION',
@@ -310,7 +312,8 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(width: 55),
+                          //SizedBox(width: 55),
+                          SizedBox(height: 15),
                           Transform.scale(
                             scale: 3,
                             child: Switch.adaptive(

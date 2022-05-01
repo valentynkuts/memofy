@@ -74,12 +74,12 @@ class _TasksListScreenState extends State<TasksListScreen> {
             tooltip: 'Filter',
             onPressed: () {
               // do something
-              print("app bar icon");
-              NotificationApi.showNotification(
-                title: 'Thsdskdfjfkjdjf asjdklsfjdslfkj',
-                body: 'dsjskadj erjweoijrio',
-                payload: 'sa.abs',
-              );
+              // print("app bar icon");
+              // NotificationApi.showNotification(
+              //   title: 'Thsdskdfjfkjdjf asjdklsfjdslfkj',
+              //   body: 'dsjskadj erjweoijrio',
+              //   payload: 'sa.abs',
+              // );
             },
           ),
         ],

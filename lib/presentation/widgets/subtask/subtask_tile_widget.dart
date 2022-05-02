@@ -65,7 +65,7 @@ class SubtaskTileWidget extends StatelessWidget {
               title: Text(
                 subtask.description, //'Text',
                 style: TextStyle(
-                    fontFamily: 'Pacifico',
+                    fontFamily: 'SourceCodePro',
                     fontSize: 22.0,
                     color: subtask.isDone ? Colors.white : Colors.black,
                     fontWeight: FontWeight.bold,

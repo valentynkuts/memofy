@@ -42,7 +42,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Task'),
+        title: const Text('Edit Task', style: kTasksStyle,),
       ),
       body: Center(
         child: Container(
@@ -51,12 +51,6 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
             child: Column(
               children: [
                 EditTitleInput(),
-                // SizedBox(height: 10.0),
-                // //datePicker(context),
-                // Text(
-                //   date,
-                //   style: TextStyle(fontSize: 20, color: Colors.black),
-                // ),
                 SizedBox(height: 15.0),
                 Row(
                   children: [

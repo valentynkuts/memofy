@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memofy/constants/constants.dart';
 import 'package:memofy/presentation/widgets/done_tasks/done_tasks_list_widget.dart';
 import 'package:memofy/view_models/done_task/done_task_view_model.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +21,7 @@ class _DoneTasksListScreenState extends State<DoneTasksListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: !isSearching ? Text('DONE TASK LIST') : searchField(),
+        title: !isSearching ? Text('DONE TASKS', style: kTasksStyle,) : searchField(),
         actions: <Widget>[
           isSearching
               ? Padding(

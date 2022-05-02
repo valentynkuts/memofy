@@ -40,7 +40,7 @@ class _SubtasksListScreenState extends State<SubtasksListScreen> {
       create: (context) => _subtaskViewModel,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(title),
+          title: Text(title, style: kSubtasksTitleStyle,),
           centerTitle: true,
         ),
         body: Stack(children: [
@@ -63,9 +63,10 @@ class _SubtasksListScreenState extends State<SubtasksListScreen> {
               //collapseText: 'show less',
               maxLines: 2,
               textAlign: TextAlign.center,
-              linkColor: Colors.grey,
+              linkColor: Colors.green,
               style: TextStyle(
-                color: Colors.lightGreen,
+                fontFamily: 'Courgette',
+                color: Colors.black54,
                 fontWeight: FontWeight.w500,
                 fontSize: 20.0,
               ),

@@ -34,9 +34,7 @@ class _MicAddSubtaskScreenState extends State<MicAddSubtaskScreen> {
         value: _subtaskDatamodel,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(
-              'Add by Mic',
-            ),
+            title: Text('Add by Mic', style: kTasksStyle,),
             centerTitle: true,
           ),
           body: ListView(

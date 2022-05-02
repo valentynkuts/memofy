@@ -39,7 +39,7 @@ class _AddSubtaskScreenState extends State<AddSubtaskScreen> {
       value: _subtaskDatamodel,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Add Subtask"),
+          title: Text("Add Subtask", style: kTasksStyle,),
         ),
         body: Center(
           child: Container(

@@ -7,8 +7,8 @@ class SpeechViewModel extends ChangeNotifier {
   String _title = '';
   String _note = '';
 
-  static List<LocaleName> _localeNames = [];
-  String currentLocaleId = '';
+  static List<LocaleName> _localeNames = []; //
+  String _langId = ''; //
 
   void setData(String info, String data) {
     if (info == TITLE) {
@@ -45,7 +45,7 @@ class SpeechViewModel extends ChangeNotifier {
     _note = note;
     notifyListeners();
   }
-
+//
   void setLocaleNames(List<LocaleName> localNames){
     _localeNames = localNames;
     // print("----------------------------------------");
@@ -54,18 +54,19 @@ class SpeechViewModel extends ChangeNotifier {
     // }
     notifyListeners();
   }
-
+//
   List<LocaleName> getLocaleNames(){
     return _localeNames;
   }
+//
+  void setLangId(String _langId){
+    this._langId = _langId;
 
-  void setLocatedId(String LocatedId){
-    currentLocaleId = LocatedId;
-    print(currentLocaleId);
+    print(_langId);
     notifyListeners();
   }
-
-  String getLocatedId(){
-    return currentLocaleId;
+//
+  String getLangId(){
+    return _langId;
   }
 }

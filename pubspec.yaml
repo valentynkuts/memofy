@@ -54,3 +54,28 @@ flutter:
 
   assets:
     - images/
+
+  fonts:
+    - family: Amiri
+      fonts:
+        - asset: fonts/Amiri-Bold.ttf
+        - asset: fonts/Amiri-BoldItalic.ttf
+        - asset: fonts/Amiri-Italic.ttf
+        - asset: fonts/Amiri-Regular.ttf
+    - family: Baskervville
+      fonts:
+        - asset: fonts/Baskervville-Regular.ttf
+        - asset: fonts/Baskervville-Italic.ttf
+    - family: Courgette
+      fonts:
+        - asset: fonts/Courgette-Regular.ttf
+    - family: SourceCodePro
+      fonts:
+        - asset: fonts/SourceCodePro-Italic.ttf
+        - asset: fonts/SourceCodePro-Italic-VariableFont_wght.ttf
+    - family: SpaceMono
+      fonts:
+        - asset: fonts/SpaceMono-Regular.ttf
+        - asset: fonts/SpaceMono-Italic.ttf
+        - asset: fonts/SpaceMono-Bold.ttf
+        - asset: fonts/SpaceMono-BoldItalic.ttf

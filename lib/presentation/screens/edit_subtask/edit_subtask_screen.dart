@@ -44,7 +44,7 @@ class _EditSubtaskScreenState extends State<EditSubtaskScreen> {
       //lazy: false,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Edit Subtask"),
+          title: Text("Edit Subtask", style: kTasksStyle,),
         ),
         body: Center(
           child: Container(

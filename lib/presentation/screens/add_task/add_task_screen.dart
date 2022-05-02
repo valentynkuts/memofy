@@ -24,7 +24,7 @@ class AddTaskScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Task'),
+        title: const Text('Add Task', style: kTasksStyle,),
       ),
       body: Center(
         child: Container(

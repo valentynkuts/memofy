@@ -26,18 +26,16 @@ class _TasksListScreenState extends State<TasksListScreen> {
   void initState() {
     super.initState();
     NotificationApi.init();
-
     //listeNotification();
   }
  // void listeNotification() => NotificationApi.onNotifications.stream.listen(onClickedNotification);
-
-  //void onClickedNotification() =>
+  // void onClickedNotification() => ...
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: !isSearching ? Text('TASKS LIST') : searchField(),
+        title: !isSearching ? Text('TASKS', style: kTasksStyle,) : searchField(),
         actions: <Widget>[
           isSearching
               ? Padding(
@@ -74,12 +72,6 @@ class _TasksListScreenState extends State<TasksListScreen> {
             tooltip: 'Filter',
             onPressed: () {
               // do something
-              print("app bar icon");
-              NotificationApi.showNotification(
-                title: 'Thsdskdfjfkjdjf asjdklsfjdslfkj',
-                body: 'dsjskadj erjweoijrio',
-                payload: 'sa.abs',
-              );
             },
           ),
         ],

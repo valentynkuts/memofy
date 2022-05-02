@@ -77,5 +77,4 @@ class TaskService{
     _listenableBox?.removeListener(() => f());
     await BoxManager().closeBox((await _box));
   }
-
 }

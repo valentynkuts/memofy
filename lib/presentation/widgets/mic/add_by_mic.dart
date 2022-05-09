@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:memofy/constants/constants.dart';
 import 'package:memofy/speech_api/speech_api.dart';
 import 'package:memofy/view_models/speech/speech_view_model.dart';
 import 'package:provider/provider.dart';
@@ -32,11 +33,12 @@ class _AddByMicState extends State<AddByMic> {
         children: [
           Text(
             text,
-            style: TextStyle(
-              fontSize: 25.0,
-              color: Colors.black,
-              fontWeight: FontWeight.w400,
-            ),
+            style: kTaskTitleStyle,
+            // style: TextStyle(
+            //   fontSize: 25.0,
+            //   color: Colors.black,
+            //   fontWeight: FontWeight.w400,
+            // ),
           ),
           AvatarGlow(
             animate: widget.isListening,
@@ -46,6 +48,7 @@ class _AddByMicState extends State<AddByMic> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
+              backgroundColor: mic_color,
               heroTag: widget.info,
               icon: Icon(widget.isListening ? Icons.mic : Icons.mic_none,
                   size: 36),

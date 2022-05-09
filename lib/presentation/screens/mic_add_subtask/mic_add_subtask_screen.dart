@@ -26,6 +26,7 @@ class _MicAddSubtaskScreenState extends State<MicAddSubtaskScreen> {
     if (_subtaskDatamodel == null) {
       _subtaskDatamodel = widget.subtasksViewModel;
     }
+    Provider.of<SpeechViewModel>(context, listen: false).title = '';
     super.initState();
   }
 
@@ -36,6 +37,13 @@ class _MicAddSubtaskScreenState extends State<MicAddSubtaskScreen> {
           appBar: AppBar(
             title: Text('Add by Mic', style: kTasksStyle,),
             centerTitle: true,
+            // leading: GestureDetector(   //TODO
+            //   child: Icon( Icons.arrow_back_ios, color: Colors.white,  ),
+            //   onTap: () {
+            //     Provider.of<SpeechViewModel>(context, listen: false).title = '';
+            //     Navigator.pop(context);
+            //   } ,
+            //) ,
           ),
           body: ListView(
             children: [

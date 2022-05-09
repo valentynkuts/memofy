@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
-// Space Mono
-// Amiri
 // Courgette
-// Baskervville
 // SourceCodePro
 
 const kTasksStyle = TextStyle(
@@ -54,7 +51,7 @@ const kSubtaskDescriptionStyle = TextStyle(
   //fontStyle: FontStyle.normal,
   fontWeight: FontWeight.bold,
 );
-
+const mic_color = const  Color(0xffffc000);  // amber 	 Color(0xffffc000)
 const kBorderRadius = BorderRadius.all(Radius.circular(10.0));
 const appBarColor = const Color(
     0xff6c6c6c); //const Color(0xff276359); //0xff94b9a7 //0xff839973 // 0xff3a6c7f  // 0xff08080 (grey)

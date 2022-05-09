@@ -45,6 +45,7 @@ class "memofy::data::box_manager.dart::BoxManager" {
   +Future<Box<TaskModel>> openTaskBox()
   +String makeSubtaskBoxName()
   +Future<Box<SubtaskModel>> openSubtaskBox()
+  +Future<Box<Settings>> openSettingsBox()
   +Future<void> closeBox()
 }
 
@@ -61,11 +62,26 @@ class "memofy::data::task_service.dart::TaskService" {
   +Future<void> removeTask()
   +Future<void> updateTask()
   +Future<void> updateTaskColor()
+  +Future<void> switchTaskNotification()
+  +Future<void> updateTaskNotificationId()
   +Future<void> close()
 }
 
 "memofy::data::task_service.dart::TaskService" o-- "flutter::src::foundation::change_notifier.dart::ValueListenable<Object>"
 
+class "memofy::data::settings_service.dart::SettingsService" {
+  -Future<Box<Settings>> _box
+  -ValueListenable<Object>? _listenableBox
+  +Future<Box<Settings>> box
+  +Future<void> load()
+  +Future<Settings?> getSettingsByKey()
+  +Future<Settings> addSettings()
+  +Future<void> updateSettingsLang()
+  +Future<void> close()
+}
+
+"memofy::data::settings_service.dart::SettingsService" o-- "flutter::src::foundation::change_notifier.dart::ValueListenable<Object>"
+
 class "memofy::models::task::task_model.dart::TaskModel" {
   +String title
   +String date
@@ -74,6 +90,8 @@ class "memofy::models::task::task_model.dart::TaskModel" {
   +int orderby
   +String id
   +int colorValue
+  +bool isNotificationOn
+  +int notificationId
   +void toggleDone()
   +String toString()
 }
@@ -98,6 +116,8 @@ class "memofy::models::task::task_model.dart::TaskModel" {
   +int orderby
   +String id
   +int colorValue
+  +bool isNotificationOn
+  +int notificationId
   +void toggleDone()
   +String toString()
 }
@@ -153,6 +173,40 @@ class "memofy::models::subtask::subtask_model.dart::SubtaskModelAdapter" {
 }
 
 "hive::hive.dart::TypeAdapter" <|-- "memofy::models::subtask::subtask_model.dart::SubtaskModelAdapter"
+
+class "memofy::models::settings::settings.dart::Settings" {
+  +String lang
+  +String toString()
+}
+
+"hive::src::object::hive_object.dart::HiveObject" <|-- "memofy::models::settings::settings.dart::Settings"
+
+class "memofy::models::settings::settings.dart::SettingsAdapter" {
+  +int typeId
+  +int hashCode
+  +Settings read()
+  +void write()
+  +bool ==()
+}
+
+"hive::hive.dart::TypeAdapter" <|-- "memofy::models::settings::settings.dart::SettingsAdapter"
+
+class "memofy::models::settings::settings.dart::Settings" {
+  +String lang
+  +String toString()
+}
+
+"hive::src::object::hive_object.dart::HiveObject" <|-- "memofy::models::settings::settings.dart::Settings"
+
+class "memofy::models::settings::settings.dart::SettingsAdapter" {
+  +int typeId
+  +int hashCode
+  +Settings read()
+  +void write()
+  +bool ==()
+}
+
+"hive::hive.dart::TypeAdapter" <|-- "memofy::models::settings::settings.dart::SettingsAdapter"
 
 class "memofy::view_models::task::task_view_model.dart::TasksViewModel" {
   +String searchingQuery
@@ -169,6 +223,8 @@ class "memofy::view_models::task::task_view_model.dart::TasksViewModel" {
   +Future<void> removeTask()
   +Future<void> updateTask()
   +Future<void> updateTaskColor()
+  +Future<void> switchTaskNotification()
+  +Future<void> updateTaskNotificationId()
   +void dispose()
 }
 
@@ -213,21 +269,34 @@ class "memofy::view_models::subtask::subtask_view_model.dart::SubtasksViewModel"
 "memofy::view_models::subtask::subtask_view_model.dart::SubtasksViewModel" o-- "memofy::data::subtask_service.dart::SubtaskService"
 "flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "memofy::view_models::subtask::subtask_view_model.dart::SubtasksViewModel"
 
+class "memofy::view_models::settings::settings_view_model.dart::SettingsViewModel" {
+  +SettingsService settingsService
+  +Settings settings
+  -Future<void> _readSettingsFromHive()
+  +Settings getSettings()
+  +Future<void> load()
+  +Future<void> updateSettingsLang()
+}
+
+"memofy::view_models::settings::settings_view_model.dart::SettingsViewModel" o-- "memofy::data::settings_service.dart::SettingsService"
+"memofy::view_models::settings::settings_view_model.dart::SettingsViewModel" o-- "memofy::models::settings::settings.dart::Settings"
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "memofy::view_models::settings::settings_view_model.dart::SettingsViewModel"
+
 class "memofy::view_models::speech::speech_view_model.dart::SpeechViewModel" {
   {static} +String TITLE
   {static} +String NOTE
   -String _title
   -String _note
   {static} -List<LocaleName> _localeNames
-  +String currentLocaleId
+  -String _langId
   +String title
   +String note
   +void setData()
   +String getData()
   +void setLocaleNames()
   +List<LocaleName> getLocaleNames()
-  +void setLocatedId()
-  +String getLocatedId()
+  +void setLangId()
+  +String getLangId()
 }
 
 "flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "memofy::view_models::speech::speech_view_model.dart::SpeechViewModel"
@@ -242,15 +311,18 @@ class "memofy::presentation::widgets::task::task_tile_widget.dart::TaskTileWidge
 
 class "memofy::presentation::widgets::task::task_tile_widget.dart::_TaskTileWidgetState" {
   +Color pickerColor
-  +bool value
   +int pickerColor_value
   +int pickerCol
   +void changeColor()
+  +void initState()
+  +void listenNotification()
+  +void onClickedNotification()
   +Widget build()
   +Widget slidableTile()
   +void editTask()
   +void showSettingColorDialog()
   +void settingDialog()
+  +int intGenerator()
 }
 
 "memofy::presentation::widgets::task::task_tile_widget.dart::_TaskTileWidgetState" o-- "dart::ui::Color"
@@ -317,7 +389,7 @@ class "memofy::presentation::screens::mic_add_task::mic_add_task_screen.dart::Mi
 
 class "memofy::presentation::screens::mic_add_task::mic_add_task_screen.dart::_MicAddTaskScreenState" {
   +String? selectedItem
-  +List<DropdownMenuItem<String>> menuItems
+  +void initState()
   +Widget build()
   +void showErrorDialog()
   +void showSettingDialog()
@@ -336,6 +408,7 @@ class "memofy::presentation::screens::tasks_list::tasks_list_screen.dart::_Tasks
   -TextEditingController _searchController
   +bool isSearching
   +String searchingQuery
+  +void initState()
   +Widget build()
   +Widget searchField()
 }
@@ -500,8 +573,22 @@ class "memofy::presentation::screens::home::home_page_screen.dart::_HomePageScre
 
 "flutter::src::widgets::framework.dart::State" <|-- "memofy::presentation::screens::home::home_page_screen.dart::_HomePageScreenState"
 
+class "memofy::notification_api::notification_api.dart::NotificationApi" {
+  {static} -FlutterLocalNotificationsPlugin _notification
+  {static} +BehaviorSubject<String?> onNotifications
+  {static} -Future<dynamic> _notificationDetails()
+  {static} +Future<dynamic> init()
+  {static} +Future<dynamic> showNotification()
+  {static} +Future<dynamic> showScheduledNotification()
+  {static} +void cancel()
+  {static} +void cancelAll()
+}
+
+"memofy::notification_api::notification_api.dart::NotificationApi" o-- "flutter_local_notifications::src::flutter_local_notifications_plugin.dart::FlutterLocalNotificationsPlugin"
+"memofy::notification_api::notification_api.dart::NotificationApi" o-- "rxdart::src::subjects::behavior_subject.dart::BehaviorSubject<String>"
+
 class "memofy::speech_api::speech_api.dart::SpeechApi" {
-  {static} -String _currentLocaleId
+  {static} -String _langId
   {static} -SpeechToText _speech
   {static} +Future<bool> toggleRecording()
 }

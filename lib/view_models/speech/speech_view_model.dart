@@ -65,7 +65,7 @@ class SpeechViewModel extends ChangeNotifier {
     print(_langId);
     notifyListeners();
   }
-//
+  //
   String getLangId(){
     return _langId;
   }

@@ -22,14 +22,11 @@ class _TasksListScreenState extends State<TasksListScreen> {
   bool isSearching = false;
   String searchingQuery = '';
 
-  @override
-  void initState() {
-    super.initState();
-    NotificationApi.init();
-    //listeNotification();
-  }
- // void listeNotification() => NotificationApi.onNotifications.stream.listen(onClickedNotification);
-  // void onClickedNotification() => ...
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   NotificationApi.init();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +101,7 @@ class _TasksListScreenState extends State<TasksListScreen> {
               borderRadius: kBorderRadius,
             ),
             child: Icon(Icons.mic),
-            backgroundColor: Colors.amber,
+            backgroundColor: mic_color,//Colors.amber,
             label: 'Add task by voice',
             onTap: () => Navigator.of(context).pushNamed(MicAddTaskScreen.id),
           ),

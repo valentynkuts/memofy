@@ -238,13 +238,11 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                           Text(
                             'NOTIFICATION',
                             style: TextStyle(
-                              //fontFamily: 'Pacifico',
                               fontSize: 20.0,
                               color: Colors.grey,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          //SizedBox(width: 55),
                           SizedBox(height: 15),
                           Transform.scale(
                             scale: 3,
@@ -253,30 +251,24 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                               value: widget.task.isNotificationOn,
                               onChanged: (value) {
                                 setState(() => widget.task.isNotificationOn = value);
-                                //setState(() => Provider.of<TasksViewModel>(context, listen: false).switchTaskNotification(widget.task, value));
                                 Provider.of<TasksViewModel>(context, listen: false).switchTaskNotification(widget.task, value);
-                                //print(widget.task.isNotificationOn);
-
                                 if(widget.task.isNotificationOn){
                                   DateTime dt = DateFormat('dd-MM-yyyy HH:mm').parse(widget.task.date);
                                   if(dt.isAfter(DateTime.now())){
                                     int notificationId = intGenerator();
-                                    print(notificationId);
                                     Provider.of<TasksViewModel>(context, listen: false).updateTaskNotificationId(widget.task, notificationId);
-                                    print(widget.task.notificationId);
                                     NotificationApi.showScheduledNotification(
                                       id: notificationId,
                                       title: widget.task.title,
                                       body: widget.task.note,
-                                      //payload: 'test for UUUUU',
                                       scheduledDate: dt,
                                     );
-                                    //print(widget.task.notificationId);
-                                    //print(notificationId);
+                                  } else{
+                                    widget.task.isNotificationOn = false;
+                                    notificationWarning(context);
                                   }
                                 } else{
                                   NotificationApi.cancel(widget.task.notificationId);
-                                  print('cancel  ${widget.task.notificationId}');
                                 }
                               }
                             ),
@@ -307,6 +299,13 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
           });
         },
       );
+  void notificationWarning(BuildContext context) => ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Please go to EDIT and set up future Date, Time'),
+        duration: Duration(seconds: 5),
+        backgroundColor: Colors.deepOrangeAccent,
+      ),
+  );
 
   int intGenerator() {
     int _randomInt = Random().nextInt(10000)*4 +

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:memofy/constants/constants.dart';
+import 'package:memofy/presentation/screens/home/home_page_screen.dart';
 import 'package:memofy/presentation/screens/tasks_list/tasks_list_screen.dart';
 import 'package:memofy/validation/text_validation.dart';
 import 'package:memofy/validation/validation_item.dart';
@@ -96,7 +97,8 @@ class AddTaskScreen extends StatelessWidget {
 
                 validationService.text = ValidationItem('', null);
                 //Navigator.pop(context);
-                Navigator.of(context).pushNamed(TasksListScreen.id);
+               // Navigator.of(context).pushNamed(TasksListScreen.id);
+                Navigator.of(context).pushNamed(HomePageScreen.id);
               },
       );
 }

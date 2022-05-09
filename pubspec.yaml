@@ -37,7 +37,7 @@ dependencies:
   flutter_colorpicker: ^1.0.3
   # notifications
   flutter_local_notifications: ^9.4.0
-  # lisgten for notifications
+  # listen for notifications
   rxdart: ^0.27.3
   # show scheduled notifications
   flutter_native_timezone: ^2.0.0
@@ -56,16 +56,6 @@ flutter:
     - images/
 
   fonts:
-    - family: Amiri
-      fonts:
-        - asset: fonts/Amiri-Bold.ttf
-        - asset: fonts/Amiri-BoldItalic.ttf
-        - asset: fonts/Amiri-Italic.ttf
-        - asset: fonts/Amiri-Regular.ttf
-    - family: Baskervville
-      fonts:
-        - asset: fonts/Baskervville-Regular.ttf
-        - asset: fonts/Baskervville-Italic.ttf
     - family: Courgette
       fonts:
         - asset: fonts/Courgette-Regular.ttf
@@ -73,9 +63,3 @@ flutter:
       fonts:
         - asset: fonts/SourceCodePro-Italic.ttf
         - asset: fonts/SourceCodePro-Italic-VariableFont_wght.ttf
-    - family: SpaceMono
-      fonts:
-        - asset: fonts/SpaceMono-Regular.ttf
-        - asset: fonts/SpaceMono-Italic.ttf
-        - asset: fonts/SpaceMono-Bold.ttf
-        - asset: fonts/SpaceMono-BoldItalic.ttf

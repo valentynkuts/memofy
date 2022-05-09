@@ -25,6 +25,8 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
   void initState() {
     super.initState();
     Provider.of<SettingsViewModel>(context, listen: false).getSettings();
+    Provider.of<SpeechViewModel>(context, listen: false).title = '';
+    Provider.of<SpeechViewModel>(context, listen: false).note = '';
     selectedItem = "pl_PL";
   }
 
@@ -46,9 +48,9 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
                   Provider.of<SettingsViewModel>(context, listen: false)
                       .getSettings()
                       .lang;
-              print(Provider.of<SettingsViewModel>(context, listen: false)
-                  .getSettings()
-                  .lang);
+              // print(Provider.of<SettingsViewModel>(context, listen: false)
+              //     .getSettings()
+              //     .lang);
               showSettingDialog(context);
             },
           ),
@@ -75,6 +77,7 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
+        backgroundColor: Colors.green,
         onPressed: () {
           String title =
               Provider.of<SpeechViewModel>(context, listen: false).title;

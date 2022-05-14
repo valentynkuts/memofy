@@ -14,7 +14,6 @@ const kTaskTitleStyle = TextStyle(
   fontStyle: FontStyle.normal,
   fontSize: 20.0,
   color: Colors.black,
-  //fontStyle: FontStyle.normal,
   fontWeight: FontWeight.bold,
 );
 
@@ -39,7 +38,6 @@ const kSubtasksTitleStyle = TextStyle(
   fontStyle: FontStyle.normal,
   fontSize: 20.0,
   color: Colors.white,
-  //fontStyle: FontStyle.normal,
   fontWeight: FontWeight.bold,
 );
 
@@ -48,7 +46,6 @@ const kSubtaskDescriptionStyle = TextStyle(
   fontStyle: FontStyle.normal,
   fontSize: 20.0,
   color: Colors.black,
-  //fontStyle: FontStyle.normal,
   fontWeight: FontWeight.bold,
 );
 const mic_color = const  Color(0xffffc000);  // amber 	 Color(0xffffc000)

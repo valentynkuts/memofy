@@ -31,23 +31,14 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-
   //Initializes Hive with a valid directory in app files.
   await Hive.initFlutter();
-
   //init settings
   Future<Box<Settings>> box = BoxManager().openSettingsBox();
   if(!(await box).containsKey(settings_key)){
     final settings = Settings(lang: 'pl_PL');
     (await box).put(settings_key, settings);
   }
-  // todo ----------------
-  // if (!Hive.isAdapterRegistered(0)) {
-  //   Hive.registerAdapter(TaskModelAdapter());
-  // }
-  // var b1 = await Hive.openBox<TaskModel>('tasks5');
-  // b1.deleteFromDisk();
-  //-------------------
   runApp(MyApp());
 }
 
@@ -75,7 +66,6 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         theme: ThemeData(
           appBarTheme: AppBarTheme(
-            //backgroundColor: const Color.fromRGBO(3, 37, 65, 1),
             backgroundColor: appBarColor,
           ),
         ),

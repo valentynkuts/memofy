@@ -195,6 +195,12 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
+
+          DateTime dt = DateFormat('dd-MM-yyyy HH:mm').parse(widget.task.date);
+          if(dt.isBefore(DateTime.now())){
+            Provider.of<TasksViewModel>(context, listen: false).switchTaskNotification(widget.task, false);
+          }
+
           return StatefulBuilder(
               builder: (BuildContext context, StateSetter setState) {
             return Dialog(
@@ -253,7 +259,7 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                                 setState(() => widget.task.isNotificationOn = value);
                                 Provider.of<TasksViewModel>(context, listen: false).switchTaskNotification(widget.task, value);
                                 if(widget.task.isNotificationOn){
-                                  DateTime dt = DateFormat('dd-MM-yyyy HH:mm').parse(widget.task.date);
+                                  //DateTime dt = DateFormat('dd-MM-yyyy HH:mm').parse(widget.task.date);
                                   if(dt.isAfter(DateTime.now())){
                                     int notificationId = intGenerator();
                                     Provider.of<TasksViewModel>(context, listen: false).updateTaskNotificationId(widget.task, notificationId);

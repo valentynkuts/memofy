@@ -96,8 +96,6 @@ class AddTaskScreen extends StatelessWidget {
                     .addTask(newTitle, date, newNote);
 
                 validationService.text = ValidationItem('', null);
-                //Navigator.pop(context);
-               // Navigator.of(context).pushNamed(TasksListScreen.id);
                 Navigator.of(context).pushNamed(HomePageScreen.id);
               },
       );

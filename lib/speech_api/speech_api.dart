@@ -1,32 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:memofy/view_models/settings/settings_view_model.dart';
-import 'package:memofy/view_models/speech/speech_view_model.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:provider/provider.dart';
 
-// enum lang{
-//   poland("pl_PL");
-// }
 class SpeechApi {
-  //static List<LocaleName> _localeNames = [];
   static String _langId = '';
   static final _speech = SpeechToText();
-
- /* void init(BuildContext context) async {
-    _localeNames = await _speech.locales();
-    for(var ln in _localeNames){
-      print(ln.name);
-    }
-
-    //print(_localeNames["af_ZA"]);
-
-    Provider.of<SpeechViewModel>(context, listen: false).setLocaleNames(_localeNames);
-    // //_localeNames = await _speech.locales();
-    // print(_localeNames);
-    // var systemLocale = await _speech.systemLocale();
-    // _currentLocaleId = systemLocale?.localeId ?? '';
-    // print(_currentLocaleId);
-  }*/
 
   static Future<bool> toggleRecording({
     required Function(String text) onResult,
@@ -45,13 +24,11 @@ class SpeechApi {
     );
 
     if (isAvailable) {
-      //_langId = Provider.of<SpeechViewModel>(context, listen: false).getLangId();
       _langId = Provider.of<SettingsViewModel>(context, listen: false).getSettings().lang;
       _speech.listen(
           onResult: (value) => onResult(value.recognizedWords),
           localeId: _langId);
     }
-
     return isAvailable;
   }
 }

@@ -6,7 +6,6 @@ import 'package:memofy/models/task/task_model.dart';
 class TasksViewModel extends ChangeNotifier {
   String searchingQuery = '';
   final taskService = TaskService();
-
   Color tileColor = Color(0xFFFFFFFF);
 
   TasksViewModel() {

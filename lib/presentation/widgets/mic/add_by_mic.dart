@@ -34,11 +34,6 @@ class _AddByMicState extends State<AddByMic> {
           Text(
             text,
             style: kTaskTitleStyle,
-            // style: TextStyle(
-            //   fontSize: 25.0,
-            //   color: Colors.black,
-            //   fontWeight: FontWeight.w400,
-            // ),
           ),
           AvatarGlow(
             animate: widget.isListening,

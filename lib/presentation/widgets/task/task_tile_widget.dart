@@ -175,14 +175,12 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
               child: MaterialPicker(
                 pickerColor: pickerColor,
                 onColorChanged: changeColor,
-                //showLabel: true, // only on portrait mode
               ),
             ),
             actions: <Widget>[
               ElevatedButton(
                 child: const Text('Got it'),
                 onPressed: () {
-                  //setState(() => currentColor = pickerColor);
                   Navigator.of(context).pop();
                 },
               ),
@@ -214,15 +212,6 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                       SizedBox(height: 5),
                       Row(
                         children: [
-                          // Text(
-                          //   'Choose color',
-                          //   style: TextStyle(
-                          //     //fontFamily: 'Pacifico',
-                          //     fontSize: 20.0,
-                          //     color: Colors.green,
-                          //     fontWeight: FontWeight.bold,
-                          //   ),
-                          // ),
                           SizedBox(width: 20),
                           ElevatedButton(
                             onPressed: () => showSettingColorDialog(context),
@@ -232,9 +221,7 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(50)),
                                 primary: Colors.grey,
-                                //padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                                textStyle:
-                                const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                                textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                           ),
                         ],
                       ),

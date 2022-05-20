@@ -15,8 +15,9 @@ class NotificationApi{
         'channelName',
         channelDescription: 'channelDescription',
         importance: Importance.max,
+        priority: Priority.high,
         //sound: RawResourceAndroidNotificationSound(''),
-        //largeIcon: DrawableResourceAndroidBitmap('')
+        //largeIcon: DrawableResourceAndroidBitmap(''),
       ),
     );
   }

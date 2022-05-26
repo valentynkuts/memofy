@@ -68,7 +68,14 @@ class _TasksListScreenState extends State<TasksListScreen> {
             ),
             tooltip: 'Filter',
             onPressed: () {
-              // do something
+            Provider.of<TasksViewModel>(context, listen: false).sortTaskAsc();
+            // Provider.of<TasksViewModel>(context, listen: false).sortTaskDesc();
+
+              // NotificationApi.showNotification(
+              //   title: 'Wyślij dokumenty pocztą do 22.07',
+              //   body: 'Kopie: paszport, pełnomocnictwo, ubezpieczenie',
+              //   payload: 'sa.abs',
+              //);
             },
           ),
         ],

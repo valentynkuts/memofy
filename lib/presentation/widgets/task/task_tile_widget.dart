@@ -301,9 +301,12 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
   );
 
   int intGenerator() {
-    int _randomInt = Random().nextInt(10000)*4 +
-        Random().nextInt(1000)*3 +
-        Random().nextInt(100)*2;
-    return _randomInt;
+    // int _randomInt = Random().nextInt(10000)*4 +
+    //     Random().nextInt(1000)*3 +
+    //     Random().nextInt(100)*2;
+
+   int _randomInt1 = DateTime.now().millisecondsSinceEpoch ~/1000;
+
+    return _randomInt1;
   }
 }

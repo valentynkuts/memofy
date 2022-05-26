@@ -15,6 +15,7 @@ class NotificationApi{
         'channelName',
         channelDescription: 'channelDescription',
         importance: Importance.max,
+        priority: Priority.high,
       ),
     );
   }

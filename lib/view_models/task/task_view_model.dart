@@ -58,7 +58,17 @@ class TasksViewModel extends ChangeNotifier {
     }
     notifyListeners();
   }
-
+  // true  - ascending  [1 2 3 4]
+  // false - descending [4 3 2 1]
+  void sortTask(bool order){
+    _temp.sort((a, b){
+      DateTime dateA = new DateFormat("dd-MM-yyyy hh:mm").parse(a.date);
+      DateTime dateB = new DateFormat("dd-MM-yyyy hh:mm").parse(b.date);
+      return order ? dateA.compareTo(dateB) : dateB.compareTo(dateA);
+    });
+    notifyListeners();
+  }
+  /*
   void sortTaskAsc(){
     // var test = <TaskModel>[];
     // test = _temp;
@@ -97,7 +107,7 @@ class TasksViewModel extends ChangeNotifier {
     notifyListeners();
 
   }
-
+  */
   Future<void> removeTask(TaskModel task) async {
     await taskService.removeTask(task);
     _tasks.remove(task);

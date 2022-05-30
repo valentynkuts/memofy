@@ -68,46 +68,7 @@ class TasksViewModel extends ChangeNotifier {
     });
     notifyListeners();
   }
-  /*
-  void sortTaskAsc(){
-    // var test = <TaskModel>[];
-    // test = _temp;
-    // test.sort((a, b) => a.date.compareTo(b.date));
-    //
-    // print(test);
 
-    _temp.sort((a, b){ //sorting in descending order
-      DateTime dateA = new DateFormat("dd-MM-yyyy hh:mm").parse(a.date);
-      DateTime dateB = new DateFormat("dd-MM-yyyy hh:mm").parse(b.date);
-      return dateA.compareTo(dateB);
-    });
-    print(_temp);
-    for (final task in _temp) {
-      print('orderby - ${task.orderby},  date -  ${task.date}');
-    }
-    notifyListeners();
-
-  }
-  void sortTaskDesc(){
-    //_temp.sort((b, a) => a.date.compareTo(b.date));
-    _temp.sort((a, b){ //sorting in descending order
-      DateTime dateA = new DateFormat("dd-MM-yyyy hh:mm").parse(a.date);
-      DateTime dateB = new DateFormat("dd-MM-yyyy hh:mm").parse(b.date);
-      return dateB.compareTo(dateA);
-    });
-    print(_temp);
-
-    for (final task in _temp) {
-      print('orderby - ${task.orderby},  date -  ${task.date}');
-      //DateTime dt = DateTime.parse('${task.date}');
-      //DateTime tempDate = new DateFormat("yyyy-MM-dd hh:mm").parse(task.date);
-      DateTime tempDate = new DateFormat("dd-MM-yyyy hh:mm").parse(task.date);
-      print(tempDate);
-    }
-    notifyListeners();
-
-  }
-  */
   Future<void> removeTask(TaskModel task) async {
     await taskService.removeTask(task);
     _tasks.remove(task);

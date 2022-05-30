@@ -127,9 +127,11 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                       maxLines: 5,
                     ),
                     subtitle: Text(
-                      task.date,
+                      //'Do:${task.date} \nOd:${task.date}',
+                      'Do:  ${task.date} \nOd:  ${task.date}',
+                      //task.date,
                       style: kTaskDateStyle,
-                      maxLines: 1,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                     dense: true,
@@ -139,9 +141,11 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                         Icons.more_vert,
                         color: Colors.black,
                       ),
-                      tooltip: 'Setting to choose color',
+                      tooltip: 'Setting to choose color and notification',
                       onPressed: () {
-                        settingDialog(context);
+                        if(!task.isDone) {
+                          settingDialog(context);
+                        }
                       },
                     ),
                   ),
@@ -244,8 +248,7 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                               value: widget.task.isNotificationOn,
                               onChanged: (value) {
                                 setState(() => widget.task.isNotificationOn = value);
-                                Provider.of<TasksViewModel>(context, listen: false).switchTaskNotification(widget.task, value);
-                                if(widget.task.isNotificationOn){
+                                Provider.of<TasksViewModel>(context, listen: false).switchTaskNotification(widget.task, value);                                if(widget.task.isNotificationOn){
                                   //DateTime dt = DateFormat('dd-MM-yyyy HH:mm').parse(widget.task.date);
                                   if(dt.isAfter(DateTime.now())){
                                     int notificationId = intGenerator();

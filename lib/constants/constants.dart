@@ -19,7 +19,7 @@ const kTaskTitleStyle = TextStyle(
 
 const kTaskDateStyle = TextStyle(
   fontFamily: 'SourceCodePro',
-  color: Colors.black,
+  color: Colors.indigo,
   fontStyle: FontStyle.italic,
   fontWeight: FontWeight.bold,
   fontSize: 17.0,
@@ -29,7 +29,7 @@ const kTaskNoteStyle = TextStyle(
   fontFamily: 'Courgette',
   //fontStyle: ,
   fontSize: 25.0,
-  color: Colors.black,
+  color: Colors.black87,
   //fontWeight: FontWeight.bold,
 );
 
@@ -48,6 +48,7 @@ const kSubtaskDescriptionStyle = TextStyle(
   color: Colors.black,
   fontWeight: FontWeight.bold,
 );
+
 const mic_color = const  Color(0xffffc000);  // amber 	 Color(0xffffc000)
 const kBorderRadius = BorderRadius.all(Radius.circular(10.0));
 const appBarColor = const Color(

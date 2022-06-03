@@ -30,12 +30,12 @@ class TaskService{
     return (await _box).values.toList();
   }
 
-  Future<TaskModel> addTask(List tasks, String title, String data, String note, int colorValue) async {
+  Future<TaskModel> addTask(List tasks, String title, String data, String dataFrom,String note, int colorValue) async {
     var uuid = Uuid();
     String key = uuid.v1();
     int l = tasks.length;
     final task = TaskModel(
-        title: title, date: data, note: note, orderby: l + 1, id: key, colorValue: colorValue, isDone: false);
+        title: title, date: data, dateFrom: dataFrom, note: note, orderby: l + 1, id: key, colorValue: colorValue, isDone: false);
     (await _box).put(key, task);
 
     return task;
@@ -50,10 +50,11 @@ class TaskService{
     task.delete();
   }
 
-  Future<void> updateTask(TaskModel task, String newTitle, String newNote, String date) async {
+  Future<void> updateTask(TaskModel task, String newTitle, String newNote, String date, String dateFrom) async {
     task.title = newTitle;
     task.note = newNote;
     task.date = date;
+    task.dateFrom = dateFrom;
     task.save();
 
   }

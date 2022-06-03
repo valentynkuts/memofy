@@ -124,14 +124,14 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                     title: Text(
                       task.title,
                       style: kTaskTitleStyle,
-                      maxLines: 5,
+                      maxLines: 10,
                     ),
                     subtitle: Text(
                       //'Do:${task.date} \nOd:${task.date}',
-                      'Do:  ${task.date} \nOd:  ${task.date}',
+                      'To:  ${task.date} \nFrom:  ${task.dateFrom}',
                       //task.date,
                       style: kTaskDateStyle,
-                      maxLines: 2,
+                      maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                     ),
                     dense: true,
@@ -154,7 +154,7 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                     child: Text(
                       task.note,
                       style: kTaskNoteStyle,
-                      maxLines: 7,
+                      maxLines: 10,
                     ),
                   ),
                 ],

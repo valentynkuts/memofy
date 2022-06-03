@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+
 part 'task_model.g.dart';
 
 @HiveType(typeId: 0)
@@ -30,9 +31,13 @@ class TaskModel extends HiveObject {
   @HiveField(9)
   int notificationId;
 
+  @HiveField(10)
+  String dateFrom;
+
   TaskModel(
       {required this.title,
       required this.date,
+      required this.dateFrom,
       required this.note,
       required this.orderby,
       required this.id,

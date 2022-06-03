@@ -25,6 +25,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
 
   String title = '';
   List dateTime = [];
+  List dateTimeFrom = [];
   String note = '';
   String tempDate = '';
 
@@ -32,6 +33,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   void initState() {
     title = widget.task.title;
     dateTime = widget.task.date.split(' ');
+    dateTimeFrom = widget.task.dateFrom.split(' ');
     note = widget.task.note;
     super.initState();
   }
@@ -40,78 +42,306 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   Widget build(BuildContext context) {
     validationService = Provider.of<TextValidation>(context);
 
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     title: const Text('Edit Task', style: kTasksStyle,),
+    //   ),
+    //   body: Center(
+    //     child: Container(
+    //       child: Padding(
+    //         padding: const EdgeInsets.all(8.0),
+    //         child: Column(
+    //           children: [
+    //             EditTitleInput(),
+    //             SizedBox(height: 15.0),
+    //             Row(
+    //               children: [
+    //                 Text('To: ',
+    //                 style: TextStyle(
+    //                   fontSize: 23.0,
+    //                   color: Colors.grey,
+    //                   fontWeight: FontWeight.bold,
+    //                 ),),
+    //                 Expanded(
+    //                   child: ElevatedButton(
+    //                     child: Text(dateTime[0]),
+    //                     onPressed: () async {
+    //                       final initialDate = DateTime.now();
+    //                       final newDate = await showDatePicker(
+    //                         context: context,
+    //                         initialDate: initialDate,
+    //                         firstDate: DateTime(DateTime.now().year - 5),
+    //                         lastDate: DateTime(DateTime.now().year + 5),
+    //                       );
+    //                       if (newDate == null) return;
+    //                       setState(
+    //                           () => dateTime[0] = DateFormat('dd-MM-yyyy').format(newDate));
+    //                     },
+    //                     style: ElevatedButton.styleFrom(
+    //                         fixedSize: const Size(130, 50),
+    //                         shape: RoundedRectangleBorder(
+    //                             borderRadius: BorderRadius.circular(10))),
+    //                   ),
+    //                 ),
+    //                 SizedBox(width: 15.0),
+    //                 Expanded(
+    //                   child: ElevatedButton(
+    //                     child: Text(dateTime[1]),
+    //                     onPressed: () async{
+    //                       final initialTime = TimeOfDay.now();
+    //                       final newTime = await showTimePicker(
+    //                           context: context,
+    //                           initialTime: initialTime,
+    //                           builder:  (context, childWidget) {
+    //                             return MediaQuery(
+    //                                 data: MediaQuery.of(context).copyWith(
+    //                                   // Using 24-Hour format
+    //                                     alwaysUse24HourFormat: true),
+    //                                 // If you want 12-Hour format, just change alwaysUse24HourFormat to false or remove all the builder argument
+    //                                 child: childWidget!);
+    //                           });
+    //                           if (newTime == null) return;
+    //                           setState(() => dateTime[1] = newTime.format(context));
+    //                     },
+    //                     style: ElevatedButton.styleFrom(
+    //                         fixedSize: const Size(130, 50),
+    //                         shape: RoundedRectangleBorder(
+    //                             borderRadius: BorderRadius.circular(10))),
+    //                   ),
+    //                 ),
+    //               ],
+    //             ),
+    //             SizedBox(height: 15.0),
+    //             Row(
+    //               children: [
+    //                 Text('From: ',
+    //                   style: TextStyle(
+    //                     fontSize: 23.0,
+    //                     color: Colors.grey,
+    //                     fontWeight: FontWeight.bold,
+    //                   ),),
+    //                 Expanded(
+    //                   child: ElevatedButton(
+    //                     child: Text(dateTimeFrom[0]),
+    //                     onPressed: () async {
+    //                       final initialDate = DateTime.now();
+    //                       final newDate = await showDatePicker(
+    //                         context: context,
+    //                         initialDate: initialDate,
+    //                         firstDate: DateTime(DateTime.now().year - 5),
+    //                         lastDate: DateTime(DateTime.now().year + 5),
+    //                       );
+    //                       if (newDate == null) return;
+    //                       setState(
+    //                               () => dateTimeFrom[0] = DateFormat('dd-MM-yyyy').format(newDate));
+    //                     },
+    //                     style: ElevatedButton.styleFrom(
+    //                         fixedSize: const Size(130, 50),
+    //                         shape: RoundedRectangleBorder(
+    //                             borderRadius: BorderRadius.circular(10))),
+    //                   ),
+    //                 ),
+    //                 SizedBox(width: 15.0),
+    //                 Expanded(
+    //                   child: ElevatedButton(
+    //                     child: Text(dateTimeFrom[1]),
+    //                     onPressed: () async{
+    //                       final initialTime = TimeOfDay.now();
+    //                       final newTime = await showTimePicker(
+    //                           context: context,
+    //                           initialTime: initialTime,
+    //                           builder:  (context, childWidget) {
+    //                             return MediaQuery(
+    //                                 data: MediaQuery.of(context).copyWith(
+    //                                   // Using 24-Hour format
+    //                                     alwaysUse24HourFormat: true),
+    //                                 // If you want 12-Hour format, just change alwaysUse24HourFormat to false or remove all the builder argument
+    //                                 child: childWidget!);
+    //                           });
+    //                       if (newTime == null) return;
+    //                       setState(() => dateTimeFrom[1] = newTime.format(context));
+    //                     },
+    //                     style: ElevatedButton.styleFrom(
+    //                         fixedSize: const Size(130, 50),
+    //                         shape: RoundedRectangleBorder(
+    //                             borderRadius: BorderRadius.circular(10))),
+    //                   ),
+    //                 ),
+    //               ],
+    //             ),
+    //             SizedBox(height: 15.0),
+    //             EditNoteInput(),
+    //           ],
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    //   floatingActionButton: submitButton(context),
+    // );
+    //----------------------------------------
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Task', style: kTasksStyle,),
       ),
-      body: Center(
-        child: Container(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                EditTitleInput(),
-                SizedBox(height: 15.0),
-                Row(
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        child: Text(dateTime[0]),
-                        onPressed: () async {
-                          final initialDate = DateTime.now();
-                          final newDate = await showDatePicker(
-                            context: context,
-                            initialDate: initialDate,
-                            firstDate: DateTime(DateTime.now().year - 5),
-                            lastDate: DateTime(DateTime.now().year + 5),
-                          );
-                          if (newDate == null) return;
-                          setState(
-                              () => dateTime[0] = DateFormat('dd-MM-yyyy').format(newDate));
-                        },
-                        style: ElevatedButton.styleFrom(
-                            fixedSize: const Size(130, 50),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10))),
-                      ),
-                    ),
-                    SizedBox(width: 15.0),
-                    Expanded(
-                      child: ElevatedButton(
-                        child: Text(dateTime[1]),
-                        onPressed: () async{
-                          final initialTime = TimeOfDay.now();
-                          final newTime = await showTimePicker(
+      body: ListView(
+        padding: EdgeInsets.all(10.0),
+        children: [
+          Column(
+                children: [
+                  EditTitleInput(),
+                  SizedBox(height: 15.0),
+                  Row(
+                    children: [
+                      Text('To: ',
+                        style: TextStyle(
+                          fontSize: 23.0,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),),
+                      Expanded(
+                        child: ElevatedButton(
+                          child: Text(dateTime[0]),
+                          onPressed: () async {
+                            final initialDate = DateTime.now();
+                            final newDate = await showDatePicker(
                               context: context,
-                              initialTime: initialTime,
-                              builder:  (context, childWidget) {
-                                return MediaQuery(
-                                    data: MediaQuery.of(context).copyWith(
-                                      // Using 24-Hour format
-                                        alwaysUse24HourFormat: true),
-                                    // If you want 12-Hour format, just change alwaysUse24HourFormat to false or remove all the builder argument
-                                    child: childWidget!);
-                              });
-                              if (newTime == null) return;
-                              setState(() => dateTime[1] = newTime.format(context));
-                        },
-                        style: ElevatedButton.styleFrom(
-                            fixedSize: const Size(130, 50),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10))),
+                              initialDate: initialDate,
+                              firstDate: DateTime(DateTime.now().year - 5),
+                              lastDate: DateTime(DateTime.now().year + 5),
+                            );
+                            if (newDate == null) return;
+                            setState(
+                                    () => dateTime[0] = DateFormat('dd-MM-yyyy').format(newDate));
+                          },
+                          style: ElevatedButton.styleFrom(
+                              fixedSize: const Size(130, 50),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10))),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 15.0),
-                EditNoteInput(),
-              ],
-            ),
+                      SizedBox(width: 15.0),
+                      Expanded(
+                        child: ElevatedButton(
+                          child: Text(dateTime[1]),
+                          onPressed: () async{
+                            final initialTime = TimeOfDay.now();
+                            final newTime = await showTimePicker(
+                                context: context,
+                                initialTime: initialTime,
+                                builder:  (context, childWidget) {
+                                  return MediaQuery(
+                                      data: MediaQuery.of(context).copyWith(
+                                        // Using 24-Hour format
+                                          alwaysUse24HourFormat: true),
+                                      // If you want 12-Hour format, just change alwaysUse24HourFormat to false or remove all the builder argument
+                                      child: childWidget!);
+                                });
+                            if (newTime == null) return;
+                            setState(() => dateTime[1] = newTime.format(context));
+                          },
+                          style: ElevatedButton.styleFrom(
+                              fixedSize: const Size(130, 50),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10))),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 15.0),
+                  Row(
+                    children: [
+                      Text('From: ',
+                        style: TextStyle(
+                          fontSize: 23.0,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),),
+                      Expanded(
+                        child: ElevatedButton(
+                          child: Text(dateTimeFrom[0]),
+                          onPressed: () async {
+                            final initialDate = DateTime.now();
+                            final newDate = await showDatePicker(
+                              context: context,
+                              initialDate: initialDate,
+                              firstDate: DateTime(DateTime.now().year - 5),
+                              lastDate: DateTime(DateTime.now().year + 5),
+                            );
+                            if (newDate == null) return;
+                            setState(
+                                    () => dateTimeFrom[0] = DateFormat('dd-MM-yyyy').format(newDate));
+                          },
+                          style: ElevatedButton.styleFrom(
+                              fixedSize: const Size(130, 50),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10))),
+                        ),
+                      ),
+                      SizedBox(width: 15.0),
+                      Expanded(
+                        child: ElevatedButton(
+                          child: Text(dateTimeFrom[1]),
+                          onPressed: () async{
+                            final initialTime = TimeOfDay.now();
+                            final newTime = await showTimePicker(
+                                context: context,
+                                initialTime: initialTime,
+                                builder:  (context, childWidget) {
+                                  return MediaQuery(
+                                      data: MediaQuery.of(context).copyWith(
+                                        // Using 24-Hour format
+                                          alwaysUse24HourFormat: true),
+                                      // If you want 12-Hour format, just change alwaysUse24HourFormat to false or remove all the builder argument
+                                      child: childWidget!);
+                                });
+                            if (newTime == null) return;
+                            setState(() => dateTimeFrom[1] = newTime.format(context));
+                          },
+                          style: ElevatedButton.styleFrom(
+                              fixedSize: const Size(130, 50),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10))),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 15.0),
+                  EditNoteInput(),
+                  //---------added fro test-------
+                 // SizedBox(width: 15.0),
+
+
+                  //---------
+                ],
+              ),
+          SizedBox(height: 15.0),
+          ElevatedButton(
+            child: Text('Submit'),
+            onPressed:() {
+              if (validationService.isValid) {
+                title = validationService.text.value;
+              }
+              note = note.trim();
+              String date = dateTime[0] + ' ' + dateTime[1];
+              String dateFrom = dateTimeFrom[0] + ' ' + dateTimeFrom[1];
+              Provider.of<TasksViewModel>(context, listen: false)
+                  .updateTask(widget.task, title, note, date, dateFrom);
+              validationService.text = ValidationItem('', null);
+              Navigator.pop(context);
+            },
+            style: ElevatedButton.styleFrom(
+              fixedSize: const Size(130, 50),
+              primary: Colors.green,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10))),
           ),
-        ),
+        ],
       ),
-      floatingActionButton: submitButton(context),
+
+
+     // floatingActionButton: submitButton(context),
     );
+    //------------------
   }
 
   Widget EditTitleInput() => TextFormField(
@@ -160,8 +390,9 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
           }
           note = note.trim();
           String date = dateTime[0] + ' ' + dateTime[1];
+          String dateFrom = dateTimeFrom[0] + ' ' + dateTimeFrom[1];
           Provider.of<TasksViewModel>(context, listen: false)
-              .updateTask(widget.task, title, note, date);
+              .updateTask(widget.task, title, note, date, dateFrom);
           validationService.text = ValidationItem('', null);
           Navigator.pop(context);
         },

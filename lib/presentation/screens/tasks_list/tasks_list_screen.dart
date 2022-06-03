@@ -168,7 +168,7 @@ class _TasksListScreenState extends State<TasksListScreen> {
                         ElevatedButton(
                           onPressed: () => Provider.of<TasksViewModel>(context,
                                   listen: false)
-                              .sortTask(true),
+                              .sortTaskAsc(),//.sortTask(true),
                           style: ElevatedButton.styleFrom(
                             fixedSize: const Size(50, 150),
                             shape: RoundedRectangleBorder(
@@ -185,7 +185,7 @@ class _TasksListScreenState extends State<TasksListScreen> {
                         ElevatedButton(
                           onPressed: () => Provider.of<TasksViewModel>(context,
                                   listen: false)
-                              .sortTask(false),
+                              .sortTaskDesc(),//.sortTask(false),
                           style: ElevatedButton.styleFrom(
                             fixedSize: const Size(50, 150),
                             shape: RoundedRectangleBorder(

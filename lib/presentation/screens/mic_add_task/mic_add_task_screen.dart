@@ -20,6 +20,9 @@ class MicAddTaskScreen extends StatefulWidget {
 
 class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
   String? selectedItem = '';
+  //---todo---------
+  String dateDo = "";
+  List dateTimeDo = [];
 
   @override
   void initState() {
@@ -28,6 +31,8 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
     Provider.of<SpeechViewModel>(context, listen: false).title = '';
     Provider.of<SpeechViewModel>(context, listen: false).note = '';
     selectedItem = "pl_PL";
+    dateDo = DateFormat('dd-MM-yyyy kk:mm').format(DateTime.now());
+    dateTimeDo = dateDo.split(' ');
   }
 
   @override
@@ -57,9 +62,10 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
         ],
       ),
       body: ListView(
+        padding: EdgeInsets.all(10.0), //todo
         children: [
           Container(
-            padding: EdgeInsets.all(10.0),
+            //padding: EdgeInsets.all(10.0),
             child: Text(
               widget.info,
               style: TextStyle(
@@ -71,32 +77,127 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
           ),
           AddByMic(info: 'TITLE'),
           AddByMic(info: 'NOTE'),
+          //---------------------
+          SizedBox(height: 5.0),
+          Container(
+            //padding: EdgeInsets.all(10.0),
+            child: Row(
+              children: [
+                Text('To: ',
+                  style: TextStyle(
+                    fontSize: 23.0,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold,
+                  ),),
+                Expanded(
+                  child: ElevatedButton(
+                    child: Text(dateTimeDo[0]),
+                    onPressed: () async {
+                      final initialDate = DateTime.now();
+                      final newDate = await showDatePicker(
+                        context: context,
+                        initialDate: initialDate,
+                        firstDate: DateTime(DateTime.now().year - 5),
+                        lastDate: DateTime(DateTime.now().year + 5),
+                      );
+                      if (newDate == null) return;
+                      setState(() => dateTimeDo[0] =
+                          DateFormat('dd-MM-yyyy').format(newDate));
+                    },
+                    style: ElevatedButton.styleFrom(
+                        fixedSize: const Size(130, 50),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                  ),
+                ), //buttonDatePicker(context, dateTimeDo[0])),
+                SizedBox(width: 15.0),
+                Expanded(
+                  child: ElevatedButton(
+                    child: Text(dateTimeDo[1]),
+                    onPressed: () async {
+                      final initialTime = TimeOfDay.now();
+                      final newTime = await showTimePicker(
+                          context: context,
+                          initialTime: initialTime,
+                          builder: (context, childWidget) {
+                            return MediaQuery(
+                                data: MediaQuery.of(context).copyWith(
+                                  // Using 24-Hour format
+                                    alwaysUse24HourFormat: true),
+                                // If you want 12-Hour format, just change alwaysUse24HourFormat to false or remove all the builder argument
+                                child: childWidget!);
+                          });
+                      if (newTime == null) return;
+                      setState(
+                              () => dateTimeDo[1] = newTime.format(context));
+                    },
+                    style: ElevatedButton.styleFrom(
+                        fixedSize: const Size(130, 50),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                  ),
+                ), //buttonTimePicker(context, dateTimeDo[1])),
+              ],
+            ),
+          ),
+          //------------------------------------------
+          SizedBox(height: 15.0),
+          ElevatedButton(
+            child: Text('Submit'),
+            onPressed:() {
+              String title =
+                      Provider.of<SpeechViewModel>(context, listen: false).title;
+                  String note =
+                      Provider.of<SpeechViewModel>(context, listen: false).note;
+
+                  if (title.isNotEmpty) {
+                    dateDo = dateTimeDo[0] + ' ' + dateTimeDo[1];
+                    Provider.of<TasksViewModel>(context, listen: false).addTask(title,
+                        dateDo,
+                        DateFormat('dd-MM-yyyy kk:mm').format(DateTime.now()), note);  // todo
+                    Provider.of<SpeechViewModel>(context, listen: false).title = '';
+                    Provider.of<SpeechViewModel>(context, listen: false).note = '';
+
+                    Navigator.pop(context);
+                  } else {
+                    showErrorDialog(context);
+                  }
+            },
+            style: ElevatedButton.styleFrom(
+                fixedSize: const Size(130, 50),
+                primary: Colors.green,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10))),
+          ),
+          //----------------
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        backgroundColor: Colors.green,
-        onPressed: () {
-          String title =
-              Provider.of<SpeechViewModel>(context, listen: false).title;
-          String note =
-              Provider.of<SpeechViewModel>(context, listen: false).note;
-
-          if (title.isNotEmpty) {
-            Provider.of<TasksViewModel>(context, listen: false).addTask(title,
-                DateFormat('dd-MM-yyyy kk:mm').format(DateTime.now()), note);
-            Provider.of<SpeechViewModel>(context, listen: false).title = '';
-            Provider.of<SpeechViewModel>(context, listen: false).note = '';
-
-            Navigator.pop(context);
-          } else {
-            showErrorDialog(context);
-          }
-        },
-        label: Text('ADD'),
-      ),
+      // floatingActionButton: FloatingActionButton.extended(
+      //   shape: RoundedRectangleBorder(
+      //     borderRadius: BorderRadius.circular(10),
+      //   ),
+      //   backgroundColor: Colors.green,
+      //   onPressed: () {
+      //     String title =
+      //         Provider.of<SpeechViewModel>(context, listen: false).title;
+      //     String note =
+      //         Provider.of<SpeechViewModel>(context, listen: false).note;
+      //
+      //     if (title.isNotEmpty) {
+      //       dateDo = dateTimeDo[0] + ' ' + dateTimeDo[1];
+      //       Provider.of<TasksViewModel>(context, listen: false).addTask(title,
+      //           dateDo,
+      //           DateFormat('dd-MM-yyyy kk:mm').format(DateTime.now()), note);  // todo
+      //       Provider.of<SpeechViewModel>(context, listen: false).title = '';
+      //       Provider.of<SpeechViewModel>(context, listen: false).note = '';
+      //
+      //       Navigator.pop(context);
+      //     } else {
+      //       showErrorDialog(context);
+      //     }
+      //   },
+      //   label: Text('ADD'),
+      // ),
     );
   }
 

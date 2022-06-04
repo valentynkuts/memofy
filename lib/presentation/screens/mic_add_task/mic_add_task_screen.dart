@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:memofy/constants/constants.dart';
 import 'package:memofy/presentation/widgets/mic/add_by_mic.dart';
-import 'package:memofy/speech_api/speech_api.dart';
 import 'package:memofy/view_models/settings/settings_view_model.dart';
 import 'package:memofy/view_models/speech/speech_view_model.dart';
 import 'package:memofy/view_models/task/task_view_model.dart';
@@ -20,7 +19,6 @@ class MicAddTaskScreen extends StatefulWidget {
 
 class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
   String? selectedItem = '';
-  //---todo---------
   String dateDo = "";
   List dateTimeDo = [];
 
@@ -53,19 +51,15 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
                   Provider.of<SettingsViewModel>(context, listen: false)
                       .getSettings()
                       .lang;
-              // print(Provider.of<SettingsViewModel>(context, listen: false)
-              //     .getSettings()
-              //     .lang);
               showSettingDialog(context);
             },
           ),
         ],
       ),
       body: ListView(
-        padding: EdgeInsets.all(10.0), //todo
+        padding: EdgeInsets.all(10.0),
         children: [
           Container(
-            //padding: EdgeInsets.all(10.0),
             child: Text(
               widget.info,
               style: TextStyle(
@@ -77,10 +71,8 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
           ),
           AddByMic(info: 'TITLE'),
           AddByMic(info: 'NOTE'),
-          //---------------------
           SizedBox(height: 5.0),
           Container(
-            //padding: EdgeInsets.all(10.0),
             child: Row(
               children: [
                 Text('To: ',
@@ -109,7 +101,7 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10))),
                   ),
-                ), //buttonDatePicker(context, dateTimeDo[0])),
+                ),
                 SizedBox(width: 15.0),
                 Expanded(
                   child: ElevatedButton(
@@ -136,11 +128,10 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10))),
                   ),
-                ), //buttonTimePicker(context, dateTimeDo[1])),
+                ),
               ],
             ),
           ),
-          //------------------------------------------
           SizedBox(height: 15.0),
           ElevatedButton(
             child: Text('Submit'),
@@ -169,35 +160,8 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10))),
           ),
-          //----------------
         ],
       ),
-      // floatingActionButton: FloatingActionButton.extended(
-      //   shape: RoundedRectangleBorder(
-      //     borderRadius: BorderRadius.circular(10),
-      //   ),
-      //   backgroundColor: Colors.green,
-      //   onPressed: () {
-      //     String title =
-      //         Provider.of<SpeechViewModel>(context, listen: false).title;
-      //     String note =
-      //         Provider.of<SpeechViewModel>(context, listen: false).note;
-      //
-      //     if (title.isNotEmpty) {
-      //       dateDo = dateTimeDo[0] + ' ' + dateTimeDo[1];
-      //       Provider.of<TasksViewModel>(context, listen: false).addTask(title,
-      //           dateDo,
-      //           DateFormat('dd-MM-yyyy kk:mm').format(DateTime.now()), note);  // todo
-      //       Provider.of<SpeechViewModel>(context, listen: false).title = '';
-      //       Provider.of<SpeechViewModel>(context, listen: false).note = '';
-      //
-      //       Navigator.pop(context);
-      //     } else {
-      //       showErrorDialog(context);
-      //     }
-      //   },
-      //   label: Text('ADD'),
-      // ),
     );
   }
 
@@ -280,7 +244,6 @@ class _MicAddTaskScreenState extends State<MicAddTaskScreen> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(50)),
                             primary: Colors.grey,
-                            //padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                             textStyle:
                             const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                       ),

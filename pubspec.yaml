@@ -63,3 +63,6 @@ flutter:
       fonts:
         - asset: fonts/SourceCodePro-Italic.ttf
         - asset: fonts/SourceCodePro-Italic-VariableFont_wght.ttf
+    - family: Roboto
+      fonts:
+        - asset: fonts/Roboto-Italic.ttf

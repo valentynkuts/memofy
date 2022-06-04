@@ -27,10 +27,8 @@ const kTaskDateStyle = TextStyle(
 
 const kTaskNoteStyle = TextStyle(
   fontFamily: 'Courgette',
-  //fontStyle: ,
   fontSize: 25.0,
   color: Colors.black87,
-  //fontWeight: FontWeight.bold,
 );
 
 const kSubtasksTitleStyle = TextStyle(

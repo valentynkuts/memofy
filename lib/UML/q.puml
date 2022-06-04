@@ -92,6 +92,7 @@ class "memofy::models::task::task_model.dart::TaskModel" {
   +int colorValue
   +bool isNotificationOn
   +int notificationId
+  +String dateFrom
   +void toggleDone()
   +String toString()
 }
@@ -118,6 +119,7 @@ class "memofy::models::task::task_model.dart::TaskModel" {
   +int colorValue
   +bool isNotificationOn
   +int notificationId
+  +String dateFrom
   +void toggleDone()
   +String toString()
 }
@@ -220,6 +222,9 @@ class "memofy::view_models::task::task_view_model.dart::TasksViewModel" {
   +Future<void> load()
   +Future<void> addTask()
   +void searchTask()
+  +void sortTask()
+  +void sortTaskAsc()
+  +void sortTaskDesc()
   +Future<void> removeTask()
   +Future<void> updateTask()
   +Future<void> updateTaskColor()
@@ -322,6 +327,7 @@ class "memofy::presentation::widgets::task::task_tile_widget.dart::_TaskTileWidg
   +void editTask()
   +void showSettingColorDialog()
   +void settingDialog()
+  +void notificationWarning()
   +int intGenerator()
 }
 
@@ -389,6 +395,8 @@ class "memofy::presentation::screens::mic_add_task::mic_add_task_screen.dart::Mi
 
 class "memofy::presentation::screens::mic_add_task::mic_add_task_screen.dart::_MicAddTaskScreenState" {
   +String? selectedItem
+  +String dateDo
+  +List<dynamic> dateTimeDo
   +void initState()
   +Widget build()
   +void showErrorDialog()
@@ -408,9 +416,9 @@ class "memofy::presentation::screens::tasks_list::tasks_list_screen.dart::_Tasks
   -TextEditingController _searchController
   +bool isSearching
   +String searchingQuery
-  +void initState()
   +Widget build()
   +Widget searchField()
+  +void tasksSortDialog()
 }
 
 "memofy::presentation::screens::tasks_list::tasks_list_screen.dart::_TasksListScreenState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
@@ -435,18 +443,29 @@ class "memofy::presentation::screens::done_tasks::done_tasks_list_screen.dart::_
 
 class "memofy::presentation::screens::add_task::add_task_screen.dart::AddTaskScreen" {
   {static} +String id
+  +State<AddTaskScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "memofy::presentation::screens::add_task::add_task_screen.dart::AddTaskScreen"
+
+class "memofy::presentation::screens::add_task::add_task_screen.dart::_AddTaskScreenState" {
   +String newTitle
   +String date
+  +String dateFrom
   +String newNote
+  +String dateDo
+  +List<dynamic> dateTimeDo
   +TextValidation validationService
+  +void initState()
   +Widget build()
   +Widget AddTitleInput()
   +Widget AddNoteInput()
-  +Widget submitButton()
+  +Widget buttonDatePicker()
+  +Widget buttonTimePicker()
 }
 
-"memofy::presentation::screens::add_task::add_task_screen.dart::AddTaskScreen" o-- "memofy::validation::text_validation.dart::TextValidation"
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "memofy::presentation::screens::add_task::add_task_screen.dart::AddTaskScreen"
+"memofy::presentation::screens::add_task::add_task_screen.dart::_AddTaskScreenState" o-- "memofy::validation::text_validation.dart::TextValidation"
+"flutter::src::widgets::framework.dart::State" <|-- "memofy::presentation::screens::add_task::add_task_screen.dart::_AddTaskScreenState"
 
 class "memofy::presentation::screens::edit_subtask::edit_subtask_screen.dart::EditSubtaskScreen" {
   {static} +String id
@@ -466,7 +485,6 @@ class "memofy::presentation::screens::edit_subtask::edit_subtask_screen.dart::_E
   +void initState()
   +Widget build()
   +Widget EditDescriptionInput()
-  +Widget submitButton()
 }
 
 "memofy::presentation::screens::edit_subtask::edit_subtask_screen.dart::_EditSubtaskScreenState" o-- "memofy::view_models::subtask::subtask_view_model.dart::SubtasksViewModel"
@@ -504,13 +522,13 @@ class "memofy::presentation::screens::edit_task::edit_task_screen.dart::_EditTas
   +TextValidation validationService
   +String title
   +List<dynamic> dateTime
+  +List<dynamic> dateTimeFrom
   +String note
   +String tempDate
   +void initState()
   +Widget build()
   +Widget EditTitleInput()
   +Widget EditNoteInput()
-  +Widget submitButton()
 }
 
 "memofy::presentation::screens::edit_task::edit_task_screen.dart::_EditTaskScreenState" o-- "memofy::validation::text_validation.dart::TextValidation"

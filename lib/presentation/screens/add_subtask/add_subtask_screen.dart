@@ -41,20 +41,40 @@ class _AddSubtaskScreenState extends State<AddSubtaskScreen> {
         appBar: AppBar(
           title: Text("Add Subtask", style: kTasksStyle,),
         ),
-        body: Center(
-          child: Container(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  AddDescriptionInput(),
-                  SizedBox(height: 10.0),
-                ],
-              ),
+        body: ListView(
+          padding: EdgeInsets.all(10.0),
+          children: [
+          Container(
+              //child: Padding(
+               // padding: const EdgeInsets.all(5.0),
+                child: Column(
+                  children: [
+                    AddDescriptionInput(),
+                    SizedBox(height: 10.0),
+                  ],
+                ),
+
             ),
-          ),
+            SizedBox(height: 15.0),
+            ElevatedButton(
+              child: Text('Submit'),
+              onPressed: (!validationService.isValid)
+                  ? null
+                  : () {
+                description = validationService.text.value;
+                _subtaskDatamodel!.addSubtask(description);
+                validationService.text = ValidationItem('', null);
+                Navigator.pop(context);
+              },
+              style: ElevatedButton.styleFrom(
+                  fixedSize: const Size(130, 50),
+                  primary: Colors.green,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10))),
+            ),
+          ],
         ),
-        floatingActionButton: submitButton(context),
+        //floatingActionButton: submitButton(context),
       ),
     );
   }

@@ -40,12 +40,17 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
     NotificationApi.init(initScheduled: true);
     listenNotification();
   }
-  void listenNotification() => NotificationApi.onNotifications.stream.listen(onClickedNotification);
+
+  void listenNotification() =>
+      NotificationApi.onNotifications.stream.listen(onClickedNotification);
 
   void onClickedNotification(String? payload) {
     // Full clean of Navigator's history and navigate to new route
-    Navigator.pushNamedAndRemoveUntil(context, SubtasksListScreen.id, (route) => false, arguments: widget.task);
-    Provider.of<TasksViewModel>(context, listen: false).switchTaskNotification(widget.task, false);
+    Navigator.pushNamedAndRemoveUntil(
+        context, SubtasksListScreen.id, (route) => false,
+        arguments: widget.task);
+    Provider.of<TasksViewModel>(context, listen: false)
+        .switchTaskNotification(widget.task, false);
   }
 
   int get pickerColor_value => pickerColor.value;
@@ -88,14 +93,14 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
             ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
               child: IconSlideAction(
-                color: Colors.red, //Colors.green,
+                color: Colors.red,
                 onTap: () {
                   final provider =
                       Provider.of<TasksViewModel>(context, listen: false);
                   provider.removeTask(task);
                 },
-                caption: 'Delete', //'Edit',
-                icon: Icons.delete, //Icons.edit,
+                caption: 'Delete',
+                icon: Icons.delete,
               ),
             ),
           ],
@@ -103,10 +108,7 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
             child: Container(
               padding: EdgeInsets.all(10.0),
               decoration: BoxDecoration(
-                  //color: task.isDone ? Colors.grey : Colors.white, //colors todo
-                  //color: task.isDone ? Colors.grey : pickerColor, //colors todo
                   color: task.isDone ? Colors.grey : Color(task.colorValue),
-                  //colors todo
                   border: Border.all(color: Colors.black.withOpacity(0.5)),
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   boxShadow: [
@@ -127,9 +129,7 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                       maxLines: 10,
                     ),
                     subtitle: Text(
-                      //'Do:${task.date} \nOd:${task.date}',
                       'To:  ${task.date} \nFrom:  ${task.dateFrom}',
-                      //task.date,
                       style: kTaskDateStyle,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
@@ -143,7 +143,7 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                       ),
                       tooltip: 'Setting to choose color and notification',
                       onPressed: () {
-                        if(!task.isDone) {
+                        if (!task.isDone) {
                           settingDialog(context);
                         }
                       },
@@ -197,10 +197,10 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
-
           DateTime dt = DateFormat('dd-MM-yyyy HH:mm').parse(widget.task.date);
-          if(dt.isBefore(DateTime.now())){
-            Provider.of<TasksViewModel>(context, listen: false).switchTaskNotification(widget.task, false);
+          if (dt.isBefore(DateTime.now())) {
+            Provider.of<TasksViewModel>(context, listen: false)
+                .switchTaskNotification(widget.task, false);
           }
 
           return StatefulBuilder(
@@ -210,106 +210,109 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(height: 5),
-                      Row(
-                        children: [
-                          SizedBox(width: 20),
-                          ElevatedButton(
-                            onPressed: () => showSettingColorDialog(context),
-                            child: Text('PRESS to get COLOR'),
-                            style: ElevatedButton.styleFrom(
-                                fixedSize: const Size(230, 50),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50)),
-                                primary: Colors.grey,
-                                textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 5),
+                    Row(
+                      children: [
+                        SizedBox(width: 20),
+                        ElevatedButton(
+                          onPressed: () => showSettingColorDialog(context),
+                          child: Text('PRESS to get COLOR'),
+                          style: ElevatedButton.styleFrom(
+                              fixedSize: const Size(230, 50),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50)),
+                              primary: Colors.grey,
+                              textStyle: const TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 30),
+                    Column(
+                      children: [
+                        Text(
+                          'NOTIFICATION',
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
                           ),
-                        ],
-                      ),
-                      SizedBox(height: 30),
-                      Column(
-                        children: [
-                          Text(
-                            'NOTIFICATION',
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              color: Colors.grey,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 15),
-                          Transform.scale(
-                            scale: 3,
-                            child: Switch.adaptive(
+                        ),
+                        SizedBox(height: 15),
+                        Transform.scale(
+                          scale: 3,
+                          child: Switch.adaptive(
                               activeColor: Colors.green,
                               value: widget.task.isNotificationOn,
                               onChanged: (value) {
-                                setState(() => widget.task.isNotificationOn = value);
-                                Provider.of<TasksViewModel>(context, listen: false).switchTaskNotification(widget.task, value);                                if(widget.task.isNotificationOn){
-                                  //DateTime dt = DateFormat('dd-MM-yyyy HH:mm').parse(widget.task.date);
-                                  if(dt.isAfter(DateTime.now())){
+                                setState(
+                                    () => widget.task.isNotificationOn = value);
+                                Provider.of<TasksViewModel>(context,
+                                        listen: false)
+                                    .switchTaskNotification(widget.task, value);
+                                if (widget.task.isNotificationOn) {
+                                  if (dt.isAfter(DateTime.now())) {
                                     int notificationId = intGenerator();
-                                    Provider.of<TasksViewModel>(context, listen: false).updateTaskNotificationId(widget.task, notificationId);
+                                    Provider.of<TasksViewModel>(context,
+                                            listen: false)
+                                        .updateTaskNotificationId(
+                                            widget.task, notificationId);
                                     NotificationApi.showScheduledNotification(
                                       id: notificationId,
                                       title: widget.task.title,
                                       body: widget.task.note,
                                       scheduledDate: dt,
                                     );
-                                  } else{
+                                  } else {
                                     widget.task.isNotificationOn = false;
                                     notificationWarning(context);
                                   }
-                                } else{
-                                  NotificationApi.cancel(widget.task.notificationId);
+                                } else {
+                                  NotificationApi.cancel(
+                                      widget.task.notificationId);
                                 }
-                              }
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 50),
-                      Align(
-                        alignment: Alignment.center,
-                        child: ElevatedButton.icon(
-                          onPressed: () => Navigator.of(context).pop(),
-                          //child: //Text('X'),
-                          icon: Icon(Icons.close),  //icon data for elevated button
-                          label: Text("CLOSE"),
-                          style: ElevatedButton.styleFrom(
-                              fixedSize: const Size(230, 45),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50)),
-                              primary: Colors.grey,
-                              //padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                              textStyle:
-                              const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                              }),
                         ),
+                      ],
+                    ),
+                    SizedBox(height: 50),
+                    Align(
+                      alignment: Alignment.center,
+                      child: ElevatedButton.icon(
+                        onPressed: () => Navigator.of(context).pop(),
+                        icon: Icon(Icons.close),
+                        label: Text("CLOSE"),
+                        style: ElevatedButton.styleFrom(
+                            fixedSize: const Size(230, 45),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50)),
+                            primary: Colors.grey,
+                            textStyle: const TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold)),
                       ),
-                    ]),
+                    ),
+                  ],
+                ),
               ),
             );
           });
         },
       );
-  void notificationWarning(BuildContext context) => ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Please go to EDIT and set up future Date, Time'),
-        duration: Duration(seconds: 5),
-        backgroundColor: Colors.deepOrangeAccent,
-      ),
-  );
+
+  void notificationWarning(BuildContext context) =>
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please go to EDIT and set up future Date, Time'),
+          duration: Duration(seconds: 5),
+          backgroundColor: Colors.deepOrangeAccent,
+        ),
+      );
 
   int intGenerator() {
-    // int _randomInt = Random().nextInt(10000)*4 +
-    //     Random().nextInt(1000)*3 +
-    //     Random().nextInt(100)*2;
-
-   int _randomInt1 = DateTime.now().millisecondsSinceEpoch ~/1000;
-
+    int _randomInt1 = DateTime.now().millisecondsSinceEpoch ~/ 1000;
     return _randomInt1;
   }
 }

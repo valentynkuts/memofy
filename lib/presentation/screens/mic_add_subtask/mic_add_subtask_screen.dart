@@ -35,7 +35,10 @@ class _MicAddSubtaskScreenState extends State<MicAddSubtaskScreen> {
         value: _subtaskDatamodel,
         child: Scaffold(
           appBar: AppBar(
-            title: Text('Add by Mic', style: kTasksStyle,),
+            title: Text(
+              'Add by Mic',
+              style: kTasksStyle,
+            ),
             centerTitle: true,
             // leading: GestureDetector(   //TODO
             //   child: Icon( Icons.arrow_back_ios, color: Colors.white,  ),
@@ -46,9 +49,10 @@ class _MicAddSubtaskScreenState extends State<MicAddSubtaskScreen> {
             //) ,
           ),
           body: ListView(
+            padding: EdgeInsets.all(10.0),
             children: [
               Container(
-                padding: EdgeInsets.all(10.0),
+                //padding: EdgeInsets.all(10.0),
                 child: Text(
                   widget.info,
                   style: TextStyle(
@@ -59,25 +63,44 @@ class _MicAddSubtaskScreenState extends State<MicAddSubtaskScreen> {
                 ),
               ),
               AddByMic(info: 'TITLE'),
+              SizedBox(height: 15.0),
+              ElevatedButton(
+                child: Text('Submit'),
+                onPressed: () {
+                  String title = Provider.of<SpeechViewModel>(context, listen: false).title;
+                  if (title.isNotEmpty) {
+                    _subtaskDatamodel!.addSubtask(title);
+                    Provider.of<SpeechViewModel>(context, listen: false).title = '';
+                    Navigator.pop(context);
+                  } else {
+                    showErrorDialog(context);
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                    fixedSize: const Size(130, 50),
+                    primary: Colors.green,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10))),
+              ),
             ],
           ),
-          floatingActionButton: FloatingActionButton.extended(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            onPressed: () {
-              String title =
-                  Provider.of<SpeechViewModel>(context, listen: false).title;
-              if (title.isNotEmpty) {
-                _subtaskDatamodel!.addSubtask(title);
-                Provider.of<SpeechViewModel>(context, listen: false).title = '';
-                Navigator.pop(context);
-              } else {
-                showErrorDialog(context);
-              }
-            },
-            label: Text('ADD'),
-          ),
+          // floatingActionButton: FloatingActionButton.extended(
+          //   shape: RoundedRectangleBorder(
+          //     borderRadius: BorderRadius.circular(10),
+          //   ),
+          //   onPressed: () {
+          //     String title =
+          //         Provider.of<SpeechViewModel>(context, listen: false).title;
+          //     if (title.isNotEmpty) {
+          //       _subtaskDatamodel!.addSubtask(title);
+          //       Provider.of<SpeechViewModel>(context, listen: false).title = '';
+          //       Navigator.pop(context);
+          //     } else {
+          //       showErrorDialog(context);
+          //     }
+          //   },
+          //   label: Text('ADD'),
+          // ),
         ),
       );
 

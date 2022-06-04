@@ -46,20 +46,37 @@ class _EditSubtaskScreenState extends State<EditSubtaskScreen> {
         appBar: AppBar(
           title: Text("Edit Subtask", style: kTasksStyle,),
         ),
-        body: Center(
-          child: Container(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
+        body: ListView(
+          padding: EdgeInsets.all(10.0),
+          children:[
+          Container(
               child: Column(
                 children: [
                   EditDescriptionInput(),
                   SizedBox(height: 10.0),
                 ],
               ),
-            ),
           ),
+            SizedBox(height: 15.0),
+            ElevatedButton(
+              child: Text('Submit'),
+              onPressed: (!validationService.isValid)
+                  ? null
+                  : () {
+                description = validationService.text.value;
+                _subtasksViewModel!.updateSubtask(widget.subtask, description);
+                validationService.text = ValidationItem('', null);
+                Navigator.pop(context);
+              },
+              style: ElevatedButton.styleFrom(
+                  fixedSize: const Size(130, 50),
+                  primary: Colors.green,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10))),
+            ),
+          ],
         ),
-        floatingActionButton: submitButton(context),
+       // floatingActionButton: submitButton(context),
       ),
     );
   }
@@ -80,21 +97,21 @@ class _EditSubtaskScreenState extends State<EditSubtaskScreen> {
         },
       );
 
-  Widget submitButton(BuildContext context) => FloatingActionButton.extended(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        foregroundColor: Colors.white,
-        backgroundColor: Colors.green,
-        icon: Icon(Icons.done),
-        label: Text('Submit'),
-        onPressed: (!validationService.isValid)
-            ? null
-            : () {
-                description = validationService.text.value;
-                _subtasksViewModel!.updateSubtask(widget.subtask, description);
-                validationService.text = ValidationItem('', null);
-                Navigator.pop(context);
-              },
-      );
+  // Widget submitButton(BuildContext context) => FloatingActionButton.extended(
+  //       shape: RoundedRectangleBorder(
+  //         borderRadius: BorderRadius.circular(10),
+  //       ),
+  //       foregroundColor: Colors.white,
+  //       backgroundColor: Colors.green,
+  //       icon: Icon(Icons.done),
+  //       label: Text('Submit'),
+  //       onPressed: (!validationService.isValid)
+  //           ? null
+  //           : () {
+  //               description = validationService.text.value;
+  //               _subtasksViewModel!.updateSubtask(widget.subtask, description);
+  //               validationService.text = ValidationItem('', null);
+  //               Navigator.pop(context);
+  //             },
+  //     );
 }

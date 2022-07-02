@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-// Courgette
-// SourceCodePro
-
 const kTasksStyle = TextStyle(
   fontFamily: 'SourceCodePro',
   color: Colors.white,
@@ -47,11 +44,11 @@ const kSubtaskDescriptionStyle = TextStyle(
   fontWeight: FontWeight.bold,
 );
 
-const mic_color = const  Color(0xffffc000);  // amber 	 Color(0xffffc000)
+const mic_color = const  Color(0xffffc000);
 const kBorderRadius = BorderRadius.all(Radius.circular(10.0));
-const appBarColor = const Color(
-    0xff6c6c6c); //const Color(0xff276359); //0xff94b9a7 //0xff839973 // 0xff3a6c7f  // 0xff08080 (grey)
+const appBarColor = const Color(0xff6c6c6c);
 const String settings_key = '73489djer8887';
+
 const List<DropdownMenuItem<String>> menuItems = [
   DropdownMenuItem(
       child: Text(

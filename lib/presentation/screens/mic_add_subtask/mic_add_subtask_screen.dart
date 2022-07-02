@@ -40,19 +40,11 @@ class _MicAddSubtaskScreenState extends State<MicAddSubtaskScreen> {
               style: kTasksStyle,
             ),
             centerTitle: true,
-            // leading: GestureDetector(   //TODO
-            //   child: Icon( Icons.arrow_back_ios, color: Colors.white,  ),
-            //   onTap: () {
-            //     Provider.of<SpeechViewModel>(context, listen: false).title = '';
-            //     Navigator.pop(context);
-            //   } ,
-            //) ,
           ),
           body: ListView(
             padding: EdgeInsets.all(10.0),
             children: [
               Container(
-                //padding: EdgeInsets.all(10.0),
                 child: Text(
                   widget.info,
                   style: TextStyle(
@@ -67,10 +59,13 @@ class _MicAddSubtaskScreenState extends State<MicAddSubtaskScreen> {
               ElevatedButton(
                 child: Text('Submit'),
                 onPressed: () {
-                  String title = Provider.of<SpeechViewModel>(context, listen: false).title;
+                  String title =
+                      Provider.of<SpeechViewModel>(context, listen: false)
+                          .title;
                   if (title.isNotEmpty) {
                     _subtaskDatamodel!.addSubtask(title);
-                    Provider.of<SpeechViewModel>(context, listen: false).title = '';
+                    Provider.of<SpeechViewModel>(context, listen: false).title =
+                        '';
                     Navigator.pop(context);
                   } else {
                     showErrorDialog(context);
@@ -84,23 +79,6 @@ class _MicAddSubtaskScreenState extends State<MicAddSubtaskScreen> {
               ),
             ],
           ),
-          // floatingActionButton: FloatingActionButton.extended(
-          //   shape: RoundedRectangleBorder(
-          //     borderRadius: BorderRadius.circular(10),
-          //   ),
-          //   onPressed: () {
-          //     String title =
-          //         Provider.of<SpeechViewModel>(context, listen: false).title;
-          //     if (title.isNotEmpty) {
-          //       _subtaskDatamodel!.addSubtask(title);
-          //       Provider.of<SpeechViewModel>(context, listen: false).title = '';
-          //       Navigator.pop(context);
-          //     } else {
-          //       showErrorDialog(context);
-          //     }
-          //   },
-          //   label: Text('ADD'),
-          // ),
         ),
       );
 

@@ -22,7 +22,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
 
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-        //backgroundColor: const Color.fromRGBO(3, 37, 65, 1),
         backgroundColor: appBarColor,
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.grey,

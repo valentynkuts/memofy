@@ -44,30 +44,34 @@ class _EditSubtaskScreenState extends State<EditSubtaskScreen> {
       //lazy: false,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Edit Subtask", style: kTasksStyle,),
+          title: Text(
+            "Edit Subtask",
+            style: kTasksStyle,
+          ),
         ),
         body: ListView(
           padding: EdgeInsets.all(10.0),
-          children:[
-          Container(
+          children: [
+            Container(
               child: Column(
                 children: [
                   EditDescriptionInput(),
                   SizedBox(height: 10.0),
                 ],
               ),
-          ),
+            ),
             SizedBox(height: 15.0),
             ElevatedButton(
               child: Text('Submit'),
               onPressed: (!validationService.isValid)
                   ? null
                   : () {
-                description = validationService.text.value;
-                _subtasksViewModel!.updateSubtask(widget.subtask, description);
-                validationService.text = ValidationItem('', null);
-                Navigator.pop(context);
-              },
+                      description = validationService.text.value;
+                      _subtasksViewModel!
+                          .updateSubtask(widget.subtask, description);
+                      validationService.text = ValidationItem('', null);
+                      Navigator.pop(context);
+                    },
               style: ElevatedButton.styleFrom(
                   fixedSize: const Size(130, 50),
                   primary: Colors.green,
@@ -76,7 +80,6 @@ class _EditSubtaskScreenState extends State<EditSubtaskScreen> {
             ),
           ],
         ),
-       // floatingActionButton: submitButton(context),
       ),
     );
   }
@@ -96,22 +99,4 @@ class _EditSubtaskScreenState extends State<EditSubtaskScreen> {
           validationService.changeNewTitle(value);
         },
       );
-
-  // Widget submitButton(BuildContext context) => FloatingActionButton.extended(
-  //       shape: RoundedRectangleBorder(
-  //         borderRadius: BorderRadius.circular(10),
-  //       ),
-  //       foregroundColor: Colors.white,
-  //       backgroundColor: Colors.green,
-  //       icon: Icon(Icons.done),
-  //       label: Text('Submit'),
-  //       onPressed: (!validationService.isValid)
-  //           ? null
-  //           : () {
-  //               description = validationService.text.value;
-  //               _subtasksViewModel!.updateSubtask(widget.subtask, description);
-  //               validationService.text = ValidationItem('', null);
-  //               Navigator.pop(context);
-  //             },
-  //     );
 }

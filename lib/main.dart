@@ -31,7 +31,7 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  ////LocalNotificationsService.ini
+
   //Initializes Hive with a valid directory in app files.
   await Hive.initFlutter();
   //init settings

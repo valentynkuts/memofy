@@ -39,21 +39,21 @@ class _AddSubtaskScreenState extends State<AddSubtaskScreen> {
       value: _subtaskDatamodel,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Add Subtask", style: kTasksStyle,),
+          title: Text(
+            "Add Subtask",
+            style: kTasksStyle,
+          ),
         ),
         body: ListView(
           padding: EdgeInsets.all(10.0),
           children: [
-          Container(
-              //child: Padding(
-               // padding: const EdgeInsets.all(5.0),
-                child: Column(
-                  children: [
-                    AddDescriptionInput(),
-                    SizedBox(height: 10.0),
-                  ],
-                ),
-
+            Container(
+              child: Column(
+                children: [
+                  AddDescriptionInput(),
+                  SizedBox(height: 10.0),
+                ],
+              ),
             ),
             SizedBox(height: 15.0),
             ElevatedButton(
@@ -61,11 +61,11 @@ class _AddSubtaskScreenState extends State<AddSubtaskScreen> {
               onPressed: (!validationService.isValid)
                   ? null
                   : () {
-                description = validationService.text.value;
-                _subtaskDatamodel!.addSubtask(description);
-                validationService.text = ValidationItem('', null);
-                Navigator.pop(context);
-              },
+                      description = validationService.text.value;
+                      _subtaskDatamodel!.addSubtask(description);
+                      validationService.text = ValidationItem('', null);
+                      Navigator.pop(context);
+                    },
               style: ElevatedButton.styleFrom(
                   fixedSize: const Size(130, 50),
                   primary: Colors.green,
@@ -74,7 +74,6 @@ class _AddSubtaskScreenState extends State<AddSubtaskScreen> {
             ),
           ],
         ),
-        //floatingActionButton: submitButton(context),
       ),
     );
   }
@@ -92,23 +91,5 @@ class _AddSubtaskScreenState extends State<AddSubtaskScreen> {
         onChanged: (value) {
           validationService.changeNewTitle(value);
         },
-      );
-
-  Widget submitButton(BuildContext context) => FloatingActionButton.extended(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        foregroundColor: Colors.white,
-        backgroundColor: Colors.green,
-        icon: Icon(Icons.done),
-        label: Text('Submit'),
-        onPressed: (!validationService.isValid)
-            ? null
-            : () {
-                description = validationService.text.value;
-                _subtaskDatamodel!.addSubtask(description);
-                validationService.text = ValidationItem('', null);
-                Navigator.pop(context);
-              },
       );
 }

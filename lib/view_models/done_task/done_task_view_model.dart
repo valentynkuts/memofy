@@ -25,7 +25,7 @@ class DoneTasksViewModel extends ChangeNotifier {
     _temp = await taskService.getTasks();
     _temp = _temp.where((task) => task.isDone == true).toList();
     if (searchingQuery.isEmpty) {
-      _temp.sort((a, b) => a.orderby.compareTo(b.orderby)); ///////
+      _temp.sort((a, b) => a.orderby.compareTo(b.orderby));
       _doneTasks = _temp;
     }
     notifyListeners();
@@ -37,7 +37,7 @@ class DoneTasksViewModel extends ChangeNotifier {
   }
 
   void searchTask(String query) {
-    searchingQuery = query; ////todo
+    searchingQuery = query;
     print(query);
     if (query.isNotEmpty) {
       _doneTasks = _temp.where((TaskModel task) {

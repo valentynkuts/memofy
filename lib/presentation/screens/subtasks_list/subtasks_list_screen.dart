@@ -60,7 +60,6 @@ class _SubtasksListScreenState extends State<SubtasksListScreen> {
               expandOnTextTap: true,
               collapseOnTextTap: true,
               expandText: ' Tap to see more',
-              //collapseText: 'show less',
               maxLines: 2,
               textAlign: TextAlign.center,
               linkColor: Colors.green,

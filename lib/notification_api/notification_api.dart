@@ -59,7 +59,6 @@ class NotificationApi{
       title,
       body,
       tz.TZDateTime.from(scheduledDate, tz.local),
-      //_scheduledDate(scheduledDate),
       await _notificationDetails(),
       payload: payload,
       androidAllowWhileIdle: true,
@@ -67,10 +66,6 @@ class NotificationApi{
       matchDateTimeComponents: DateTimeComponents.dateAndTime,
 
   );
-
-  // static tz.TZDateTime _scheduledDate(DateTime scheduledDate){
-  //   return tz.TZDateTime.from(scheduledDate, tz.local);
-  // }
 
   static void cancel(int id) => _notification.cancel(id);
 

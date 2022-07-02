@@ -4,13 +4,10 @@ import 'package:memofy/data/settings_service.dart';
 import 'package:memofy/models/settings/settings.dart';
 
 class SettingsViewModel extends ChangeNotifier {
-  //static const String settings_key = '73489djer8887';
   final settingsService = SettingsService();
   var settings = Settings(lang: '');
-  //Settings settings;
 
   SettingsViewModel() {
-    //settings = settingsService.addSettings('', settings_key);
     load();
   }
 
@@ -24,11 +21,6 @@ class SettingsViewModel extends ChangeNotifier {
     print( 'getSettings :  $settings');
     return settings;
   }
-
-  // Future<Settings>  getSettings() async{
-  //   print( 'getSettings :  $settings');
-  //   return settings;
-  // }
 
   Future<void> load() async {
     await settingsService.load(_readSettingsFromHive);

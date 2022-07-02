@@ -63,7 +63,7 @@ class SubtaskTileWidget extends StatelessWidget {
             clipBehavior: Clip.hardEdge,
             child: ListTile(
               title: Text(
-                subtask.description, //'Text',
+                subtask.description,
                 style: TextStyle(
                     fontFamily: 'SourceCodePro',
                     fontSize: 22.0,

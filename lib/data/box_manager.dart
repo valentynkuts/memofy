@@ -39,7 +39,6 @@ class BoxManager {
   }
 
   Future<Box<TaskModel>> openTaskBox() async {
-    //return _openBox('tasks6', 0, TaskModelAdapter());
     return _openBox('tasks7', 0, TaskModelAdapter());
   }
 

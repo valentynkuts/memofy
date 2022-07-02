@@ -22,12 +22,6 @@ class _TasksListScreenState extends State<TasksListScreen> {
   bool isSearching = false;
   String searchingQuery = '';
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   NotificationApi.init();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,7 +101,6 @@ class _TasksListScreenState extends State<TasksListScreen> {
             ),
             child: Icon(Icons.mic),
             backgroundColor: mic_color,
-            //Colors.amber,
             label: 'Add task by voice',
             onTap: () => Navigator.of(context).pushNamed(MicAddTaskScreen.id),
           ),
@@ -168,7 +161,7 @@ class _TasksListScreenState extends State<TasksListScreen> {
                         ElevatedButton(
                           onPressed: () => Provider.of<TasksViewModel>(context,
                                   listen: false)
-                              .sortTaskAsc(),//.sortTask(true),
+                              .sortTaskAsc(),
                           style: ElevatedButton.styleFrom(
                             fixedSize: const Size(50, 150),
                             shape: RoundedRectangleBorder(
@@ -185,7 +178,7 @@ class _TasksListScreenState extends State<TasksListScreen> {
                         ElevatedButton(
                           onPressed: () => Provider.of<TasksViewModel>(context,
                                   listen: false)
-                              .sortTaskDesc(),//.sortTask(false),
+                              .sortTaskDesc(),
                           style: ElevatedButton.styleFrom(
                             fixedSize: const Size(50, 150),
                             shape: RoundedRectangleBorder(
